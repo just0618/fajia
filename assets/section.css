@@ -1,0 +1,13 @@
+
+:root{--bg:#fffaf9;--text:#241f22;--muted:#7a7075;--pink:#ff8aa1}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;display:grid;place-items:center;padding:28px;
+  font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  color:var(--text);background:radial-gradient(circle at 20% 15%,rgba(255,138,161,.16),transparent 26rem),var(--bg)
+}
+.wrap{width:min(720px,100%);padding:34px;border:1px solid #eadfe3;border-radius:28px;background:#ffffffc9;box-shadow:0 20px 60px rgba(47,28,35,.08)}
+.kicker{font-size:12px;letter-spacing:.2em;font-weight:800;color:#a77e89}
+h1{font-size:clamp(34px,8vw,62px);letter-spacing:-.05em;margin:14px 0}
+p{color:var(--muted);line-height:1.8}
+a{display:inline-block;margin-top:16px;color:var(--text);text-decoration:none;border-bottom:1px solid var(--pink);padding-bottom:3px}

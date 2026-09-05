@@ -1,0 +1,39 @@
+
+:root{
+  --bg:#fffaf9;--panel:rgba(255,255,255,.78);--text:#241f22;--muted:#7a7075;
+  --line:#eadfe3;--pink:#ff8aa1;--gold:#ffe25b;--shadow:0 18px 55px rgba(47,28,35,.08);
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{
+  margin:0;min-height:100vh;color:var(--text);
+  font-family:Inter,"PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  background:
+    radial-gradient(circle at 12% 8%,rgba(255,138,161,.17),transparent 27rem),
+    radial-gradient(circle at 88% 18%,rgba(255,226,91,.18),transparent 23rem),
+    var(--bg);
+}
+a{color:inherit}
+.shell{width:min(1100px,calc(100% - 36px));margin:auto;padding:84px 0 40px}
+.hero{max-width:760px;margin-bottom:54px}
+.eyebrow{font-size:12px;letter-spacing:.24em;font-weight:800;color:#9e7882;margin-bottom:18px}
+h1{font-size:clamp(42px,8vw,86px);line-height:.98;letter-spacing:-.055em;margin:0 0 22px}
+.lead{font-size:clamp(17px,2.3vw,24px);color:var(--muted);margin:0;line-height:1.65}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{
+  min-height:230px;padding:24px;border:1px solid rgba(234,223,227,.9);border-radius:24px;
+  background:var(--panel);backdrop-filter:blur(14px);box-shadow:var(--shadow);
+  text-decoration:none;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto 1fr;
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.card:hover{transform:translateY(-5px);border-color:#e6b4c1;box-shadow:0 25px 70px rgba(47,28,35,.12)}
+.num{font-size:12px;font-weight:800;color:#b58d97}
+.card div{align-self:end;grid-column:1/3}
+.card h2{font-size:26px;letter-spacing:-.03em;margin:0 0 9px}
+.card p{color:var(--muted);line-height:1.65;margin:0;font-size:14px}
+.arrow{justify-self:end;font-size:22px}
+footer{display:flex;gap:9px;align-items:center;color:#9b8e93;font-size:12px;margin-top:38px;padding:0 4px}
+.dot{opacity:.5}
+@media(max-width:760px){
+  .shell{padding-top:58px}.hero{margin-bottom:38px}.grid{grid-template-columns:1fr}.card{min-height:178px}
+}
