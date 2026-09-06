@@ -1,0 +1,506 @@
+{
+  "schema_version": "monitor-dashboard-v1",
+  "snapshot_version": "2026-09-06-cross-platform-v1.0",
+  "generated_at": "2026-09-06T11:53:00+08:00",
+  "status": "FROZEN_SNAPSHOT",
+  "title": "法嘉舆情观察",
+  "subtitle": "微博 × 豆瓣 · Direct Hotspots → Insight → Statistical Overview",
+  "windows": {
+    "weibo": {
+      "start": "2026-08-22T16:18:08+08:00",
+      "end": "2026-08-24T00:20:15+08:00",
+      "note": "Official dual-account anchor comment corpus; adjacent but not identical to the Douban window."
+    },
+    "douban": {
+      "start": "2026-08-25T13:52:19+08:00",
+      "end": "2026-08-26T23:59:53+08:00"
+    },
+    "comparison_warning": "The two corpora are adjacent but not identical in time or source construction. Use cross-platform contrasts descriptively, not as controlled causal estimates."
+  },
+  "platforms": {
+    "weibo": {
+      "label": "微博",
+      "headline": "公开诉求/运营压力",
+      "strict_organic": 525,
+      "dissatisfaction": {
+        "count": 235,
+        "share": 0.44761904761904764,
+        "top_topics": [
+          {
+            "code": "T09",
+            "label": "公司运营",
+            "count": 137,
+            "share_within_E08": 0.5829787234042553
+          },
+          {
+            "code": "T03",
+            "label": "双人物料",
+            "count": 58,
+            "share_within_E08": 0.24680851063829787
+          },
+          {
+            "code": "T13",
+            "label": "线下活动",
+            "count": 37,
+            "share_within_E08": 0.1574468085106383
+          }
+        ],
+        "top_targets": [
+          {
+            "code": "G06",
+            "label": "宣发/运营",
+            "count": 167,
+            "share_within_E08": 0.7106382978723405
+          },
+          {
+            "code": "G05",
+            "label": "公司/工作室",
+            "count": 129,
+            "share_within_E08": 0.548936170212766
+          },
+          {
+            "code": "G03",
+            "label": "法嘉双人",
+            "count": 30,
+            "share_within_E08": 0.1276595744680851
+          }
+        ]
+      },
+      "relation": {
+        "discussion_count": 1,
+        "discussion_share": 0.0019047619047619048,
+        "negative_count": 0,
+        "contract": "NONE = no relationship judgment; do not call it neutral relationship."
+      },
+      "focus_topics": [
+        {
+          "code": "T13",
+          "label": "线下活动",
+          "count": 192,
+          "share": 0.3657142857142857
+        },
+        {
+          "code": "T09",
+          "label": "公司运营",
+          "count": 171,
+          "share": 0.32571428571428573
+        },
+        {
+          "code": "T03",
+          "label": "双人物料",
+          "count": 108,
+          "share": 0.2057142857142857
+        }
+      ],
+      "hotspots": [
+        {
+          "rank": 1,
+          "title": "粉丝集中催促官方发布双人物料及侧拍",
+          "evidence_level": "DIRECT",
+          "support": 81,
+          "support_label": "热点证据支持",
+          "summary": "",
+          "caveat": "support 为冻结 Hotspot HUMAN 分支中的证据支持，不代表微博平台总提及量。"
+        },
+        {
+          "rank": 2,
+          "title": "粉丝强烈要求放出积压“冻货”",
+          "evidence_level": "DIRECT",
+          "support": 75,
+          "support_label": "热点证据支持",
+          "summary": "",
+          "caveat": "support 为冻结 Hotspot HUMAN 分支中的证据支持，不代表微博平台总提及量。"
+        },
+        {
+          "rank": 3,
+          "title": "官方双人账号长期沉默后突然更新，引发集中“诈尸”调侃",
+          "evidence_level": "DIRECT",
+          "support": 40,
+          "support_label": "热点证据支持",
+          "summary": "",
+          "caveat": "support 为冻结 Hotspot HUMAN 分支中的证据支持，不代表微博平台总提及量。"
+        },
+        {
+          "rank": 4,
+          "title": "部分粉丝对运营不满升级为要求销号或更换工作人员",
+          "evidence_level": "DIRECT",
+          "support": 16,
+          "support_label": "热点证据支持",
+          "summary": "",
+          "caveat": "support 为冻结 Hotspot HUMAN 分支中的证据支持，不代表微博平台总提及量。"
+        },
+        {
+          "rank": 5,
+          "title": "澳门见面会官宣后，粉丝集中表达九月见面的期待",
+          "evidence_level": "DIRECT",
+          "support": 7,
+          "support_label": "热点证据支持",
+          "summary": "",
+          "caveat": "support 为冻结 Hotspot HUMAN 分支中的证据支持，不代表微博平台总提及量。"
+        }
+      ]
+    },
+    "douban": {
+      "label": "豆瓣",
+      "headline": "细节复盘/关系解释/粉圈讨论",
+      "strict_organic": 7801,
+      "dissatisfaction": {
+        "count": 1472,
+        "share": 0.18869375721061402,
+        "top_topics": [
+          {
+            "code": "T10",
+            "label": "粉圈生态",
+            "count": 557,
+            "comment_share": 0.37839673913043476
+          },
+          {
+            "code": "T11",
+            "label": "舆情争议",
+            "count": 523,
+            "comment_share": 0.35529891304347827
+          },
+          {
+            "code": "T01",
+            "label": "双人互动",
+            "count": 257,
+            "comment_share": 0.17459239130434784
+          },
+          {
+            "code": "T04",
+            "label": "单人物料",
+            "count": 254,
+            "comment_share": 0.17255434782608695
+          },
+          {
+            "code": "T09",
+            "label": "公司运营",
+            "count": 248,
+            "comment_share": 0.16847826086956522
+          },
+          {
+            "code": "T16",
+            "label": "日常闲聊",
+            "count": 215,
+            "comment_share": 0.14605978260869565
+          }
+        ],
+        "top_targets": [
+          {
+            "code": "G03",
+            "label": "法嘉双人",
+            "count": 464,
+            "comment_share": 0.31521739130434784
+          },
+          {
+            "code": "G04",
+            "label": "两人关系",
+            "count": 413,
+            "comment_share": 0.280570652173913
+          },
+          {
+            "code": "G07",
+            "label": "CP粉群体",
+            "count": 370,
+            "comment_share": 0.2513586956521739
+          },
+          {
+            "code": "G05",
+            "label": "公司/工作室",
+            "count": 231,
+            "comment_share": 0.15692934782608695
+          },
+          {
+            "code": "G06",
+            "label": "宣发/运营",
+            "count": 202,
+            "comment_share": 0.13722826086956522
+          },
+          {
+            "code": "G01",
+            "label": "法宣阁",
+            "count": 160,
+            "comment_share": 0.10869565217391304
+          }
+        ]
+      },
+      "relation": {
+        "discussion_share": 0.3564927573388027,
+        "none_share": 0.6435072426611973,
+        "resolved_positive_share": 0.08973208563004743,
+        "resolved_negative_share": 0.08498910396103064,
+        "resolved_uncertain_share": 0.03371362645814639,
+        "unresolved_relation_share": 0.14805794128957825,
+        "contract": "NONE = no relationship judgment; unresolved buckets remain unresolved."
+      },
+      "top_substantive_topics": [
+        {
+          "code": "T10",
+          "label": "粉圈生态",
+          "count": 2007,
+          "comment_share": 0.2572747083707217
+        },
+        {
+          "code": "T04",
+          "label": "单人物料",
+          "count": 1701,
+          "comment_share": 0.21804896808101526
+        },
+        {
+          "code": "T01",
+          "label": "双人互动",
+          "count": 1671,
+          "comment_share": 0.21420330726829895
+        },
+        {
+          "code": "T11",
+          "label": "舆情争议",
+          "count": 1251,
+          "comment_share": 0.16036405589027047
+        },
+        {
+          "code": "T02",
+          "label": "直播",
+          "count": 1028,
+          "comment_share": 0.13177797718241252
+        },
+        {
+          "code": "T03",
+          "label": "双人物料",
+          "count": 632,
+          "comment_share": 0.08101525445455711
+        },
+        {
+          "code": "T09",
+          "label": "公司运营",
+          "count": 559,
+          "comment_share": 0.07165747981028073
+        },
+        {
+          "code": "T13",
+          "label": "线下活动",
+          "count": 453,
+          "comment_share": 0.05806947827201641
+        }
+      ],
+      "hotspots": [
+        {
+          "rank": 1,
+          "title": "8/24直播切片中“哽咽、眼红、忍泪”片段被集中复盘，两人当晚情绪状态成焦点",
+          "evidence_level": "DIRECT",
+          "support": 47,
+          "support_label": "merged microcluster evidence",
+          "summary": "讨论围绕同一场直播中的可见表情、声音和身体语言展开；不同评论对哭泣原因存在分歧，因此只确认“这些片段被集中复盘”，不把哭泣原因写成事实。",
+          "caveat": "可直接观察的是切片中的哽咽/眼红等表现；“因关系问题、弹幕或维稳而哭”均属于解释或猜测。",
+          "time_start": "2026-08-25T17:29:58+08:00",
+          "time_end": "2026-08-26T23:50:30+08:00"
+        },
+        {
+          "rank": 2,
+          "title": "搬出/分居时间线被反复追溯：何时搬、为何直播主动提及、“狗没带走”等线索被集中拼图",
+          "evidence_level": "INFERRED",
+          "support": 44,
+          "support_label": "merged microcluster evidence",
+          "summary": "评论集中讨论是否曾同住、何时搬出，以及七月直播中的同居相关表达如何理解；“沙发上的狗没有带走”等细节被当作辅助线索。",
+          "caveat": "“分居/同居时间点”并未由这批评论中的可核实来源统一确认，前台应写成追溯与讨论，而不是确定事实。",
+          "time_start": "2026-08-25T19:42:14+08:00",
+          "time_end": "2026-08-26T14:23:02+08:00"
+        },
+        {
+          "rank": 3,
+          "title": "七夕看电影、摩天轮和吃饭行程被重新串联，不少人猜测是否是“最后一次情侣式约会”",
+          "evidence_level": "HYPOTHESIS",
+          "support": 44,
+          "support_label": "merged microcluster evidence",
+          "summary": "七夕当天的看电影、摩天轮、吃饭以及后续影子图/音乐被重新拼接成关系时间线，并衍生出“当天前后是否已吵架”的多种版本。",
+          "caveat": "“最后一次情侣式约会”“七夕当天吵架”等均为粉丝推测，热点只能呈现“出现集中猜测”。",
+          "time_start": "2026-08-25T17:11:14+08:00",
+          "time_end": "2026-08-26T15:47:49+08:00"
+        },
+        {
+          "rank": 4,
+          "title": "私信“已读/一键已读”机制被集中实测，粉丝互相核对是否真的代表本人阅读",
+          "evidence_level": "DIRECT",
+          "support": 34,
+          "support_label": "merged microcluster evidence",
+          "summary": "粉丝用网页端、小号和不同发送时间测试私信已读状态，讨论一键已读、客户端显示差异以及部分消息为何未读。",
+          "caveat": "能确认的是粉丝观察到不同客户端/账号的已读状态差异；“一定由本人逐条阅读”不能从已读标识直接推出。",
+          "time_start": "2026-08-25T14:03:16+08:00",
+          "time_end": "2026-08-26T16:58:32+08:00"
+        },
+        {
+          "rank": 5,
+          "title": "621直播“是否有剧本”再度升温：调灯、报备、酒吧场地和回答速度被拿来反复论证",
+          "evidence_level": "DIRECT",
+          "support": 33,
+          "support_label": "merged microcluster evidence",
+          "summary": "围绕621直播是否预设剧本，评论分别引用工作人员调灯、直播报备、公共场地、回答速度和早期脚本痕迹进行正反论证。",
+          "caveat": "这是“剧本说”的争议复盘；现有讨论不足以证明直播整体为剧本或完全无剧本。",
+          "time_start": "2026-08-25T18:18:44+08:00",
+          "time_end": "2026-08-25T19:09:28+08:00"
+        },
+        {
+          "rank": 6,
+          "title": "“不拧瓶盖、递水、拿纸巾”等小细节被放大，围绕双人互动是否明显降温展开讨论",
+          "evidence_level": "INFERRED",
+          "support": 30,
+          "support_label": "merged microcluster evidence",
+          "summary": "评论把递水是否先拧瓶盖、拿纸巾以及“不及时向对方表达需求”等细节，与过去互动方式进行比较，并据此讨论关系温度。",
+          "caveat": "动作本身可以观察，但“互动降温/感情变化”是基于动作差异的解释。",
+          "time_start": "2026-08-26T11:01:12+08:00",
+          "time_end": "2026-08-26T17:58:31+08:00"
+        },
+        {
+          "rank": 7,
+          "title": "“家里长辈是否施压”形成一条集中猜测线：父母看直播、大伯来电与816小号被串联",
+          "evidence_level": "HYPOTHESIS",
+          "support": 29,
+          "support_label": "merged microcluster evidence",
+          "summary": "评论把直播中提到的大伯来电、父母是否看过直播和816小号内容串联，推测是否存在家庭压力；同时也有大量反驳。",
+          "caveat": "家庭施压没有在当前语料中获得直接证据，必须保持为“集中猜测/争论”。",
+          "time_start": "2026-08-25T19:22:52+08:00",
+          "time_end": "2026-08-26T11:14:19+08:00"
+        },
+        {
+          "rank": 8,
+          "title": "“金箔画原来有两幅”触发新一轮考古：两幅画分别放在哪里、是否对应不同住处被集中讨论",
+          "evidence_level": "DIRECT",
+          "support": 23,
+          "support_label": "merged microcluster evidence",
+          "summary": "发现同款/同组金箔画可能存在两幅后，讨论迅速转向两幅画各自的摆放地点、制作时间以及是否与两人的住处有关。",
+          "caveat": "“存在两幅”的讨论线很明确；具体一幅在哪个住处、归谁所有仍包含推断。",
+          "time_start": "2026-08-25T22:33:44+08:00",
+          "time_end": "2026-08-25T23:51:16+08:00"
+        },
+        {
+          "rank": 9,
+          "title": "贺嘉述自动回复改成“已收到您的求助信息”，粉丝围绕文案变化集中讨论",
+          "evidence_level": "DIRECT",
+          "support": 23,
+          "support_label": "merged microcluster evidence",
+          "summary": "自动回复文案变化被迅速截图、转述并讨论，部分粉丝把“求助信息”与近期大量私信联系起来。",
+          "caveat": "文案变化本身属于直接可观察事件；其设置原因和是否针对近期舆情无法由当前数据确认。",
+          "time_start": "2026-08-26T00:28:41+08:00",
+          "time_end": "2026-08-26T14:29:13+08:00"
+        },
+        {
+          "rank": 10,
+          "title": "“公司是否在逐步解绑法嘉”成为运营猜测：建群、共创与见面会节点被串联讨论",
+          "evidence_level": "HYPOTHESIS",
+          "support": 20,
+          "support_label": "merged microcluster evidence",
+          "summary": "部分评论把单人建群、共创后续、见面会节点和近期双人状态串联，推测公司是否计划降低双人绑定。",
+          "caveat": "“公司逐步解绑”没有官方确认，是围绕运营动作形成的假设，不应写成公司既定计划。",
+          "time_start": "2026-08-26T09:17:59+08:00",
+          "time_end": "2026-08-26T12:38:26+08:00"
+        }
+      ]
+    }
+  },
+  "insights": [
+    {
+      "insight_id": "XPI_001",
+      "level": "DIRECT",
+      "title": "微博的主要压力对象是宣发/运营与公司，核心诉求集中在双人物料供给和账号运营",
+      "statement": "微博不满并非主要冲着法嘉本人，而是明显集中在宣发/运营与公司；排名最高的热点也都是催双人物料、催“冻货”和要求改善运营。",
+      "evidence": [
+        "Weibo E08: 宣发/运营 167/235 = 71.1%",
+        "Weibo E08: 公司/工作室 129/235 = 54.9%",
+        "Weibo E08: 法嘉双人 30/235 = 12.8%",
+        "Weibo MAIN #1 support=81: 催双人物料及侧拍",
+        "Weibo MAIN #2 support=75: 催积压“冻货”",
+        "Weibo MAIN #4 support=16: 要求销号或更换工作人员"
+      ],
+      "guardrail": "这是当前微博锚点语料的直接结构，不外推为所有微博用户长期态度。"
+    },
+    {
+      "insight_id": "XPI_002",
+      "level": "DIRECT",
+      "title": "豆瓣的主要阅读颗粒度是“细节—关系—粉圈解释”，而不是单纯向官方催更",
+      "statement": "豆瓣高频实质议题包括粉圈生态、单人物料、双人互动和舆情争议；关系讨论占比也明显高，Top Hotspots 大量围绕直播片段、搬出时间线、七夕行程、互动细节等进行复盘和解释。",
+      "evidence": [
+        "Douban T10 粉圈生态 2007/7801 = 25.7%",
+        "Douban T04 单人物料 1701/7801 = 21.8%",
+        "Douban T01 双人互动 1671/7801 = 21.4%",
+        "Douban relationship discussion share = 35.6%",
+        "Douban Top Hotspots include 8/24直播情绪切片、搬出/分居时间线、七夕行程、621剧本争议和互动小细节"
+      ],
+      "guardrail": "豆瓣关系讨论多，不代表多数评论已经形成负向关系结论。"
+    },
+    {
+      "insight_id": "XPI_003",
+      "level": "INFERRED",
+      "title": "两个平台承担了不同功能：微博更像“公开诉求/施压场”，豆瓣更像“解释与拼图场”",
+      "statement": "综合热点结构与不满指向，微博更常把问题转化成对官方的直接诉求；豆瓣更常把公开痕迹、直播细节和时间线拼接成解释框架。",
+      "evidence": [
+        "Weibo 5个 MAIN 中 4个直接围绕官方更新、物料、账号或运营动作",
+        "Douban Top 10 中多数围绕细节复盘、时间线、关系含义或机制实测",
+        "Douban E08 targets 中法嘉双人/两人关系/CP粉群体均高于公司/运营"
+      ],
+      "guardrail": "这是基于相邻时间窗和当前样本结构的功能性推断，不应解释为平台用户的固定人格差异。"
+    },
+    {
+      "insight_id": "XPI_004",
+      "level": "INFERRED",
+      "title": "“双人内容供给不足/互动信息稀缺”可能是两个平台共同的底层焦点，但表现形式不同",
+      "statement": "微博把稀缺直接表达成“催物料、催冻货、催运营”；豆瓣则更多通过单人物料、双人互动细节、直播切片和时间线去寻找可解释的信息。",
+      "evidence": [
+        "Weibo MAIN #1/#2 均为双人物料供给诉求",
+        "Weibo focus topics: 双人物料 108/525 = 20.6%",
+        "Douban substantive topics: 单人物料 21.8%, 双人互动 21.4%, 双人物料 8.1%",
+        "Douban Hotspots 多次围绕公开互动痕迹进行复盘"
+      ],
+      "guardrail": "“共同底层焦点”是跨平台归纳，不等于已证明同一原因导致两个平台的全部讨论。"
+    },
+    {
+      "insight_id": "XPI_005",
+      "level": "DIRECT",
+      "title": "关系议题在微博并非当前主要冲突，但在豆瓣是高频讨论对象；两边都不能简单写成“关系负面”",
+      "statement": "微博严格语料中只有1条关系讨论且没有负向关系判断；豆瓣关系讨论约35.6%，但其中约14.8%仍处于未决关系桶，因此“讨论很多”不能改写成“普遍认为关系恶化”。",
+      "evidence": [
+        "Weibo relationship discussion = 1/525 = 0.19%; negative relation = 0",
+        "Douban relationship discussion = 35.6%",
+        "Douban unresolved relation = 14.8%",
+        "Douban resolved negative relation = 8.5%"
+      ],
+      "guardrail": "NONE 只代表无关系判断；unresolved 也不得被重新分配到负向。"
+    },
+    {
+      "insight_id": "XPI_006",
+      "level": "HYPOTHESIS",
+      "title": "官方双人信息稀缺可能形成“信息真空”，进而把部分讨论推向豆瓣式关系猜测",
+      "statement": "一种可检验解释是：当官方双人账号更新稀少、物料供给不足时，微博侧出现明确催更压力，而豆瓣侧更依赖零散公开痕迹进行关系拼图，可能放大了“家里施压、公司解绑、最后一次约会”等假设线。",
+      "evidence": [
+        "Weibo: 双人账号沉默后更新引发“诈尸”调侃；大量催物料/冻货",
+        "Douban HYPOTHESIS hotspots: 家庭施压、公司逐步解绑、七夕最后一次情侣式约会",
+        "Douban INFERRED hotspots: 搬出/分居时间线、互动细节降温"
+      ],
+      "guardrail": "这是因果假设，不是当前数据已经证明的因果关系；需要更长时间序列或事件前后对照验证。"
+    }
+  ],
+  "guardrails": [
+    "微博与豆瓣时间窗相邻但不完全一致，跨平台比较是描述性比较，不是严格因果比较。",
+    "NONE 表示没有关系判断，不等于“关系中性”。",
+    "unresolved relation 保持 unresolved，不强制归入正向或负向。",
+    "HYPOTHESIS 只表示语料中存在集中假设或机制猜测，不表示假设为真。",
+    "Hotspot support 是发现/人工合并阶段的证据支持，不等于平台总提及量。"
+  ],
+  "methodology": {
+    "hierarchy": [
+      "Direct Hotspots / 小热搜榜",
+      "Insight Layer / DIRECT · INFERRED · HYPOTHESIS",
+      "Statistical Overview / Topic · Emotion · Target · Relation"
+    ],
+    "weibo_lineage": {
+      "semantic": "Weibo Production Semantic V1.5.2 frozen/pass",
+      "aggregation": "Weibo Aggregation V0.9.0 frozen/pass",
+      "hotspot": "Weibo Human Hotspot Adjudication V1.1-HUMAN-1 frozen/pass"
+    },
+    "douban_lineage": {
+      "semantic": "Douban Semantic / Router frozen",
+      "human": "Douban Human Adjudication V1.0–V1.2 + HUMAN-1 + HUMAN-2 frozen/pass",
+      "aggregation": "Douban Aggregation V1.0 pass/frozen",
+      "hotspot": "Douban Hotspot HUMAN Synthesis V1.0 pass/frozen"
+    }
+  }
+}

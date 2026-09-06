@@ -1,17 +1,142 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>舆情观察 · 法嘉</title>
-<link rel="stylesheet" href="../assets/section.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#fff8fa" />
+  <title>法嘉舆情观察</title>
+  <meta name="description" content="法嘉微博与豆瓣舆情观察：小热搜、跨平台洞察与统计概览。" />
+  <link rel="stylesheet" href="../assets/monitor.css" />
 </head>
 <body>
-<main class="wrap">
-  <div class="kicker">FAJIA · ONLINE</div>
-  <h1>舆情观察</h1>
-  <p>舆情 Dashboard 正在接入。当前先用于验证 fajia.online 的总入口与路由部署。</p>
-  <a href="../">← 返回总入口</a>
-</main>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="../" aria-label="返回 fajia.online 首页">
+        <span class="brand-mark">FJ</span>
+        <span>
+          <strong>fajia.online</strong>
+          <small>舆情观察</small>
+        </span>
+      </a>
+      <div class="top-actions">
+        <span id="snapshotStatus" class="status-dot">读取数据中</span>
+        <a class="ghost-btn" href="../">返回首页</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">FAJIA SOCIAL LISTENING</span>
+          <h1>法嘉舆情观察</h1>
+          <p>先看具体发生了什么，再看跨平台结论，最后回到统计结构。</p>
+          <div class="hero-meta">
+            <span id="generatedAt">—</span>
+            <span>静态冻结快照</span>
+            <span>微博 × 豆瓣</span>
+          </div>
+        </div>
+        <div class="hero-note">
+          <strong>阅读顺序</strong>
+          <span>Direct Hotspots</span>
+          <i>→</i>
+          <span>Insight Layer</span>
+          <i>→</i>
+          <span>Statistical Overview</span>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="kicker">01 · DIRECT HOTSPOTS</span>
+            <h2>最近具体在谈什么</h2>
+          </div>
+          <div class="segmented" role="tablist">
+            <button class="seg-btn active" data-platform="weibo">微博</button>
+            <button class="seg-btn" data-platform="douban">豆瓣</button>
+          </div>
+        </div>
+
+        <div id="platformSummary" class="platform-summary"></div>
+        <div id="hotspotList" class="hotspot-list"></div>
+        <p class="fine-print">热点 support 为发现/人工合并阶段的“证据支持”，不是平台总提及量。</p>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="kicker">02 · INSIGHT LAYER</span>
+            <h2>跨平台可以得出什么</h2>
+          </div>
+        </div>
+        <div id="insightGrid" class="insight-grid"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <span class="kicker">03 · STATISTICAL OVERVIEW</span>
+            <h2>结构性统计</h2>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <article class="panel">
+            <div class="panel-title">
+              <span class="platform-pill weibo">微博</span>
+              <h3>不满主要指向</h3>
+            </div>
+            <div id="weiboTargets" class="bar-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-title">
+              <span class="platform-pill douban">豆瓣</span>
+              <h3>核心实质议题</h3>
+            </div>
+            <div id="doubanTopics" class="bar-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-title">
+              <span class="platform-pill weibo">微博</span>
+              <h3>关系讨论</h3>
+            </div>
+            <div id="weiboRelation" class="metric-block"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-title">
+              <span class="platform-pill douban">豆瓣</span>
+              <h3>关系讨论</h3>
+            </div>
+            <div id="doubanRelation" class="metric-block"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section methodology">
+        <div class="section-head">
+          <div>
+            <span class="kicker">04 · READING GUARDRAILS</span>
+            <h2>如何读这些结论</h2>
+          </div>
+        </div>
+        <div id="guardrails" class="guardrail-grid"></div>
+        <details>
+          <summary>查看数据窗口与方法说明</summary>
+          <div id="methodDetail" class="method-detail"></div>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <span>fajia.online · monitor</span>
+      <span>Public static dashboard · no API key exposed</span>
+    </footer>
+  </div>
+
+  <script src="../assets/monitor.js" defer></script>
 </body>
 </html>

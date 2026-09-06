@@ -1,0 +1,30 @@
+{
+  "name": "Fajia Monitor Dashboard Data Contract",
+  "version": "v1.0",
+  "frontend_entry": "/monitor/",
+  "active_data": "/monitor/data/dashboard.json",
+  "required_top_level_fields": [
+    "schema_version",
+    "snapshot_version",
+    "generated_at",
+    "status",
+    "windows",
+    "platforms",
+    "insights",
+    "guardrails",
+    "methodology"
+  ],
+  "evidence_levels": {
+    "DIRECT": "语料直接支持的事实性观察或集中讨论现象。",
+    "INFERRED": "由多个直接观察归纳出的解释；不能写成直接事实。",
+    "HYPOTHESIS": "机制、原因或事件真实性的待验证假设；必须与事实视觉隔离。"
+  },
+  "support_contract": "support only means evidence support in the frozen hotspot pipeline; never label it as total mentions.",
+  "relation_contract": "NONE means no relationship judgment; unresolved buckets must stay unresolved.",
+  "update_contract": {
+    "frontend_code": "stable",
+    "snapshot_file": "replace /monitor/data/dashboard.json",
+    "manifest": "update generated_at + snapshot_version",
+    "backend_secrets": "never publish to GitHub/static frontend"
+  }
+}
