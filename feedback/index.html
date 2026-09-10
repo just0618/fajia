@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="referrer" content="no-referrer" />
+  <title>一些想听听你们意见的东西</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="hero" id="top">
+      <div class="eyebrow">FAJIA.ONLINE · PRIVATE FEEDBACK</div>
+      <h1>一些想听听你们意见的东西</h1>
+      <p class="lead">这里放了游戏屋和星遇企划档案的一些反馈问题，也顺便留了一个正在做的新项目预告。</p>
+      <div class="privacy-note">
+        <span>不用一次全部回答</span><span>所有问题都可以跳过</span><span>不询问姓名或联系方式</span>
+      </div>
+      <p class="muted">填写过程中只会保存在当前设备；只有主动点击“提交反馈”后，回答才会发送给我。</p>
+      <div class="hero-actions">
+        <button class="btn primary" data-go="game">开始看看</button>
+        <button class="btn ghost" data-go="preview">先看预告</button>
+      </div>
+    </header>
+
+    <nav class="step-nav" aria-label="页面章节">
+      <button class="step active" data-go="game"><b>01</b><span>游戏屋</span></button>
+      <button class="step" data-go="archive"><b>02</b><span>企划档案</span></button>
+      <button class="step" data-go="preview"><b>03</b><span>讨论概览</span></button>
+      <button class="step" data-go="final"><b>04</b><span>最后一点</span></button>
+    </nav>
+
+    <form id="feedbackForm" novalidate>
+      <section class="panel" id="game" data-step="game">
+        <div class="section-head">
+          <div class="section-index">01</div>
+          <div>
+            <p class="kicker">🎮 LIVE GAME HOUSE</p>
+            <h2>游戏屋小小反馈箱</h2>
+          </div>
+        </div>
+
+        <div class="intro-card">
+          <p>谢谢你们之前真的在直播里玩过它。</p>
+          <p>目前直播里实际使用过的是 <strong>双人互动大富翁（0730直播）</strong> 和 <strong>真心话（0809直播）</strong>。后来游戏屋一直还有在慢慢更新，陆续加入新的题目、玩法，也做过一些操作体验上的调整。</p>
+          <p>这份反馈更想站在<strong>创作者和维护者</strong>的视角来听真实使用体验，而不是收“夸夸”。我希望以后如果某一次直播刚好又需要一个游戏集合或互动工具，它可以是一个随时能拿出来用、又不会增加负担的选择。</p>
+          <p>所以如果有觉得尴尬、麻烦、多余、直播效果不好，或者单纯觉得“这个以后不用再做了”的地方，都可以直接说。后续更新时，我会尽量在<strong>直播效果、游戏可玩性和你们两个人的舒适程度</strong>之间重新找平衡。</p>
+        </div>
+
+        <fieldset class="question">
+          <legend><span>01</span>直播之后，有自己再打开过游戏屋吗？</legend>
+          <div class="options single" data-name="game_reopen">
+            <label><input type="radio" name="game_reopen" value="yes" />有，后来还自己点开看过 / 玩过</label>
+            <label><input type="radio" name="game_reopen" value="maybe" />好像打开过，但没有仔细看</label>
+            <label><input type="radio" name="game_reopen" value="no" />没有，直播之后基本没再打开</label>
+            <label><input type="radio" name="game_reopen" value="unsure" />记不太清了</label>
+          </div>
+          <div class="conditional" id="gameReopenDetail" hidden>
+            <p class="subq">如果后来打开过，大概看过哪些？</p>
+            <div class="options compact">
+              <label><input type="checkbox" name="game_seen" value="truth_updates" />后续更新的真心话题目</label>
+              <label><input type="checkbox" name="game_seen" value="chemistry" />默契挑战</label>
+              <label><input type="checkbox" name="game_seen" value="charades" />你比我猜</label>
+              <label><input type="checkbox" name="game_seen" value="heartbeat" />心动值挑战 / 心率实验室</label>
+              <label><input type="checkbox" name="game_seen" value="avoid" />别中招挑战</label>
+              <label><input type="checkbox" name="game_seen" value="forgot" />记不太清具体名字了</label>
+            </div>
+            <input class="textline" name="game_seen_other" placeholder="其他（可不填）" />
+          </div>
+          <p class="hint">没有再打开也完全没关系。这题只是为了区分“直播实际使用体验”和“后来有没有看到更新后的版本”。</p>
+        </fieldset>
+
+        <fieldset class="question">
+          <legend><span>02</span>回想两次直播实际使用时，下面哪些情况比较接近当时的体验？</legend>
+          <div class="split-cards">
+            <div class="mini-card">
+              <h3>双人互动大富翁 <small>0730</small></h3>
+              <div class="options compact">
+                <label><input type="checkbox" name="monopoly_exp" value="smooth" />基本可以顺着游戏流程直接玩</label>
+                <label><input type="checkbox" name="monopoly_exp" value="rules" />有些规则需要现场再确认一下</label>
+                <label><input type="checkbox" name="monopoly_exp" value="interrupt" />页面操作偶尔会打断直播节奏</label>
+                <label><input type="checkbox" name="monopoly_exp" value="less_fun" />有些环节实际玩起来没有预想中有意思</label>
+                <label><input type="checkbox" name="monopoly_exp" value="keep" />有些环节比较适合直播，可以保留</label>
+                <label><input type="checkbox" name="monopoly_exp" value="forgot" />记不太清了</label>
+              </div>
+              <input class="textline" name="monopoly_other" placeholder="其他（可不填）" />
+            </div>
+            <div class="mini-card">
+              <h3>真心话 <small>0809</small></h3>
+              <div class="options compact">
+                <label><input type="checkbox" name="truth_exp" value="direct" />大部分题可以直接回答</label>
+                <label><input type="checkbox" name="truth_exp" value="skip" />遇到过想跳过的题</label>
+                <label><input type="checkbox" name="truth_exp" value="rephrase" />有些题需要临时换一种说法再回答</label>
+                <label><input type="checkbox" name="truth_exp" value="not_live" />有些题本身没问题，但直播里不太方便答</label>
+                <label><input type="checkbox" name="truth_exp" value="better_live" />有些题实际播出来的效果比预想中好</label>
+                <label><input type="checkbox" name="truth_exp" value="forgot" />记不太清了</label>
+              </div>
+              <input class="textline" name="truth_other" placeholder="其他（可不填）" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="question">
+          <legend><span>03</span>只看那次直播实际玩过的真心话，题目尺度更接近哪一种？</legend>
+          <div class="options single">
+            <label><input type="radio" name="truth_scale" value="much_lower" />可以明显收一点</label>
+            <label><input type="radio" name="truth_scale" value="lower" />可以稍微收一点</label>
+            <label><input type="radio" name="truth_scale" value="right" />当时这样差不多</label>
+            <label><input type="radio" name="truth_scale" value="higher" />可以稍微大胆一点</label>
+            <label><input type="radio" name="truth_scale" value="much_higher" />可以明显大胆一点</label>
+            <label><input type="radio" name="truth_scale" value="segment" />很难用一个尺度概括，不同类型最好分开</label>
+            <label><input type="radio" name="truth_scale" value="unsure" />记不太清 / 不好判断</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="question">
+          <legend><span>04</span>哪些类型的题，更容易出现“题目本身可以，但直播里不太方便答”的情况？</legend>
+          <p class="hint top">可多选，也可以完全不答。</p>
+          <div class="options compact two-col">
+            <label><input type="checkbox" name="awkward_type" value="relationship" />需要定义两个人关系或亲密程度的</label>
+            <label><input type="checkbox" name="awkward_type" value="ambiguous" />太暧昧、容易被过度解读的</label>
+            <label><input type="checkbox" name="awkward_type" value="physical" />涉及身体接触或亲密行为的</label>
+            <label><input type="checkbox" name="awkward_type" value="private_past" />涉及过去经历或私人生活的</label>
+            <label><input type="checkbox" name="awkward_type" value="circle" />涉及家人、朋友、工作人员等身边人的</label>
+            <label><input type="checkbox" name="awkward_type" value="third_party" />涉及其他具体人物的</label>
+            <label><input type="checkbox" name="awkward_type" value="nonpublic" />答案可能暴露不方便公开的信息</label>
+            <label><input type="checkbox" name="awkward_type" value="clip_risk" />单看问题没事，但直播里容易被截取或放大解读的</label>
+            <label><input type="checkbox" name="awkward_type" value="none" />暂时没有觉得特别不方便的类型</label>
+          </div>
+          <textarea name="awkward_example" rows="3" placeholder="如果方便，也可以举一个“这种题以后少一点 / 不要再出了”的例子（可不填）"></textarea>
+        </fieldset>
+
+        <fieldset class="question">
+          <legend><span>05</span>如果以后继续维护游戏屋，你们觉得我把时间花在哪些地方最值得？</legend>
+          <p class="hint top">最多选 2 项。</p>
+          <div class="options compact limit-group" data-limit="2">
+            <label><input type="checkbox" name="game_priority" value="screen_existing" />把已有题目继续筛一遍、改得更合适</label>
+            <label><input type="checkbox" name="game_priority" value="new_questions" />继续增加新题</label>
+            <label><input type="checkbox" name="game_priority" value="new_games" />做新的游戏</label>
+            <label><input type="checkbox" name="game_priority" value="live_first" />增加更适合直播现场直接玩的互动玩法</label>
+            <label><input type="checkbox" name="game_priority" value="levels" />做不同尺度 / 不同直播场景的题库分级</label>
+            <label><input type="checkbox" name="game_priority" value="discoverability" />让找游戏、找题更方便</label>
+            <label><input type="checkbox" name="game_priority" value="performance" />优化加载速度和操作体验</label>
+            <label><input type="checkbox" name="game_priority" value="enough" />现在已经基本够用了，不需要一直增加内容</label>
+            <label><input type="checkbox" name="game_priority" value="less_maintenance" />其实不太需要继续投入这么多时间维护</label>
+          </div>
+          <input class="textline" name="game_priority_other" placeholder="其他（可不填）" />
+        </fieldset>
+
+        <fieldset class="question">
+          <legend><span>06</span>如果以后某次直播刚好又需要互动游戏，你们觉得游戏屋更适合承担哪些作用？</legend>
+          <p class="hint top">最多选 2 项。不是在问“以后一定会不会继续用”，只是想判断以后更适合往什么方向维护。</p>
+          <div class="options compact limit-group" data-limit="2">
+            <label><input type="checkbox" name="game_role" value="complete_hub" />做成一个需要时可以直接打开玩的完整游戏集合</label>
+            <label><input type="checkbox" name="game_role" value="pick_one" />有合适主题时，可以从里面直接挑一个游戏来玩</label>
+            <label><input type="checkbox" name="game_role" value="idea_bank" />更适合当题库 / 游戏灵感库，不一定完全按照网页流程玩</label>
+            <label><input type="checkbox" name="game_role" value="special" />针对某一次直播主题，临时做对应的特别版</label>
+            <label><input type="checkbox" name="game_role" value="fan_requests" />把微博超话或其他平台里大家希望你们尝试的游戏和互动玩法及时整理进来，想玩的时候可以直接找到</label>
+            <label><input type="checkbox" name="game_role" value="not_needed" />现在暂时不太需要这种工具</label>
+            <label><input type="checkbox" name="game_role" value="depends" />都可以，看之后的直播形式</label>
+          </div>
+          <input class="textline" name="game_role_other" placeholder="其他（可不填）" />
+        </fieldset>
+
+        <fieldset class="question">
+          <legend><span>07</span>如果只能让我改一件事，你最希望我改什么？</legend>
+          <textarea name="game_one_change" rows="4" placeholder="可以是一道题、一类题、一个玩法、页面操作，也可以直接说“这里没必要继续做”。这题可以空着。"></textarea>
+        </fieldset>
+
+        <div class="section-actions">
+          <button type="button" class="btn ghost" data-go="archive">暂时跳过 / 下一部分</button>
+          <span class="save-status" data-save-status>已自动保存到当前设备</span>
+        </div>
+      </section>
+
+      <section class="panel" id="archive" data-step="archive">
+        <div class="section-head">
+          <div class="section-index">02</div>
+          <div>
+            <p class="kicker">📖 PROJECT ARCHIVE</p>
+            <h2>星遇企划档案 · 一点反馈</h2>
+          </div>
+        </div>
+
+        <div class="intro-card">
+          <p>这个网站最开始是我从粉丝视角整理的一份双人宣传资料，希望把已经公开的数据、作品、合作经历和一些适合对外展示的信息集中起来，让需要了解你们的人能更快看到比较完整的内容。</p>
+          <p>这里想确认的不是“做得好不好看”，而是两个更实际的问题：<strong>它有没有存在的实际价值，以及如果继续维护，边界应该在哪里。</strong></p>
+          <p>如果真实答案是“其实用不上”“当粉丝整理看看就够了”“不用继续花很多时间维护”，都可以直接选。</p>
+        </div>
+
+        <fieldset class="question">
+          <legend><span>01</span>从你们自己的角度来看，现在这个网站更接近哪一种用途？</legend>
+          <div class="options single" id="archiveRoleOptions">
+            <label><input type="radio" name="archive_role" value="business_help" />作为对外介绍 / 商务展示的补充资料，确实有一定实际帮助</label>
+            <label><input type="radio" name="archive_role" value="useful_adjust" />有一些内容有用，但现在的形式还需要调整</label>
+            <label><input type="radio" name="archive_role" value="reference_only" />偶尔可以作为对外介绍的参考，但不需要专门持续维护</label>
+            <label><input type="radio" name="archive_role" value="fan_archive" />更适合作为粉丝整理的资料页，不太需要承担商务用途</label>
+            <label><input type="radio" name="archive_role" value="not_needed" />实际上目前不太需要这类网站</label>
+            <label><input type="radio" name="archive_role" value="not_seen" />之前没有仔细看过，现在还不太好评价</label>
+            <label><input type="radio" name="archive_role" value="unknown_use" />不太清楚它有没有被真正使用过，所以暂时不好判断</label>
+          </div>
+          <input class="textline" name="archive_role_other" placeholder="其他（可不填）" />
+        </fieldset>
+
+        <div id="archiveFollowups">
+          <fieldset class="question">
+            <legend><span>02</span>如果之后继续维护，哪些内容最值得我保留或更新？</legend>
+            <p class="hint top">最多选 3 项。</p>
+            <div class="options compact limit-group" data-limit="3">
+              <label><input type="checkbox" name="archive_keep" value="followers" />三个平台的账号和粉丝数据</label>
+              <label><input type="checkbox" name="archive_keep" value="works" />代表作品 / 角色 / 音乐作品</label>
+              <label><input type="checkbox" name="archive_keep" value="duo_performance" />双人相关作品和内容表现</label>
+              <label><input type="checkbox" name="archive_keep" value="mag_events" />杂志、活动、线下见面会等公开经历</label>
+              <label><input type="checkbox" name="archive_keep" value="brand_cases" />品牌合作 / 商务合作案例</label>
+              <label><input type="checkbox" name="archive_keep" value="public_results" />已经公开的传播数据或合作成绩</label>
+              <label><input type="checkbox" name="archive_keep" value="shareable_intro" />可以直接转发给品牌或合作方看的简洁介绍</label>
+              <label><input type="checkbox" name="archive_keep" value="pdf" />可下载的 PDF 宣传资料</label>
+              <label><input type="checkbox" name="archive_keep" value="visuals" />图片和视觉展示</label>
+              <label><input type="checkbox" name="archive_keep" value="enough" />现在的信息其实已经基本够用，不需要频繁更新</label>
+              <label><input type="checkbox" name="archive_keep" value="not_business" />不太建议继续把它往“商务资料”方向维护</label>
+            </div>
+            <input class="textline" name="archive_keep_other" placeholder="其他（可不填）" />
+          </fieldset>
+
+          <fieldset class="question">
+            <legend><span>03</span>有没有哪些内容“不适合继续公开整理”，或者“最好先确认再更新”？</legend>
+            <p class="hint top">可多选，也可以完全不答。</p>
+            <div class="options compact two-col">
+              <label><input type="checkbox" name="archive_boundary" value="unannounced_business" />尚未正式公开或仍在推进中的商务合作信息</label>
+              <label><input type="checkbox" name="archive_boundary" value="metrics" />粉丝量、播放量、销量等数据</label>
+              <label><input type="checkbox" name="archive_boundary" value="project_results" />作品、项目或杂志的成绩数据</label>
+              <label><input type="checkbox" name="archive_boundary" value="brand_cases" />品牌 / 商务合作案例</label>
+              <label><input type="checkbox" name="archive_boundary" value="basic_info" />个人基本信息</label>
+              <label><input type="checkbox" name="archive_boundary" value="assets" />图片或宣传素材</label>
+              <label><input type="checkbox" name="archive_boundary" value="judgement" />对未来定位、商业价值、受众特征等带判断性质的描述</label>
+              <label><input type="checkbox" name="archive_boundary" value="unconfirmed_fan_info" />粉丝整理、但官方没有明确确认过的信息</label>
+              <label><input type="checkbox" name="archive_boundary" value="none" />目前没有特别介意的内容</label>
+              <label><input type="checkbox" name="archive_boundary" value="confirm_case_by_case" />不确定，最好有需要时再沟通</label>
+            </div>
+            <textarea name="archive_boundary_note" rows="3" placeholder="如果某一类不是“完全不能放”，而是希望更新前先确认，可以写在这里（可不填）"></textarea>
+          </fieldset>
+
+          <fieldset class="question">
+            <legend><span>04</span>如果只能让我调整一个地方，你最希望是什么？</legend>
+            <textarea name="archive_one_change" rows="4" placeholder="可以很具体，也可以直接说“其实不用再花很多时间做这个了”。这题可以空着。"></textarea>
+          </fieldset>
+        </div>
+
+        <div class="section-actions">
+          <button type="button" class="btn ghost" data-go="preview">暂时跳过 / 下一部分</button>
+          <span class="save-status" data-save-status>已自动保存到当前设备</span>
+        </div>
+      </section>
+
+      <section class="panel" id="preview" data-step="preview">
+        <div class="section-head">
+          <div class="section-index">03</div>
+          <div>
+            <p class="kicker">📊 COMING SOON</p>
+            <h2>近期讨论概览 · 一个小预告</h2>
+          </div>
+        </div>
+
+        <div class="preview-banner">
+          <span>内部预览</span><span>暂不向粉丝公开</span>
+        </div>
+
+        <div class="intro-card">
+          <p>做这个页面的起点，是我慢慢发现：微博、豆瓣等公开平台上的讨论里，经常会出现一些值得注意的意见、分歧和阶段性热点，但真正有价值的信息往往会和大量即时情绪混在一起。</p>
+          <p>所以我开始尝试把公开讨论里的<strong>“情绪”和“信息”分开整理</strong>。它不是为了判断谁说得对、谁说得错，也不是为了追踪某一个具体的人，而是希望更快回答几个简单的问题：</p>
+          <ul class="prompt-list">
+            <li>最近大家主要在讨论什么？</li>
+            <li>比较集中的不满是什么？</li>
+            <li>这些不满主要指向哪些事情？</li>
+            <li>微博和豆瓣的讨论重点有没有明显区别？</li>
+          </ul>
+          <p>完成后也会放在 <strong>fajia.online</strong> 中，但暂时不会向粉丝公开传播。</p>
+        </div>
+
+        <div class="dashboard-mock" id="dashboardPreview">
+          <div class="dash-top"><span>近期讨论概览</span><small>PREVIEW</small></div>
+          <div class="dash-grid">
+            <article><small>TOP TOPICS</small><b>最近在谈什么</b><p>阶段性议题 · 热点变化 · 高频讨论</p></article>
+            <article><small>DISSATISFACTIONS</small><b>主要不满</b><p>从情绪表达中进一步拆解具体问题</p></article>
+            <article><small>TARGETS</small><b>不满指向</b><p>线下活动 · 运营质量 · 粉圈生态等</p></article>
+            <article><small>PLATFORMS</small><b>平台差异</b><p>微博 / 豆瓣分别在讨论什么</p></article>
+          </div>
+          <p class="mock-note">后续可直接替换成你在另一个对话框调整完成后的真实 Dashboard 截图。</p>
+        </div>
+
+        <div class="boundary-card">
+          <b>关于边界</b>
+          <p>只整理公开平台上的公开讨论；不读取私信、群聊等非公开内容；不以识别或追踪具体粉丝为目的，也不制作个人画像。重点是“大家在讨论什么”，而不是“某个人说了什么”。</p>
+        </div>
+
+        <div class="section-actions">
+          <button type="button" class="btn primary" data-go="final">继续到最后</button>
+        </div>
+      </section>
+
+      <section class="panel" id="final" data-step="final">
+        <div class="section-head">
+          <div class="section-index">04</div>
+          <div>
+            <p class="kicker">✦ ONE LAST THING</p>
+            <h2>最后一点</h2>
+          </div>
+        </div>
+
+        <fieldset class="question large-final">
+          <legend>还有什么是前面没问到，但你们觉得我最好知道的吗？</legend>
+          <p class="hint top">游戏屋、星遇企划档案、近期讨论概览，或者以后类似的东西都可以。也可以直接告诉我“这个不用继续做”“这里以后最好先确认”“这个方向可以继续”。</p>
+          <textarea name="final_note" rows="7" placeholder="完全可以留空。"></textarea>
+        </fieldset>
+
+        <div class="submit-card">
+          <div>
+            <h3>准备好了再提交</h3>
+            <p>提交后仍然可以用同一台设备重新打开并修改。页面不会询问是谁填写，我也不会尝试通过回答内容区分是谁。</p>
+          </div>
+          <button type="submit" class="btn primary big" id="submitBtn">提交反馈</button>
+          <p class="submit-state" id="submitState" aria-live="polite"></p>
+        </div>
+
+        <div class="contact-card">
+          <b>不方便写在这里的内容</b>
+          <p>如果涉及题目边界、内容删改、公开信息、身份确认或其他不适合直接写在问卷里的事项，不需要在这里回答。之后可以通过页面底部留下的联系邮箱与我联系。</p>
+          <p class="contact-placeholder">联系邮箱：<span>请上线前替换成你的正式联系邮箱</span></p>
+        </div>
+      </section>
+    </form>
+
+    <section class="success" id="success" hidden>
+      <div class="success-mark">✓</div>
+      <p class="kicker">FEEDBACK RECEIVED</p>
+      <h2>收到啦。</h2>
+      <p>谢谢你愿意认真告诉我这些。我会根据反馈再判断哪些东西值得继续做、哪些需要调整，也不会默认所有项目都一定需要继续。</p>
+      <p>如果之后又想到什么，用同一台设备重新打开这个页面，可以继续修改再提交。</p>
+      <button class="btn ghost" id="editAgain">回来修改</button>
+    </section>
+
+    <footer>
+      <span>fajia.online</span>
+      <span>private feedback · noindex</span>
+    </footer>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
