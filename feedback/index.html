@@ -20,7 +20,7 @@
       <p class="muted">填写过程中只会保存在当前设备；只有主动点击“提交反馈”后，回答才会发送给我。</p>
       <div class="hero-actions">
         <button class="btn primary" data-go="game">开始看看</button>
-        <button class="btn ghost" data-go="preview">先看预告</button>
+        <button class="btn ghost" data-go="preview">先看讨论预览</button>
       </div>
     </header>
 
@@ -257,13 +257,13 @@
         <div class="section-head">
           <div class="section-index">03</div>
           <div>
-            <p class="kicker">📊 COMING SOON</p>
-            <h2>近期讨论概览 · 一个小预告</h2>
+            <p class="kicker">📊 INTERNAL PREVIEW</p>
+            <h2>近期讨论概览 · 内部预览</h2>
           </div>
         </div>
 
         <div class="preview-banner">
-          <span>内部预览</span><span>暂不向粉丝公开</span>
+          <span>内部预览</span><span>仍在调试</span><span>暂不向粉丝公开</span>
         </div>
 
         <div class="intro-card">
@@ -275,18 +275,24 @@
             <li>这些不满主要指向哪些事情？</li>
             <li>微博和豆瓣的讨论重点有没有明显区别？</li>
           </ul>
-          <p>完成后也会放在 <strong>fajia.online</strong> 中，但暂时不会向粉丝公开传播。</p>
+          <p>目前已经有一个小范围的功能预览，可以直接在下面打开看看。它主要用于展示页面的阅读方式和功能方向，仍在继续调试，也暂时不会向粉丝公开传播。</p>
         </div>
 
-        <div class="dashboard-mock" id="dashboardPreview">
-          <div class="dash-top"><span>近期讨论概览</span><small>PREVIEW</small></div>
-          <div class="dash-grid">
-            <article><small>TOP TOPICS</small><b>最近在谈什么</b><p>阶段性议题 · 热点变化 · 高频讨论</p></article>
-            <article><small>DISSATISFACTIONS</small><b>主要不满</b><p>从情绪表达中进一步拆解具体问题</p></article>
-            <article><small>TARGETS</small><b>不满指向</b><p>线下活动 · 运营质量 · 粉圈生态等</p></article>
-            <article><small>PLATFORMS</small><b>平台差异</b><p>微博 / 豆瓣分别在讨论什么</p></article>
+        <div class="live-preview-card" id="dashboardPreview">
+          <div class="live-preview-head">
+            <div>
+              <small>当前调试版</small>
+              <b>双平台小热搜 · 功能预览</b>
+            </div>
+            <span>可单独打开</span>
           </div>
-          <p class="mock-note">后续可直接替换成你在另一个对话框调整完成后的真实 Dashboard 截图。</p>
+          <div class="preview-frame-shell" aria-hidden="true">
+            <iframe src="./monitor-preview/" title="近期讨论概览内部预览" loading="lazy" tabindex="-1"></iframe>
+          </div>
+          <div class="preview-open-row">
+            <p>下方嵌入的是当前预览页的实时画面；正式查看时建议单独打开，手机端会更清楚。</p>
+            <a class="btn preview-link" href="./monitor-preview/" target="_blank" rel="noopener">打开完整内部预览 →</a>
+          </div>
         </div>
 
         <div class="boundary-card">
