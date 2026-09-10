@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>法嘉舆情｜Phase A 双平台小热搜预览</title>
+<style>
+:root{
+  --bg:#f6f7fa; --card:#fff; --text:#18191c; --sub:#747b86; --line:#eceef2;
+  --wb:#ff4f67; --db:#3a9b4a; --orange:#ff7a45; --soft:#f8f9fb;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text)}
+.wrap{max-width:1080px;margin:auto;padding:28px 16px 48px}
+.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-end;margin-bottom:16px}
+h1{margin:0 0 6px;font-size:25px}
+.subtitle{font-size:13px;color:var(--sub);line-height:1.7}
+.status{font-size:12px;padding:8px 11px;border-radius:999px;background:#fff;border:1px solid var(--line);color:#555;white-space:nowrap}
+.notice{background:#fffaf2;border:1px solid #ffe5c8;border-radius:14px;padding:12px 14px;font-size:12px;color:#6b5842;line-height:1.7;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 5px 20px rgba(30,40,60,.04)}
+.head{padding:16px 18px 13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}
+.name{font-size:17px;font-weight:760;display:flex;align-items:center;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%}.wb .dot{background:var(--wb)}.db .dot{background:var(--db)}
+.count{font-size:11px;color:var(--sub)}
+.list{padding:4px 14px 12px}
+.row{display:grid;grid-template-columns:28px 1fr auto;gap:8px;padding:13px 2px;border-bottom:1px solid var(--line);cursor:pointer}
+.row:last-child{border-bottom:0}
+.rank{width:23px;height:23px;border-radius:7px;background:#f1f2f4;display:grid;place-items:center;font-size:11px;font-weight:800;color:#626973}
+.row:nth-child(1) .rank{background:#fff0ed;color:#ff5436}
+.row:nth-child(2) .rank{background:#fff6e8;color:#db8b22}
+.row:nth-child(3) .rank{background:#fff9e5;color:#b58a13}
+.title{font-size:14px;font-weight:650;line-height:1.45}
+.meta{font-size:11px;color:var(--sub);margin-top:5px}
+.hit{align-self:start;background:#fff3ee;color:#ef6a35;border-radius:999px;padding:4px 7px;font-size:11px;white-space:nowrap}
+.detail{display:none;grid-column:2 / 4;margin-top:3px;padding:9px 10px;background:var(--soft);border-radius:9px;font-size:12px;color:#555e68;line-height:1.65}
+.row.open .detail{display:block}
+.lowinfo{margin:4px 14px 14px;background:#f7f7f8;border-radius:12px;padding:11px 12px;font-size:12px;line-height:1.65;color:#676d76}
+.lowinfo b{color:#444}
+.bottom{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;font-size:12px;color:#5c626b;line-height:1.7}
+.bottom b{color:#222}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.top{flex-direction:column;align-items:flex-start}.status{white-space:normal}.wrap{padding:20px 12px 36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div>
+      <h1>双平台小热搜 · Phase A 输入预览</h1>
+      <div class="subtitle">使用 2026-09-10 Phase A 实际 batch；先看真实输入能否形成“微博热议 / 豆瓣热议”。</div>
+    </div>
+    <div class="status">Phase A：PASS · Semantic 尚未调用</div>
+  </div>
+
+  <div class="notice">
+    ⚠️ 这里展示的是“候选热议预览”，不是生产确认榜。命中样本数来自对本批原始文本的规则归并，仅用于验证前端形式；正式版仍应由 Semantic → hotspot synthesis → Evidence Gate 决定是否上榜。
+  </div>
+
+  <div class="grid">
+    <section class="panel wb">
+      <div class="head">
+        <div class="name"><span class="dot"></span>微博热议</div>
+        <div class="count">61 条真实 batch 输入</div>
+      </div>
+      <div class="list">
+        <div class="row" onclick="this.classList.toggle('open')">
+          <div class="rank">1</div>
+          <div>
+            <div class="title">澳门见面会出行、航班与交通攻略被集中讨论</div>
+            <div class="meta">出行 / 线下活动</div>
+          </div>
+          <div class="hit">命中 10</div>
+          <div class="detail">样本里出现“明天出发但航班取消”“哈尔滨到澳门怎么闪现”“3A 巴士运行轨迹”“去澳门清单”等，属于信息型、行动型讨论，适合进入微博小热搜。</div>
+        </div>
+
+        <div class="row" onclick="this.classList.toggle('open')">
+          <div class="rank">2</div>
+          <div>
+            <div class="title">粉丝向“首饰盒”集中提运营与物料更新建议</div>
+            <div class="meta">运营反馈 / 内容供给</div>
+          </div>
+          <div class="hit">命中 4</div>
+          <div class="detail">包括“如果澳门随行工作人员换了请精读建议”“首饰盒该添一手货”“请仔细研读”等，属于明确指向运营方的反馈，而不是普通应援。</div>
+        </div>
+
+        <div class="row" onclick="this.classList.toggle('open')">
+          <div class="rank">3</div>
+          <div>
+            <div class="title">新人求物料合集，历史内容入口需求出现</div>
+            <div class="meta">新人需求 / 物料整理</div>
+          </div>
+          <div class="hit">弱信号</div>
+          <div class="detail">当前样本里直接表达“新人被吸引了，求一个物料合集”的数量还少，正式 Evidence Gate 下未必会上榜，但很适合保留为 emerging signal。</div>
+        </div>
+      </div>
+
+      <div class="lowinfo"><b>榜外高频：</b>应援/CP 文案约命中 24 条。它们频次很高，但大多是祝福、文案、话题签到或重复表达，建议作为 LOWINFO / routine engagement，不进入“小热搜”。</div>
+    </section>
+
+    <section class="panel db">
+      <div class="head">
+        <div class="name"><span class="dot"></span>豆瓣热议</div>
+        <div class="count">170 条真实 batch 输入</div>
+      </div>
+      <div class="list">
+        <div class="row" onclick="this.classList.toggle('open')">
+          <div class="rank">1</div>
+          <div>
+            <div class="title">到澳门后“怎么没动静”：想念与催露出刷屏</div>
+            <div class="meta">内容缺口 / 即时情绪</div>
+          </div>
+          <div class="hit">命中 39</div>
+          <div class="detail">大量“fj/ffjj我想你们了”与“到了澳门怎么跟消失了一样”“今晚还出来不”“一点东西都不发”等形成非常明显的同一时间段聚集，是这批最像真正动态小热搜的一簇。</div>
+        </div>
+
+        <div class="row" onclick="this.classList.toggle('open')">
+          <div class="rank">2</div>
+          <div>
+            <div class="title">澳门到达后的去向：酒店、排练还是外出？</div>
+            <div class="meta">行程猜测 / 线下活动</div>
+          </div>
+          <div class="hit">命中 9</div>
+          <div class="detail">出现“回酒店还是排练”“酒店外卖中”“不会在排练吧”“可以去澳门坐摩天轮”等。正式版标题应保持“用户在猜测”的措辞，不能把去向写成事实。</div>
+        </div>
+
+        <div class="row" onclick="this.classList.toggle('open')">
+          <div class="rank">3</div>
+          <div>
+            <div class="title">明天直播几点播？预告与新鲜互动期待升温</div>
+            <div class="meta">直播 / 活动预期</div>
+          </div>
+          <div class="hit">命中 9</div>
+          <div class="detail">“好期待明天”“明天几点播”“后援会最好早点发直播预告”“怎么今天不是11号，想看大直播”等已经形成围绕次日直播的独立讨论。</div>
+        </div>
+
+        <div class="row" onclick="this.classList.toggle('open')">
+          <div class="rank">4</div>
+          <div>
+            <div class="title">旧直播重新被翻看，7月互动再次被讨论</div>
+            <div class="meta">旧内容回流 / 二次传播</div>
+          </div>
+          <div class="hit">命中 5</div>
+          <div class="detail">样本里出现“今晚很多人被刺激得开始回看法嘉直播”“七月末那三场都有好几个人正在看”“收拾东西又听了一遍 726”等，属于旧内容短时回流。</div>
+        </div>
+
+        <div class="row" onclick="this.classList.toggle('open')">
+          <div class="rank">5</div>
+          <div>
+            <div class="title">“824”情绪余波仍在：痛感、敏感与关系波动被回忆</div>
+            <div class="meta">关系感知 / 历史事件回看</div>
+          </div>
+          <div class="hit">命中 4</div>
+          <div class="detail">多条评论主动回看 8·24 的情绪体验，并把当前对互动浓度的敏感与那次经历联系起来。它更像持续性 long-tail 热点，而不是当天突发事件。</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="bottom">
+    <b>这个版本最重要的验证：</b>
+    微博和豆瓣不能共用完全相同的“热度=频次”逻辑。豆瓣适合从回复链和短时重复讨论中识别热点；微博必须先把签到、应援话题、模板文案等 routine engagement 压掉，否则它们会把真正有信息量的“澳门出行”“运营反馈”挤出榜单。
+  </div>
+</div>
+</body>
+</html>
