@@ -73,6 +73,28 @@ function go(id){
   target.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
+function addProjectLink(sectionId, url, label){
+  const section = document.getElementById(sectionId);
+  const intro = section?.querySelector('.intro-card');
+  if (!intro) return;
+  const row = document.createElement('div');
+  row.className = 'section-actions project-link-row';
+  row.style.marginTop = '14px';
+  const link = document.createElement('a');
+  link.className = 'btn ghost';
+  link.href = url;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  link.textContent = label;
+  link.style.textDecoration = 'none';
+  link.style.display = 'inline-block';
+  row.appendChild(link);
+  intro.insertAdjacentElement('afterend', row);
+}
+
+addProjectLink('game', 'https://fajia-livegame.top/', '打开现在的游戏屋 ↗');
+addProjectLink('archive', 'https://fajia-business.cn/', '查看星遇企划档案 ↗');
+
 document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));
 
 document.querySelectorAll('.limit-group').forEach(group=>{
