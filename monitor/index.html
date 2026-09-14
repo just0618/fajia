@@ -5,18 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#fff8fa" />
   <title>法嘉舆情观察</title>
-  <meta name="description" content="法嘉微博与豆瓣舆情观察：小热搜、跨平台洞察与统计概览。" />
+  <meta name="description" content="法嘉微博与豆瓣舆情观察：近期热议、跨平台观察与结构统计。" />
   <link rel="stylesheet" href="../assets/monitor.css" />
+  <style>
+    .source-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+    .source-card{padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:18px;line-height:1.65}
+    .source-card strong{display:block;font-size:14px;margin-bottom:4px}.source-card span{display:block;color:var(--muted);font-size:12px}
+    .window-warning{margin-top:12px;padding:13px 16px;border-radius:15px;background:#fff8e8;border:1px solid #f0dfb1;color:#806a38;font-size:12px;line-height:1.7}
+    .comparison-panel{grid-column:1/-1}
+    .comparison-note{font-size:12px;color:var(--muted);line-height:1.7;margin:-8px 0 18px}
+    .compare-list{display:grid;gap:16px}.compare-row{display:grid;grid-template-columns:130px 1fr;gap:18px;padding:4px 0}
+    .compare-label{font-size:13px;font-weight:700;padding-top:3px}.compare-pair{display:grid;gap:8px}
+    .compare-line{display:grid;grid-template-columns:42px 1fr 58px;gap:9px;align-items:center;font-size:11px}
+    .compare-platform{font-weight:750}.compare-platform.wb{color:#b44460}.compare-platform.db{color:#347355}
+    .compare-track{height:8px;background:#f3ecef;border-radius:999px;overflow:hidden}.compare-fill{height:100%;border-radius:999px}.compare-fill.wb{background:#ef7890}.compare-fill.db{background:#69a77d}
+    .compare-value{text-align:right;color:var(--muted)}
+    .relation-plain{display:grid;grid-template-columns:1fr 1fr;gap:12px}.relation-card{padding:16px;border-radius:16px;background:var(--surface-soft)}
+    .relation-card strong{display:block;font-size:23px;margin:4px 0}.relation-card p{font-size:11px;color:var(--muted);line-height:1.65;margin:7px 0 0}
+    .comparison-state{display:inline-block;margin-left:8px;padding:4px 8px;border-radius:999px;background:#fff8e8;color:#806a38;font-size:10px;font-weight:700;vertical-align:middle}
+    @media(max-width:820px){.source-strip{grid-template-columns:1fr}.compare-row{grid-template-columns:1fr;gap:8px}.relation-plain{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
   <div class="page-shell">
     <header class="topbar">
       <a class="brand" href="../" aria-label="返回 fajia.online 首页">
         <span class="brand-mark">FJ</span>
-        <span>
-          <strong>fajia.online</strong>
-          <small>舆情观察</small>
-        </span>
+        <span><strong>fajia.online</strong><small>舆情观察</small></span>
       </a>
       <div class="top-actions">
         <span id="snapshotStatus" class="status-dot">读取数据中</span>
@@ -27,116 +42,68 @@
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <span class="eyebrow">FAJIA SOCIAL LISTENING</span>
+          <span class="eyebrow">法嘉舆情观察</span>
           <h1>法嘉舆情观察</h1>
-          <p>先看具体发生了什么，再看跨平台结论，最后回到统计结构。</p>
-          <div class="hero-meta">
-            <span id="generatedAt">—</span>
-            <span>静态冻结快照</span>
-            <span>微博 × 豆瓣</span>
-          </div>
+          <p>先看最近具体在谈什么，再看可以谨慎得出的跨平台观察，最后看同口径的结构统计。</p>
+          <div class="hero-meta"><span id="generatedAt">—</span><span>静态冻结快照</span><span>微博 × 豆瓣</span></div>
         </div>
         <div class="hero-note">
           <strong>阅读顺序</strong>
-          <span>Direct Hotspots</span>
-          <i>→</i>
-          <span>Insight Layer</span>
-          <i>→</i>
-          <span>Statistical Overview</span>
+          <span>近期热议</span><i>→</i><span>跨平台观察</span><i>→</i><span>结构统计</span>
         </div>
       </section>
 
+      <div class="source-strip" aria-label="数据来源">
+        <div class="source-card"><strong>微博数据来源</strong><span id="weiboSource">—</span></div>
+        <div class="source-card"><strong>豆瓣数据来源</strong><span id="doubanSource">—</span></div>
+      </div>
+      <div id="windowWarning" class="window-warning"></div>
+
       <section class="section">
         <div class="section-head">
-          <div>
-            <span class="kicker">01 · DIRECT HOTSPOTS</span>
-            <h2>最近具体在谈什么</h2>
-          </div>
-          <div class="segmented" role="tablist">
-            <button class="seg-btn active" data-platform="weibo">微博</button>
-            <button class="seg-btn" data-platform="douban">豆瓣</button>
-          </div>
+          <div><span class="kicker">01 · 近期热议</span><h2>最近具体在谈什么</h2></div>
+          <div class="segmented" role="tablist"><button class="seg-btn active" data-platform="weibo">微博</button><button class="seg-btn" data-platform="douban">豆瓣</button></div>
         </div>
-
         <div id="platformSummary" class="platform-summary"></div>
         <div id="hotspotList" class="hotspot-list"></div>
-        <p class="fine-print">热点 support 为发现/人工合并阶段的“证据支持”，不是平台总提及量。</p>
+        <p class="fine-print">“独立证据”表示经过去重与证据门后的支持数量，不等于平台总提及量；短时重复刷屏不会按原始条数直接累加。</p>
       </section>
 
       <section class="section">
-        <div class="section-head">
-          <div>
-            <span class="kicker">02 · INSIGHT LAYER</span>
-            <h2>跨平台可以得出什么</h2>
-          </div>
-        </div>
+        <div class="section-head"><div><span class="kicker">02 · 跨平台观察</span><h2>目前可以客观地说什么</h2></div></div>
         <div id="insightGrid" class="insight-grid"></div>
       </section>
 
       <section class="section">
-        <div class="section-head">
-          <div>
-            <span class="kicker">03 · STATISTICAL OVERVIEW</span>
-            <h2>结构性统计</h2>
-          </div>
-        </div>
-
+        <div class="section-head"><div><span class="kicker">03 · 结构统计</span><h2>两个平台放在同一类指标里看</h2></div></div>
         <div class="stat-grid">
-          <article class="panel">
-            <div class="panel-title">
-              <span class="platform-pill weibo">微博</span>
-              <h3>不满主要指向</h3>
-            </div>
-            <div id="weiboTargets" class="bar-list"></div>
+          <article class="panel comparison-panel">
+            <div class="panel-title"><h3>不满主要指向</h3><span id="targetCompareState" class="comparison-state"></span></div>
+            <p class="comparison-note">每个类别同时展示微博与豆瓣占比。占比均以各平台“不满/愤怒”语料为分母；只有时间窗对齐时才比较平台高低。</p>
+            <div id="crossTargets" class="compare-list"></div>
           </article>
-
-          <article class="panel">
-            <div class="panel-title">
-              <span class="platform-pill douban">豆瓣</span>
-              <h3>核心实质议题</h3>
-            </div>
-            <div id="doubanTopics" class="bar-list"></div>
+          <article class="panel comparison-panel">
+            <div class="panel-title"><h3>核心实质议题</h3><span id="topicCompareState" class="comparison-state"></span></div>
+            <p class="comparison-note">同一议题下并列展示两个平台的语料占比，避免把微博和豆瓣拆成两个无法直接对照的图。</p>
+            <div id="crossTopics" class="compare-list"></div>
           </article>
-
-          <article class="panel">
-            <div class="panel-title">
-              <span class="platform-pill weibo">微博</span>
-              <h3>关系讨论</h3>
-            </div>
-            <div id="weiboRelation" class="metric-block"></div>
-          </article>
-
-          <article class="panel">
-            <div class="panel-title">
-              <span class="platform-pill douban">豆瓣</span>
-              <h3>关系讨论</h3>
-            </div>
-            <div id="doubanRelation" class="metric-block"></div>
+          <article class="panel comparison-panel">
+            <div class="panel-title"><h3>关系讨论强度：讨论得多，不等于关系负面</h3><span id="relationCompareState" class="comparison-state"></span></div>
+            <p class="comparison-note">这里只回答“关系本身是否成为讨论对象”以及明确关系判断的分布，不把高讨论量改写成关系恶化。</p>
+            <div id="relationPlain" class="relation-plain"></div>
           </article>
         </div>
       </section>
 
       <section class="section methodology">
-        <div class="section-head">
-          <div>
-            <span class="kicker">04 · READING GUARDRAILS</span>
-            <h2>如何读这些结论</h2>
-          </div>
-        </div>
+        <div class="section-head"><div><span class="kicker">04 · 阅读边界</span><h2>这些结论应该怎么读</h2></div></div>
         <div id="guardrails" class="guardrail-grid"></div>
-        <details>
-          <summary>查看数据窗口与方法说明</summary>
-          <div id="methodDetail" class="method-detail"></div>
-        </details>
+        <details><summary>查看数据窗口与方法说明</summary><div id="methodDetail" class="method-detail"></div></details>
       </section>
     </main>
 
-    <footer>
-      <span>fajia.online · monitor</span>
-      <span>Public static dashboard · no API key exposed</span>
-    </footer>
+    <footer><span>fajia.online · 舆情观察</span><span>公开页面仅读取静态快照，不暴露接口密钥</span></footer>
   </div>
-
   <script src="../assets/monitor.js" defer></script>
 </body>
 </html>
