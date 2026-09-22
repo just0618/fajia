@@ -4,24 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>法嘉舆情观察</title>
-  <meta name="description" content="法嘉微博与豆瓣双平台舆情观察">
-  <link rel="stylesheet" href="./styles.css?v=2.2">
+  <meta name="description" content="法嘉公开讨论趋势观察">
+  <link rel="stylesheet" href="./styles.css?v=2.3-preview">
 </head>
-
 <body>
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="/">
-      <span class="brand-dot"></span>
-      <span>fajia.online</span>
-      <span class="brand-divider">/</span>
-      <span class="brand-sub">舆情观察</span>
+      <span class="brand-dot"></span><span>fajia.online</span><span class="brand-divider">/</span><span class="brand-sub">舆情观察</span>
     </a>
-
-    <div class="top-status">
-      <span class="status-dot"></span>
-      双平台观察
-    </div>
+    <div class="top-status"><span class="status-dot"></span><span id="top-status-text">读取中</span></div>
   </div>
 </header>
 
@@ -30,213 +22,72 @@
     <div class="hero-copy">
       <div class="eyebrow">FAJIA SOCIAL LISTENING</div>
       <h1>法嘉舆情观察</h1>
-      <p>
-        从微博与豆瓣公开讨论中提取近期议题，
-        聚合相近话题，并观察主要不满及其指向。
-      </p>
+      <p>整理微博等公开讨论中的近期话题、正向反馈、负向反馈与来源差异。页面只展示当前数据真正支持的结论；暂无当前数据的来源会明确标注。</p>
     </div>
-
     <div class="hero-meta">
-      <div class="meta-block">
-        <span>当前数据窗口</span>
-        <strong id="overall-window">读取中…</strong>
-      </div>
-
-      
+      <div class="meta-block"><span>当前状态</span><strong id="publish-status">读取中…</strong></div>
+      <div class="meta-block"><span>数据范围</span><strong id="overall-window">读取中…</strong></div>
+      <div class="meta-block"><span>最近更新</span><strong id="generated-at">读取中…</strong></div>
     </div>
   </section>
 
-
-  <section class="section">
-    <div class="section-head">
-      <div>
-        <div class="section-kicker">TOPICS</div>
-        <h2>最近谈什么</h2>
-      </div>
-
-      
-    </div>
-
-    <div class="platform-grid">
-      <article class="platform-card">
-        <div class="platform-head">
-          <div>
-            <span class="platform-badge weibo">微博</span>
-            <h3>微博主要讨论</h3>
-          </div>
-          <div id="weibo-topic-stat" class="platform-stat"></div>
-        </div>
-
-        <div class="source-box">
-          <strong>分析来源</strong>
-          <span>
-            法嘉致富超话及指定官方/后援会账号相关微博内容与跟踪评论区
-          </span>
-          <span id="weibo-window" class="source-window"></span>
-        </div>
-
-        <div id="weibo-topics" class="rank-list"></div>
-      </article>
-
-
-      <article class="platform-card">
-        <div class="platform-head">
-          <div>
-            <span class="platform-badge douban">豆瓣</span>
-            <h3>豆瓣主要讨论</h3>
-          </div>
-          <div id="douban-topic-stat" class="platform-stat"></div>
-        </div>
-
-        <div class="source-box">
-          <strong>分析来源</strong>
-          <span>法嘉相关豆瓣闲聊楼</span>
-          <span id="douban-window" class="source-window"></span>
-        </div>
-
-        <div id="douban-topics" class="rank-list"></div>
-      </article>
-    </div>
+  <section class="section" id="recent-section">
+    <div class="section-head"><div><div class="section-kicker">TOPICS</div><h2>最近在聊什么</h2></div><p class="section-note" id="recent-note"></p></div>
+    <div id="recent-topics" class="topic-grid"></div>
   </section>
 
-
   <section class="section">
-    <div class="section-head">
-      <div>
-        <div class="section-kicker pink">DISSATISFACTIONS</div>
-        <h2>主要不满</h2>
-      </div>
-
-      <p class="section-note">
-        既看负面讨论量，也区分议题内部的负面浓度。
-      </p>
-    </div>
-
-    <div class="platform-grid">
-      <article class="platform-card">
-        <div class="platform-head compact">
-          <div>
-            <span class="platform-badge weibo">微博</span>
-            <h3>微博主要不满</h3>
-          </div>
-        </div>
-        <div id="weibo-dissatisfaction" class="dissatisfaction-list"></div>
-      </article>
-
-      <article class="platform-card">
-        <div class="platform-head compact">
-          <div>
-            <span class="platform-badge douban">豆瓣</span>
-            <h3>豆瓣主要不满</h3>
-          </div>
-        </div>
-        <div id="douban-dissatisfaction" class="dissatisfaction-list"></div>
-      </article>
-    </div>
+    <div class="section-head"><div><div class="section-kicker positive">POSITIVE</div><h2>大家夸了什么</h2></div><p class="section-note" id="positive-note"></p></div>
+    <div id="positive-themes" class="theme-grid"></div>
   </section>
 
+  <section class="section">
+    <div class="section-head"><div><div class="section-kicker pink">NEGATIVE</div><h2>主要负面</h2></div><p class="section-note" id="negative-note">汇总本期较明显的负向反馈、担忧、争议与批评。</p></div>
+    <div id="negative-themes" class="theme-grid"></div>
+  </section>
 
   <section class="section">
-    <div class="section-head">
-      <div>
-        <div class="section-kicker gold">TARGETS</div>
-        <h2>不满主要指向</h2>
-      </div>
-
-      <p class="section-note">
-        同一条讨论可能同时涉及多个对象，因此各项占比不要求合计为 100%。
-      </p>
-    </div>
-
-    <article class="target-comparison-card">
-      <div class="target-comparison-head">
-        <div>
-          <strong>负面讨论主要集中在哪里</strong>
-          <span>微博与豆瓣分别计算</span>
-        </div>
-
-        <div class="target-legend">
-          <span><i class="legend-dot weibo-dot"></i>微博</span>
-          <span><i class="legend-dot douban-dot"></i>豆瓣</span>
-        </div>
-      </div>
-
-      <div id="target-comparison" class="target-comparison-list"></div>
+    <div class="section-head"><div><div class="section-kicker gold">TARGETS</div><h2>负面主要涉及什么</h2></div><p class="section-note">一条负面讨论可能同时涉及多个对象，因此各对象条数之和可能高于负面讨论总数。</p></div>
+    <article class="panel">
+      <div id="negative-target-warning"></div>
+      <div id="negative-targets" class="target-list"></div>
     </article>
   </section>
 
-
   <section class="section">
-    <div class="section-head">
-      <div>
-        <div class="section-kicker">CROSS-PLATFORM INSIGHTS</div>
-        <h2>平台差异</h2>
-      </div>
-
-      <p class="section-note">
-        将微博与豆瓣放在一起看，区分直接观察、归纳判断与待验证假设。
-      </p>
-    </div>
-
-    <div id="platform-insights" class="insight-grid"></div>
+    <div class="section-head"><div><div class="section-kicker">SOURCES</div><h2>不同来源在聊什么</h2></div><p class="section-note">微博超话、评论区与转发区分开呈现；低样本或事件集中来源不外推为整个来源画像。</p></div>
+    <div id="source-discussion" class="source-grid"></div>
   </section>
 
+  <section class="section">
+    <div class="section-head"><div><div class="section-kicker">CHANGE</div><h2>讨论如何变化</h2></div></div>
+    <article id="discussion-change" class="state-card"></article>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><div class="section-kicker">CROSS-PLATFORM</div><h2>微博 vs 豆瓣</h2></div></div>
+    <article id="platform-comparison" class="state-card"></article>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><div class="section-kicker">HISTORY</div><h2>查看历史</h2></div></div>
+    <article id="history" class="state-card"></article>
+  </section>
 
   <section class="section method-section">
     <details class="method-card">
-      <summary>
-        <span>
-          <span class="section-kicker">METHODOLOGY</span>
-          数据来源与阅读说明
-        </span>
-        <span class="summary-plus">＋</span>
-      </summary>
-
+      <summary><span><span class="section-kicker">METHODOLOGY</span>数据来源与阅读说明</span><span class="summary-plus">＋</span></summary>
       <div class="method-body">
-        <div>
-          <h4>微博数据范围</h4>
-          <p>
-            当前 source registry 包括法嘉致富超话、法宣阁阿、
-            贺嘉述、贺嘉述微博小号、小发夹的首饰盒、
-            法嘉致富-金币事务所，以及系统正在跟踪的指定微博评论区。
-          </p>
-        </div>
-
-        <div>
-          <h4>豆瓣数据范围</h4>
-          <p>
-            采集法嘉相关连续闲聊楼；新楼出现后自动切换，
-            旧楼进入短期扫尾后归档。
-          </p>
-        </div>
-
-        <div>
-          <h4>如何阅读“条讨论”</h4>
-          <p>
-            页面中的数量表示经过去重、信息价值与证据独立性处理后，
-            参与该 Family 的有效讨论证据量，
-            不等同于独立用户数，也不等同于平台原始评论总量。
-          </p>
-        </div>
-
-        <div>
-          <h4>跨平台比较</h4>
-          <p>
-            微博与豆瓣的采集结构、活跃规模和讨论机制不同，
-            因而主要比较“讨论重点”和“不满结构”，
-            不直接把绝对数量解释为平台热度高低。
-          </p>
-        </div>
+        <div><h4>当前来源</h4><p>微博按超话、评论区、转发区分别统计。豆瓣只有在当前窗口存在新语义样本时才参与当前页比较。</p></div>
+        <div><h4>“条讨论”是什么意思</h4><p>页面中的数量是经过去重、信息价值和证据独立性处理后的讨论支持量，不等同于独立用户数，也不等同于平台原始评论总量。</p></div>
+        <div><h4>关于负面指向</h4><p>一条讨论可以同时涉及多个对象；尚不能稳定归因的 REVIEW 项不会被伪装成正常对象条形图。</p></div>
+        <div><h4>关于跨平台比较</h4><p>只有微博和豆瓣在同一当前窗口都具备足够新样本时，才生成跨平台总体差异结论。</p></div>
       </div>
     </details>
   </section>
 </main>
 
-<footer>
-  <div>法嘉舆情观察 · fajia.online</div>
-  <div>仅用于公开讨论趋势整理，不代表事实判断。</div>
-</footer>
-
-<script src="./app.js?v=2.2"></script>
+<footer><div>法嘉舆情观察 · fajia.online</div><div>仅用于公开讨论趋势整理，不代表事实判断。</div></footer>
+<script src="./app.js?v=2.3-preview"></script>
 </body>
 </html>
