@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>法嘉舆情观察</title>
+  <meta name="description" content="法嘉公开讨论趋势观察">
+  <link rel="stylesheet" href="./styles.css?v=2.4-preview">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/">
+      <span class="brand-dot"></span><span>fajia.online</span><span class="brand-divider">/</span><span class="brand-sub">舆情观察</span>
+    </a>
+    <div class="top-status"><span class="status-dot"></span><span id="top-status-text">读取中</span></div>
+  </div>
+</header>
+
+<main>
+  <section id="history-banner" class="history-banner" hidden></section>
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">FAJIA SOCIAL LISTENING</div>
+      <h1>法嘉舆情观察</h1>
+      <p>整理微博与豆瓣公开讨论中的近期话题、正向反馈、负向反馈与来源差异。页面只展示当前数据真正支持的结论；暂无当前数据的来源会明确标注。</p>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-block"><span>当前状态</span><strong id="publish-status">读取中…</strong></div>
+      <div class="meta-block"><span>数据范围</span><strong id="overall-window">读取中…</strong></div>
+      <div class="meta-block"><span>最近更新</span><strong id="generated-at">读取中…</strong></div>
+    </div>
+  </section>
+
+  <section class="section" id="recent-section">
+    <div class="section-head"><div><div class="section-kicker">TOPICS</div><h2>最近在聊什么</h2></div><p class="section-note" id="recent-note"></p></div>
+    <div id="recent-platforms" class="platform-section-grid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><div class="section-kicker positive">POSITIVE</div><h2>大家夸了什么</h2></div><p class="section-note" id="positive-note"></p></div>
+    <div id="positive-platforms" class="platform-section-grid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><div class="section-kicker pink">NEGATIVE</div><h2>主要负面</h2></div><p class="section-note" id="negative-note">汇总本期较明显的负向反馈、担忧、争议与批评。</p></div>
+    <div id="negative-platforms" class="platform-section-grid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><div class="section-kicker gold">TARGETS</div><h2>负面主要涉及什么</h2></div><p class="section-note">一条负面讨论可能同时涉及多个对象，因此各对象条数之和可能高于负面讨论总数。</p></div>
+    <article class="panel">
+      <div id="negative-target-warning"></div>
+      <div id="negative-targets" class="target-list"></div>
+    </article>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><div class="section-kicker">SOURCES</div><h2>不同来源在聊什么</h2></div><p class="section-note">微博超话、评论区与转发区分开呈现；低样本或事件集中来源不外推为整个来源画像。</p></div>
+    <div id="source-discussion" class="source-grid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><div class="section-kicker">CROSS-PLATFORM</div><h2>微博 vs 豆瓣</h2></div></div>
+    <div id="platform-comparison" class="platform-grid"></div>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><div class="section-kicker">CHANGE</div><h2>讨论如何变化</h2></div></div>
+    <article id="discussion-change" class="state-card"></article>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><div><div class="section-kicker">HISTORY</div><h2>查看历史</h2></div></div>
+    <div id="history" class="history-panel"></div>
+  </section>
+
+  <section class="section method-section">
+    <details class="method-card">
+      <summary><span><span class="section-kicker">METHODOLOGY</span>数据来源与阅读说明</span><span class="summary-plus">＋</span></summary>
+      <div class="method-body">
+        <div><h4>当前来源</h4><p>微博按超话、评论区、转发区分别统计。豆瓣只有在当前窗口存在新语义样本时才参与当前页比较。</p></div>
+        <div><h4>“条讨论”是什么意思</h4><p>页面中的数量是经过去重、信息价值和证据独立性处理后的讨论支持量，不等同于独立用户数，也不等同于平台原始评论总量。</p></div>
+        <div><h4>关于负面指向</h4><p>一条讨论可以同时涉及多个对象；尚不能稳定归因的 REVIEW 项不会被伪装成正常对象条形图。</p></div>
+        <div><h4>关于跨平台比较</h4><p>只有微博和豆瓣在同一当前窗口都具备足够新样本时，才生成跨平台总体差异结论。</p></div>
+      </div>
+    </details>
+  </section>
+</main>
+
+<footer><div>法嘉舆情观察 · fajia.online</div><div>仅用于公开讨论趋势整理，不代表事实判断。</div></footer>
+<script src="./app.js?v=2.4-preview"></script>
+</body>
+</html>
