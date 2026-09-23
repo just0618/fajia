@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>法嘉舆情观察</title>
   <meta name="description" content="法嘉公开讨论趋势观察">
-  <link rel="stylesheet" href="./styles.css?v=2.3-preview">
+  <link rel="stylesheet" href="./styles.css?v=2.3">
 </head>
 <body>
 <header class="topbar">
@@ -18,11 +18,12 @@
 </header>
 
 <main>
+  <section id="history-banner" class="history-banner" hidden></section>
   <section class="hero">
     <div class="hero-copy">
       <div class="eyebrow">FAJIA SOCIAL LISTENING</div>
       <h1>法嘉舆情观察</h1>
-      <p>整理微博等公开讨论中的近期话题、正向反馈、负向反馈与来源差异。页面只展示当前数据真正支持的结论；暂无当前数据的来源会明确标注。</p>
+      <p>整理微博与豆瓣公开讨论中的近期话题、正向反馈、负向反馈与来源差异。页面只展示当前数据真正支持的结论；暂无当前数据的来源会明确标注。</p>
     </div>
     <div class="hero-meta">
       <div class="meta-block"><span>当前状态</span><strong id="publish-status">读取中…</strong></div>
@@ -66,12 +67,12 @@
 
   <section class="section">
     <div class="section-head"><div><div class="section-kicker">CROSS-PLATFORM</div><h2>微博 vs 豆瓣</h2></div></div>
-    <article id="platform-comparison" class="state-card"></article>
+    <div id="platform-comparison" class="platform-grid"></div>
   </section>
 
   <section class="section">
     <div class="section-head"><div><div class="section-kicker">HISTORY</div><h2>查看历史</h2></div></div>
-    <article id="history" class="state-card"></article>
+    <div id="history" class="history-panel"></div>
   </section>
 
   <section class="section method-section">
@@ -88,6 +89,6 @@
 </main>
 
 <footer><div>法嘉舆情观察 · fajia.online</div><div>仅用于公开讨论趋势整理，不代表事实判断。</div></footer>
-<script src="./app.js?v=2.3-preview"></script>
+<script src="./app.js?v=2.3"></script>
 </body>
 </html>
