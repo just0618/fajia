@@ -471,7 +471,7 @@ function renderPositive(data) {
           return platformSection(
             label,
             tone,
-            p.status || "READY",
+            b.status || p.status || "READY",
             "",
             body
           );
@@ -559,7 +559,7 @@ function renderNegative(data) {
           return platformSection(
             label,
             tone,
-            n.status || "READY",
+            b.status || n.status || "READY",
             "",
             body
           );
@@ -631,9 +631,47 @@ function renderTargets(data) {
     .innerHTML =
     items.length
       ? items.map(x => {
-          const pc =
-            x.platform_counts
-            || null;
+          const formalSplit =
+              t.platform_split_status
+              === "PASS";
+
+            const splitRows =
+              t.by_platform || {};
+
+            const findPlatformCount =
+              platform => {
+                const row =
+                  arr(
+                    splitRows[platform]
+                  ).find(
+                    y =>
+                      y.title === x.title
+                      && y.category === x.category
+                  );
+
+                return num(
+                  row
+                    ? row.support
+                    : 0
+                );
+              };
+
+            const pc =
+              x.platform_counts
+              || (
+                formalSplit
+                  ? {
+                      weibo:
+                        findPlatformCount(
+                          "weibo"
+                        ),
+                      douban:
+                        findPlatformCount(
+                          "douban"
+                        )
+                    }
+                  : null
+              );
 
           const w =
             pc
@@ -797,8 +835,9 @@ function sourceCard(s) {
               <div class="source-topic-row">
                 <span>
                   ${esc(
-                    x.display_title
-                    || x.ontology_label
+                    x.title
+                      || x.display_title
+                      || x.ontology_label
                     || x.topic_code
                     || ""
                   )}
@@ -850,8 +889,9 @@ function aggregateTopics(
     arr(s.topic_support)
       .forEach(t => {
         const name =
-          t.display_title
-          || t.ontology_label
+          t.title
+            || t.display_title
+            || t.ontology_label
           || t.topic_code
           || "其他";
 
@@ -940,7 +980,9 @@ function platformCard(
 function insightCard(x) {
   const level =
     String(
-      x.level || "DIRECT"
+      x.level
+        || x.type
+        || "DIRECT"
     ).toUpperCase();
 
   return `
@@ -956,7 +998,9 @@ function insightCard(x) {
       </h3>
 
       <p>
-        ${esc(x.statement || "")}
+        ${esc(x.statement
+          || x.summary
+          || "")}
       </p>
 
       <details>
@@ -1027,14 +1071,62 @@ function renderPlatformComparison(
   const box =
     $("#platform-comparison");
 
+    const formalTopTopics =
+      pc.top_topics || {};
+
+    const weiboFormal =
+      (
+        formalTopTopics.weibo
+        && !Array.isArray(
+          formalTopTopics.weibo
+        )
+      )
+        ? formalTopTopics.weibo
+        : {};
+
+    const doubanFormal =
+      (
+        formalTopTopics.douban
+        && !Array.isArray(
+          formalTopTopics.douban
+        )
+      )
+        ? formalTopTopics.douban
+        : {};
+
+    const sourceRowCount =
+      list =>
+        list.reduce(
+          (sum, s) =>
+            sum + num(s.rows),
+          0
+        );
+
+    const weiboRows =
+      num(
+        pc.weibo_current_rows
+        || weiboFormal.rows
+        || sourceRowCount(
+          weiboSources
+        )
+      );
+
+    const doubanRows =
+      num(
+        pc.douban_current_rows
+        || doubanFormal.rows
+        || sourceRowCount(
+          doubanSources
+        )
+      );
+
   if (
-    pc.status !== "READY"
-    || !num(
-      pc.weibo_current_rows
-    )
-    || !num(
-      pc.douban_current_rows
-    )
+    !(
+        pc.status === "READY"
+        || pc.status === "PARTIAL"
+      )
+    || !weiboRows
+    || !doubanRows
   ) {
     box.innerHTML = `
       <article class="state-card platform-comparison-state">
@@ -1083,14 +1175,14 @@ function renderPlatformComparison(
     <div class="platform-topic-comparison">
       ${platformCard(
         "微博",
-        pc.weibo_current_rows,
+        weiboRows,
         weiboTopics,
         "weibo"
       )}
 
       ${platformCard(
         "豆瓣",
-        pc.douban_current_rows,
+        doubanRows,
         doubanTopics,
         "douban"
       )}
