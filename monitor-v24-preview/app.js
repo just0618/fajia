@@ -339,6 +339,123 @@ function recentTopicCards(items) {
   `;
 }
 
+
+const SOURCE_PUBLIC_LABELS = {
+  weibo_chaohua: "超话",
+  weibo_comment: "评论区",
+  weibo_repost: "转发区",
+  douban_chat: "闲聊楼"
+};
+
+function buildPlatformSourceNote(
+  data,
+  platform,
+  dataWindow
+) {
+  const sources =
+    arr(
+      data?.source_discussion?.sources
+    ).filter(
+      s => {
+        const family =
+          String(
+            s.source_family || ""
+          );
+
+        return platform === "weibo"
+          ? family.startsWith("weibo_")
+          : family.startsWith("douban_");
+      }
+    );
+
+  const active =
+    sources.filter(
+      s =>
+        num(s.rows) > 0
+        && (
+          s.coverage?.status
+          !== "NO_CURRENT_DATA"
+        )
+    );
+
+  const unavailable =
+    sources.filter(
+      s =>
+        num(s.rows) <= 0
+        || (
+          s.coverage?.status
+          === "NO_CURRENT_DATA"
+        )
+    );
+
+  const labels =
+    active.map(
+      s =>
+        SOURCE_PUBLIC_LABELS[
+          s.source_family
+        ]
+        || s.title
+        || s.source_family
+    );
+
+  const unavailableLabels =
+    unavailable.map(
+      s =>
+        SOURCE_PUBLIC_LABELS[
+          s.source_family
+        ]
+        || s.title
+        || s.source_family
+    );
+
+  const rows =
+    active.reduce(
+      (sum, s) =>
+        sum + num(s.rows),
+      0
+    );
+
+  const parts = [];
+
+  if (labels.length) {
+    parts.push(
+      `数据来源：${labels.join(" · ")}`
+    );
+  } else {
+    parts.push(
+      "当前暂无可用来源"
+    );
+  }
+
+  parts.push(
+    `当前纳入 ${rows} 条讨论`
+  );
+
+  if (
+    unavailableLabels.length
+  ) {
+    parts.push(
+      `${
+        unavailableLabels.join("、")
+      }当前窗口暂无可用数据`
+    );
+  }
+
+  if (dataWindow) {
+    parts.push(
+      `数据窗口 · ${
+        fmtWindow(dataWindow)
+      }`
+    );
+  }
+
+  return (
+    parts.join("；")
+    + "。"
+  );
+}
+
+
 function renderRecent(data) {
   const r =
     data.recent_topics || {};
@@ -350,7 +467,7 @@ function renderRecent(data) {
 
   if (r.by_platform) {
     $("#recent-note").textContent =
-      "微博与豆瓣按各自最近一次可用 Hotspot 快照分别呈现；状态标签会标注数据新鲜度。";
+      "样本量表示当前采集范围内纳入分析的讨论数量，不代表平台整体讨论规模。";
 
     const rows = [
       ["weibo", "微博", "weibo"],
@@ -364,24 +481,21 @@ function renderRecent(data) {
             r.by_platform[key]
             || {};
 
-          let notice = "";
+          let notice =
+              buildPlatformSourceNote(
+                data,
+                key,
+                b.data_window
+              );
 
-          if (
-            b.status
-            === "STALE_FOR_LIVE"
-          ) {
-            notice =
-              "当前使用较旧快照，不作为实时结论。";
-          } else if (
-            b.data_window
-          ) {
-            notice =
-              `数据窗口 · ${
-                fmtWindow(
-                  b.data_window
-                )
-              }`;
-          }
+            if (
+              b.status
+              === "STALE_FOR_LIVE"
+            ) {
+              notice =
+                "当前使用较旧快照，不作为实时结论。 "
+                + notice;
+            }
 
           return platformSection(
             label,
