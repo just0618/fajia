@@ -1,12 +1,13 @@
 {
   "version": "FAJIA_MONITOR_FRONTEND_PAYLOAD_V2.2",
   "public_projection_version": "FAJIA_MONITOR_PUBLIC_PAYLOAD_V2.2",
-  "generated_at": "2026-10-10T00:12:53+08:00",
+  "generated_at": "2026-10-10T01:25:25+08:00",
   "meta": {
-    "current_72h_rows": 6573,
+    "current_72h_rows": 6541,
     "current_72h_source_counts": {
-      "weibo_chaohua": 328,
-      "douban_chat": 6245
+      "weibo_chaohua": 340,
+      "douban_chat": 6184,
+      "weibo_repost": 17
     }
   },
   "publish_readiness": {
@@ -21,36 +22,63 @@
     "title": "最近在聊什么",
     "status": "READY",
     "data_window": {
-      "window_start": "2026-10-07T00:01:25+08:00",
-      "window_end": "2026-10-10T00:01:25+08:00"
+      "window_start": "2026-10-07T01:06:34+08:00",
+      "window_end": "2026-10-10T01:06:34+08:00"
     },
     "publishable": true,
     "items": [
       {
         "rank": 1,
-        "family_title": "粉丝对法嘉二人平安与身心状态的担忧及报平安期待",
-        "title": "粉丝担忧贺嘉述及相关账号平安并盼报平安直播",
-        "summary": "粉丝在评论中表达对@法宣阁阿、@贺嘉述、@shu_coming的思念，担忧他们是否平安，并期待出现、报平安或开启直播。",
+        "family_title": "散点式生日祝福与平安祈愿",
+        "title": "生日祝福与平安期待",
+        "summary": "多条评论向“云云/宝宝”表达生日快乐，其中一条同时祝愿健康平安。",
         "evidence_tier": "REVIEW_WORTHY",
-        "independent_support_count": 8,
+        "independent_support_count": 5,
         "reaction_heat_count": 0
       },
       {
         "rank": 2,
-        "family_title": "粉丝持续陪伴支持与共度难关的情感表达",
-        "title": "小发夹盼继续陪伴法嘉并升级互动",
-        "summary": "粉丝以“小发夹”自称，询问是否仍有人陪伴法嘉/法法嘉嘉，表达继续陪伴、互相照顾，并提出换气泡、评论升级等互动诉求；个别粉丝表示情绪低落、难以坚持。",
+        "family_title": "粉丝留存焦虑与关系稳定性寄托",
+        "title": "小发夹讨论是否继续陪伴法嘉，有人动摇求劝",
+        "summary": "粉丝互相确认是否还在，有人表示坚持不下去并求劝，也有人承诺陪伴，并讨论评论升级、更换法嘉属性气泡等超话操作。",
         "evidence_tier": "REVIEW_WORTHY",
-        "independent_support_count": 11,
+        "independent_support_count": 12,
         "reaction_heat_count": 0
       },
       {
         "rank": 3,
-        "family_title": "贺嘉述生日相关祝福、应援筹备与氛围讨论",
-        "title": "贺嘉述1010生日祝福与应援氛围讨论",
-        "summary": "粉丝围绕贺嘉述10月10日生日发布祝福、文案筹备和周年确认讨论，同时担忧生日氛围是否冷清。",
+        "family_title": "空窗期催更与露面期待",
+        "title": "空窗期粉丝想念并催促法宣阁与贺嘉述现身或直播",
+        "summary": "多条评论表达“我好想你们”“再等等”“盼路上能够与你相逢”，也有评论以提问方式询问“什么时候来接孩子”，共同反映粉丝在等待期想念两人，并期待尽快更新、回归或相见。",
         "evidence_tier": "REVIEW_WORTHY",
-        "independent_support_count": 20,
+        "independent_support_count": 12,
+        "reaction_heat_count": 0
+      },
+      {
+        "rank": 4,
+        "family_title": "贺嘉述生日应援执行与资源协调",
+        "title": "贺嘉述生日祝福刷屏与零点应援提醒",
+        "summary": "粉丝集中向贺嘉述/小贺/小述/云云等送上农历生日祝福，祝愿健康平安、长期陪伴；部分粉丝提醒零点发布或准备应援内容。",
+        "evidence_tier": "REVIEW_WORTHY",
+        "independent_support_count": 30,
+        "reaction_heat_count": 0
+      },
+      {
+        "rank": 5,
+        "family_title": "法嘉纪念日节点自发庆祝",
+        "title": "法嘉粉丝庆祝喜欢100天、超话80天、相遇111天等节点",
+        "summary": "粉丝记录“每天一句法嘉99”并庆祝喜欢法法嘉嘉满100天，同时纪念法嘉致富超话80天、相遇111天等节点。",
+        "evidence_tier": "REVIEW_WORTHY",
+        "independent_support_count": 5,
+        "reaction_heat_count": 0
+      },
+      {
+        "rank": 6,
+        "family_title": "贺嘉述生日与周年节点重叠疑虑",
+        "title": "贺嘉述生日与周年节点是否重叠",
+        "summary": "粉丝询问10月10日贺嘉述生日当天是否也是周年，并担心周年话题分散生日关注。",
+        "evidence_tier": "EMERGING_CANDIDATE",
+        "independent_support_count": 2,
         "reaction_heat_count": 0
       }
     ]
@@ -84,7 +112,7 @@
       {
         "title": "后援会与组织管理受到质疑",
         "category": "组织管理",
-        "support": 454
+        "support": 459
       },
       {
         "title": "部分粉丝行为引发不满",
@@ -104,7 +132,7 @@
       {
         "title": "应援方案与执行方式受到讨论",
         "category": "应援执行",
-        "support": 20
+        "support": 22
       }
     ]
   },
@@ -116,7 +144,7 @@
       {
         "title": "公司 / 运营",
         "category": "组织运营",
-        "support": 339
+        "support": 344
       },
       {
         "title": "部分粉丝行为",
@@ -140,19 +168,19 @@
       }
     ],
     "unresolved_review": {
-      "count": 272,
-      "notice": "当前有 272 条负面讨论尚未能稳定归因到具体对象，因此未计入下方对象条形图。"
+      "count": 274,
+      "notice": "当前有 274 条负面讨论尚未能稳定归因到具体对象，因此未计入下方对象条形图。"
     }
   },
   "source_discussion": {
     "title": "不同来源在聊什么",
     "status": "READY",
-    "current_rows": 6573,
+    "current_rows": 6541,
     "sources": [
       {
         "source_family": "weibo_chaohua",
         "title": "微博超话",
-        "rows": 328,
+        "rows": 340,
         "coverage": {
           "status": "READY",
           "notice": "当前样本量与覆盖范围可用于来源级讨论概览。"
@@ -160,11 +188,11 @@
         "topic_support": [
           {
             "display_title": "日常闲聊",
-            "support_rows": 122
+            "support_rows": 126
           },
           {
             "display_title": "粉圈生态",
-            "support_rows": 113
+            "support_rows": 115
           },
           {
             "display_title": "创作安利",
@@ -172,19 +200,19 @@
           },
           {
             "display_title": "单人物料",
-            "support_rows": 36
+            "support_rows": 42
           },
           {
             "display_title": "双人互动",
-            "support_rows": 29
+            "support_rows": 30
           },
           {
             "display_title": "双人物料",
-            "support_rows": 25
+            "support_rows": 26
           },
           {
             "display_title": "行程动态",
-            "support_rows": 21
+            "support_rows": 22
           },
           {
             "display_title": "线下活动",
@@ -196,7 +224,7 @@
           },
           {
             "display_title": "直播",
-            "support_rows": 11
+            "support_rows": 13
           },
           {
             "display_title": "舆情争议",
@@ -230,18 +258,31 @@
       {
         "source_family": "weibo_repost",
         "title": "微博转发区",
-        "rows": 0,
+        "rows": 17,
         "coverage": {
-          "status": "NO_CURRENT_DATA",
-          "notice": "当前72小时暂无新样本。"
+          "status": "EVENT_CONCENTRATED",
+          "notice": "当前样本高度集中于单一事件/帖子；以下内容仅代表该事件下的反馈，不代表整个来源的总体讨论。"
         },
-        "notice": "当前72小时暂无新语义样本。",
-        "topic_support": []
+        "notice": "当前样本主要集中于特定事件反馈，不代表该来源整体讨论画像。",
+        "topic_support": [
+          {
+            "display_title": "日常闲聊",
+            "support_rows": 14
+          },
+          {
+            "display_title": "其他",
+            "support_rows": 2
+          },
+          {
+            "display_title": "单人物料",
+            "support_rows": 1
+          }
+        ]
       },
       {
         "source_family": "douban_chat",
         "title": "豆瓣闲聊楼",
-        "rows": 6245,
+        "rows": 6184,
         "coverage": {
           "status": "READY",
           "notice": "当前样本量与覆盖范围可用于来源级讨论概览。"
@@ -249,63 +290,63 @@
         "topic_support": [
           {
             "display_title": "粉圈生态",
-            "support_rows": 1977
+            "support_rows": 1971
           },
           {
             "display_title": "日常闲聊",
-            "support_rows": 1727
+            "support_rows": 1671
           },
           {
             "display_title": "舆情争议",
-            "support_rows": 1459
+            "support_rows": 1468
           },
           {
             "display_title": "公司运营",
-            "support_rows": 695
+            "support_rows": 701
           },
           {
             "display_title": "双人互动",
-            "support_rows": 563
+            "support_rows": 554
           },
           {
             "display_title": "单人物料",
-            "support_rows": 560
+            "support_rows": 537
           },
           {
             "display_title": "其他",
-            "support_rows": 435
+            "support_rows": 436
           },
           {
             "display_title": "行程动态",
-            "support_rows": 404
+            "support_rows": 399
           },
           {
             "display_title": "直播",
-            "support_rows": 395
+            "support_rows": 396
           },
           {
             "display_title": "双人物料",
-            "support_rows": 334
+            "support_rows": 338
           },
           {
             "display_title": "线下活动",
-            "support_rows": 283
+            "support_rows": 288
           },
           {
             "display_title": "考古",
-            "support_rows": 143
+            "support_rows": 140
           },
           {
             "display_title": "商务合作",
-            "support_rows": 100
+            "support_rows": 97
           },
           {
             "display_title": "影视作品",
-            "support_rows": 76
+            "support_rows": 73
           },
           {
             "display_title": "创作安利",
-            "support_rows": 71
+            "support_rows": 68
           },
           {
             "display_title": "数据成绩",
@@ -325,8 +366,8 @@
   },
   "platform_comparison": {
     "status": "READY",
-    "weibo_current_rows": 328,
-    "douban_current_rows": 6245,
+    "weibo_current_rows": 357,
+    "douban_current_rows": 6184,
     "comparison_generated": true
   },
   "history": {
