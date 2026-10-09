@@ -1,0 +1,314 @@
+/* =========================================================
+   FAJIA Monitor V2.4 — isolated staging enhancements
+   ========================================================= */
+
+.v24-staging-banner{
+  max-width:1500px;
+  margin:20px auto 0;
+  padding:14px 18px;
+  border:1px solid #f0d98a;
+  border-radius:16px;
+  background:#fff9e8;
+  color:#735b12;
+  font-size:12px;
+  line-height:1.7
+}
+
+.v24-overview{
+  margin-top:26px
+}
+
+.v24-overview-head{
+  display:flex;
+  justify-content:space-between;
+  gap:24px;
+  align-items:flex-end;
+  margin-bottom:14px
+}
+
+.v24-overview-head h2{
+  margin:0;
+  font-size:20px;
+  letter-spacing:-.02em
+}
+
+.v24-overview-head p{
+  margin:0;
+  color:var(--muted);
+  font-size:11px
+}
+
+.v24-overview-grid{
+  display:grid;
+  grid-template-columns:
+    1.15fr 1fr 1fr;
+  gap:14px
+}
+
+.v24-overview-card{
+  padding:20px;
+  border:1px solid #e3e4e9;
+  border-radius:22px;
+  background:rgba(255,255,255,.96);
+  box-shadow:var(--shadow)
+}
+
+.v24-overview-card.total{
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      #fff6f8
+    )
+}
+
+.v24-overview-card.weibo{
+  background:
+    linear-gradient(
+      180deg,
+      #fff,
+      #fff9fa
+    )
+}
+
+.v24-overview-card.douban{
+  background:
+    linear-gradient(
+      180deg,
+      #fff,
+      #f7fff9
+    )
+}
+
+.v24-overview-label{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800
+}
+
+.v24-overview-value{
+  margin-top:8px;
+  font-size:34px;
+  font-weight:950;
+  letter-spacing:-.045em
+}
+
+.v24-overview-value span{
+  margin-left:4px;
+  color:var(--muted);
+  font-size:11px;
+  font-weight:650;
+  letter-spacing:0
+}
+
+.v24-overview-meta{
+  margin-top:8px;
+  color:#858b95;
+  font-size:10px;
+  line-height:1.55
+}
+
+
+/* ---------------------------------------------------------
+   Mobile platform tabs
+   --------------------------------------------------------- */
+
+.v24-mobile-tabs{
+  display:none
+}
+
+.platform-section-status.pending{
+  background:#f2f3f6;
+  color:#6f7580
+}
+
+.v24-pending-card{
+  padding:24px;
+  border:1px dashed #d9dce2;
+  border-radius:17px;
+  background:#fafafd;
+  color:#747a84;
+  font-size:12px;
+  line-height:1.75
+}
+
+
+/* ---------------------------------------------------------
+   Cross-platform insight buckets
+   --------------------------------------------------------- */
+
+body.v24-enhanced
+#platform-comparison
+> .comparison-subhead,
+
+body.v24-enhanced
+#platform-comparison
+> .insight-grid,
+
+body.v24-enhanced
+#platform-comparison
+> .empty-card{
+  display:none
+}
+
+.v24-insight-shell{
+  margin-top:34px
+}
+
+.v24-insight-shell-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:24px;
+  margin-bottom:18px
+}
+
+.v24-insight-shell-head h3{
+  margin:0;
+  font-size:25px;
+  letter-spacing:-.025em
+}
+
+.v24-insight-shell-head p{
+  max-width:610px;
+  margin:0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.7;
+  text-align:right
+}
+
+.v24-insight-buckets{
+  display:grid;
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+  gap:16px
+}
+
+.v24-insight-bucket{
+  padding:20px;
+  border:1px solid #e3e4e9;
+  border-radius:22px;
+  background:rgba(255,255,255,.95);
+  box-shadow:var(--shadow)
+}
+
+.v24-insight-bucket-head{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  margin-bottom:14px
+}
+
+.v24-insight-bucket-title{
+  font-size:17px;
+  font-weight:900
+}
+
+.v24-insight-bucket-tag{
+  padding:4px 8px;
+  border-radius:999px;
+  background:#f3f4f6;
+  color:#747a84;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.05em
+}
+
+.v24-insight-item{
+  padding:13px 0;
+  border-top:1px solid var(--line)
+}
+
+.v24-insight-item:first-of-type{
+  border-top:0
+}
+
+.v24-insight-item strong{
+  display:block;
+  margin-bottom:6px;
+  font-size:13px
+}
+
+.v24-insight-item p{
+  margin:0;
+  color:#606773;
+  font-size:12px;
+  line-height:1.7
+}
+
+.v24-insight-empty{
+  color:#8a9099;
+  font-size:12px;
+  line-height:1.7
+}
+
+.v24-insight-guardrail{
+  margin-top:16px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:#fafafd;
+  color:#747a84;
+  font-size:11px;
+  line-height:1.7
+}
+
+
+@media(max-width:900px){
+
+  .v24-overview-grid{
+    grid-template-columns:1fr
+  }
+
+  .v24-overview-head,
+  .v24-insight-shell-head{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:7px
+  }
+
+  .v24-insight-shell-head p{
+    text-align:left
+  }
+
+  .v24-mobile-tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:5px;
+    margin-bottom:12px;
+    padding:4px;
+    border:1px solid var(--line);
+    border-radius:15px;
+    background:#f2f3f6
+  }
+
+  .v24-mobile-tab{
+    appearance:none;
+    border:0;
+    border-radius:11px;
+    padding:10px 12px;
+    background:transparent;
+    color:#777d87;
+    font:inherit;
+    font-size:12px;
+    font-weight:850;
+    cursor:pointer
+  }
+
+  .v24-mobile-tab.active{
+    background:white;
+    color:#252830;
+    box-shadow:
+      0 3px 12px
+      rgba(30,34,50,.07)
+  }
+
+  [data-v24-mobile-hidden="true"]{
+    display:none !important
+  }
+
+  .v24-insight-buckets{
+    grid-template-columns:1fr
+  }
+}
