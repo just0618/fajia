@@ -1371,6 +1371,245 @@ function renderStateCard(
   `;
 }
 
+
+function renderDiscussionChange(
+  data
+) {
+  const dc =
+    data?.discussion_change
+    || {};
+
+  const el =
+    $("#discussion-change");
+
+  if (!el) return;
+
+  if (
+    ![
+      "SHORT_INTERVAL_STABLE",
+      "READY"
+    ].includes(
+      String(dc.status || "")
+    )
+  ) {
+    renderStateCard(
+      "#discussion-change",
+      dc,
+      "趋势模块将在连续可比 V2.4 快照积累后接入。"
+    );
+
+    return;
+  }
+
+  const fmtShare = value => {
+    if (
+      value === null
+      || value === undefined
+    ) {
+      return "—";
+    }
+
+    const n = Number(value);
+
+    return Number.isFinite(n)
+      ? `${(n * 100).toFixed(1)}%`
+      : "—";
+  };
+
+  const fmtDelta = value => {
+    if (
+      value === null
+      || value === undefined
+      || !Number.isFinite(
+        Number(value)
+      )
+    ) {
+      return "";
+    }
+
+    const n = Number(value);
+
+    return `${
+      n > 0 ? "+" : ""
+    }${n.toFixed(1)}pp`;
+  };
+
+  const kindCN = {
+    NEW: "新出现",
+    RISING: "明显升温",
+    MILD_RISING: "温和升温",
+    FALLING: "明显降温",
+    MILD_FALLING: "温和降温",
+    DROPPED: "退出主要主题",
+    STABLE: "基本稳定"
+  };
+
+  const platformCard =
+    (key, label) => {
+
+      const block =
+        dc?.by_platform?.[key]
+        || {};
+
+      const changes =
+        arr(block.changes)
+          .slice()
+          .sort(
+            (a, b) =>
+              Math.abs(
+                num(b.delta_pp)
+              )
+              -
+              Math.abs(
+                num(a.delta_pp)
+              )
+          )
+          .slice(0, 4);
+
+      return `
+        <article class="insight-card">
+          <span class="insight-badge direct">
+            ${esc(label)}
+          </span>
+
+          <h3>
+            ${esc(
+              dc.status === "SHORT_INTERVAL_STABLE"
+                ? "当前主要主题波动较小"
+                : "当前主要变化"
+            )}
+          </h3>
+
+          ${
+            changes.length
+              ? `
+                <ul class="evidence-list">
+                  ${changes.map(x => `
+                    <li>
+                      <strong>
+                        ${esc(x.title || "")}
+                      </strong>
+                      ·
+                      ${esc(
+                        fmtShare(
+                          x.previous_share
+                        )
+                      )}
+                      →
+                      ${esc(
+                        fmtShare(
+                          x.current_share
+                        )
+                      )}
+                      ${
+                        fmtDelta(
+                          x.delta_pp
+                        )
+                          ? `
+                            ·
+                            <strong>
+                              ${esc(
+                                fmtDelta(
+                                  x.delta_pp
+                                )
+                              )}
+                            </strong>
+                          `
+                          : ""
+                      }
+                      ·
+                      ${esc(
+                        kindCN[x.kind]
+                        || x.kind
+                        || ""
+                      )}
+                    </li>
+                  `).join("")}
+                </ul>
+              `
+              : `
+                <p>
+                  当前没有可展示的主题变化。
+                </p>
+              `
+          }
+        </article>
+      `;
+    };
+
+  const statusTitle =
+    dc.status === "SHORT_INTERVAL_STABLE"
+      ? "短周期内讨论结构总体稳定"
+      : "已形成可比趋势";
+
+  const previous =
+    dc.previous_snapshot
+      ?.generated_at;
+
+  const current =
+    dc.current_snapshot
+      ?.generated_at;
+
+  el.innerHTML = `
+    <div
+      class="state-status ${
+        String(dc.status)
+          .toLowerCase()
+      }"
+    >
+      ${esc(statusTitle)}
+    </div>
+
+    <p>
+      ${esc(dc.notice || "")}
+    </p>
+
+    <div class="chips">
+      <span>
+        间隔
+        ${num(
+          dc.interval_hours
+        ).toFixed(1)}h
+      </span>
+
+      <span>
+        最大变化
+        ${num(
+          dc.max_abs_delta_pp
+        ).toFixed(1)}pp
+      </span>
+
+      ${
+        previous && current
+          ? `
+            <span>
+              ${esc(fmtTime(previous))}
+              →
+              ${esc(fmtTime(current))}
+            </span>
+          `
+          : ""
+      }
+    </div>
+
+    <div
+      class="insight-grid"
+      style="margin-top:18px"
+    >
+      ${platformCard(
+        "weibo",
+        "微博"
+      )}
+
+      ${platformCard(
+        "douban",
+        "豆瓣"
+      )}
+    </div>
+  `;
+}
+
+
 function showHistoryBanner(
   item
 ) {
@@ -1487,10 +1726,8 @@ function renderDashboard(
   renderSources(data);
   renderPlatformComparison(data);
 
-  renderStateCard(
-    "#discussion-change",
-    data.discussion_change,
-    "趋势模块将在连续快照积累后接入。"
+  renderDiscussionChange(
+    data
   );
 
   renderHistory();

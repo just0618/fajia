@@ -920,8 +920,149 @@
     ]
   },
   "discussion_change": {
-    "status": "BASELINE_NOT_WIRED",
-    "notice": "V2 首版先建立稳定快照；趋势变化将在连续 V2 快照积累后接入。"
+    "version": "FAJIA_MONITOR_V24_DISCUSSION_CHANGE_V1.0",
+    "status": "SHORT_INTERVAL_STABLE",
+    "previous_snapshot": {
+      "generated_at": "2026-10-09T12:23:17+08:00",
+      "current_72h_rows": 5542
+    },
+    "current_snapshot": {
+      "generated_at": "2026-10-09T19:15:41+08:00",
+      "current_72h_rows": 6301
+    },
+    "interval_hours": 6.87,
+    "comparison_policy": {
+      "formal_min_interval_hours": 18,
+      "preferred_interval_hours": 24,
+      "strong_move_pp": 5,
+      "mild_move_pp": 3
+    },
+    "max_abs_delta_pp": 1.8,
+    "notice": "两次 V2.4 快照相隔约 6.9 小时，72 小时滚动窗口高度重叠；当前主要主题最大占比变化约 1.8 个百分点，尚未出现足以判定正式升温或降温的结构性变化。",
+    "by_platform": {
+      "weibo": {
+        "title": "微博",
+        "changes": [
+          {
+            "title": "粉圈生态",
+            "kind": "STABLE",
+            "previous_share": 0.3965,
+            "current_share": 0.3786,
+            "delta_pp": -1.8
+          },
+          {
+            "title": "单人物料",
+            "kind": "STABLE",
+            "previous_share": 0.0729,
+            "current_share": 0.0896,
+            "delta_pp": 1.7
+          },
+          {
+            "title": "日常闲聊",
+            "kind": "STABLE",
+            "previous_share": 0.344,
+            "current_share": 0.3555,
+            "delta_pp": 1.2
+          },
+          {
+            "title": "创作安利",
+            "kind": "STABLE",
+            "previous_share": 0.1312,
+            "current_share": 0.1416,
+            "delta_pp": 1.0
+          },
+          {
+            "title": "双人互动",
+            "kind": "STABLE",
+            "previous_share": 0.0933,
+            "current_share": 0.0867,
+            "delta_pp": -0.7
+          },
+          {
+            "title": "双人物料",
+            "kind": "STABLE",
+            "previous_share": 0.0787,
+            "current_share": 0.0723,
+            "delta_pp": -0.6
+          },
+          {
+            "title": "行程动态",
+            "kind": "STABLE",
+            "previous_share": 0.0525,
+            "current_share": 0.0578,
+            "delta_pp": 0.5
+          },
+          {
+            "title": "线下活动",
+            "kind": "STABLE",
+            "previous_share": 0.0554,
+            "current_share": 0.0578,
+            "delta_pp": 0.2
+          }
+        ]
+      },
+      "douban": {
+        "title": "豆瓣",
+        "changes": [
+          {
+            "title": "粉圈生态",
+            "kind": "STABLE",
+            "previous_share": 0.2995,
+            "current_share": 0.3105,
+            "delta_pp": 1.1
+          },
+          {
+            "title": "舆情争议",
+            "kind": "STABLE",
+            "previous_share": 0.2241,
+            "current_share": 0.2346,
+            "delta_pp": 1.1
+          },
+          {
+            "title": "日常闲聊",
+            "kind": "STABLE",
+            "previous_share": 0.2835,
+            "current_share": 0.2754,
+            "delta_pp": -0.8
+          },
+          {
+            "title": "双人互动",
+            "kind": "STABLE",
+            "previous_share": 0.095,
+            "current_share": 0.0914,
+            "delta_pp": -0.4
+          },
+          {
+            "title": "其他",
+            "kind": "STABLE",
+            "previous_share": 0.0667,
+            "current_share": 0.0697,
+            "delta_pp": 0.3
+          },
+          {
+            "title": "公司运营",
+            "kind": "STABLE",
+            "previous_share": 0.1098,
+            "current_share": 0.111,
+            "delta_pp": 0.1
+          },
+          {
+            "title": "单人物料",
+            "kind": "STABLE",
+            "previous_share": 0.0898,
+            "current_share": 0.0897,
+            "delta_pp": -0.0
+          },
+          {
+            "title": "行程动态",
+            "kind": "STABLE",
+            "previous_share": 0.0658,
+            "current_share": 0.0662,
+            "delta_pp": 0.0
+          }
+        ]
+      }
+    }
   },
   "history": {
     "status": "SNAPSHOT_HISTORY_PENDING",
