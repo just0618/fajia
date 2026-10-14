@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#faf7f5">
+  <title>成员检索 · Fajia Online</title>
+  <style>
+    :root{
+      --bg:#faf7f5;--card:#fff;--text:#29262c;--muted:#817980;
+      --line:#eadfe2;--pink:#ff8aa1;--pink-soft:#fff0f3;
+      --green:#237a4b;--green-bg:#edf8f1;--gray-bg:#f5f3f4;
+      --danger:#a33b4c;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);
+      font:14px/1.6 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+    .wrap{max-width:920px;margin:0 auto;padding:42px 18px 72px}
+    .eyebrow{font-size:12px;letter-spacing:.14em;color:var(--muted);font-weight:700}
+    h1{font-size:34px;line-height:1.2;margin:8px 0 8px}
+    .lead{margin:0;color:var(--muted)}
+    .panel,.result{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:18px}
+    .row{display:grid;grid-template-columns:1fr;gap:12px}
+    label{font-weight:650;display:block;margin-bottom:6px}
+    input{width:100%;font:inherit;border:1px solid #ddd2d6;border-radius:12px;padding:12px 14px;outline:none;background:#fff}
+    input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,138,161,.13)}
+    button{font:inherit;border:0;border-radius:12px;padding:12px 18px;background:var(--text);color:#fff;cursor:pointer;font-weight:700}
+    button:hover{opacity:.9}
+    button:disabled{opacity:.45;cursor:default}
+    .hint,.state,.meta{color:var(--muted);font-size:13px}
+    .state{margin-left:10px}
+    .actions{display:flex;align-items:center;margin-top:14px;gap:8px;flex-wrap:wrap}
+    .results{margin-top:18px}
+    .result-head{display:flex;gap:12px;justify-content:space-between;align-items:flex-start}
+    .name{font-size:19px;font-weight:760}
+    .key{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);font-size:12px;word-break:break-all}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:650}
+    .yes{background:var(--green-bg);color:var(--green)}
+    .no{background:var(--gray-bg);color:var(--muted)}
+    a{color:inherit}
+    .warning{background:#fff8e8;border:1px solid #f1dfad;border-radius:14px;padding:12px 14px;margin-top:14px}
+    .empty{padding:26px;text-align:center;color:var(--muted)}
+    .future{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px;color:var(--muted)}
+    code{background:#f4f1f2;border-radius:6px;padding:2px 5px}
+    @media(min-width:720px){
+      .row{grid-template-columns:260px 1fr}
+    }
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">FAJIA · INTERNAL TOOL</div>
+  <h1>豆瓣成员检索</h1>
+  <p class="lead">输入昵称、username、豆瓣个人主页 URL 或 profile key，查询申请人是否出现在两个目标小组的成员索引中。</p>
+
+  <section class="panel">
+    <div class="row">
+      <div>
+        <label for="token">内部访问口令</label>
+        <input id="token" type="password" autocomplete="off" placeholder="MEMBER_CHECK_TOKEN">
+        <div class="hint">只随本次请求发送，不写入 localStorage。</div>
+      </div>
+      <div>
+        <label for="query">成员</label>
+        <input id="query" type="search" autocomplete="off" placeholder="昵称 / username / https://www.douban.com/people/xxxxx/">
+        <div class="hint">同名用户会列出多个候选；以个人主页 URL / profile key 匹配最可靠。</div>
+      </div>
+    </div>
+    <div class="actions">
+      <button id="search">搜索</button>
+      <span class="state" id="state"></span>
+    </div>
+  </section>
+
+  <section id="summary"></section>
+  <section class="results" id="results"></section>
+</main>
+
+<script>
+const GROUPS = [
+  { id: "763220", name: "贺嘉述专组" },
+  { id: "761299", name: "旧组" }
+];
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, m => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"
+}[m]));
+
+function fmtTime(value){
+  if(!value) return "未知";
+  try { return new Date(value).toLocaleString("zh-CN", {hour12:false}); }
+  catch { return value; }
+}
+
+function renderMember(m){
+  const joined = new Set((m.groups || []).map(g => String(g.id)));
+  const badges = GROUPS.map(g => `
+    <span class="badge ${joined.has(g.id) ? "yes" : "no"}">
+      ${joined.has(g.id) ? "✓" : "—"} ${esc(g.name)}
+    </span>`).join("");
+
+  const link = m.profile_url
+    ? `<a href="${esc(m.profile_url)}" target="_blank" rel="noopener noreferrer">打开豆瓣主页 ↗</a>`
+    : "";
+
+  return `
+    <article class="result">
+      <div class="result-head">
+        <div>
+          <div class="name">${esc(m.display_name || "未命名")}</div>
+          <div class="key">profile_key: ${esc(m.profile_key || "—")}</div>
+          ${m.username ? `<div class="key">username: ${esc(m.username)}</div>` : ""}
+        </div>
+        <div>${link}</div>
+      </div>
+      <div class="badges">${badges}</div>
+      <div class="future">历史发言：第二阶段接入旧组闲聊楼 author/profile 索引后显示。</div>
+    </article>`;
+}
+
+async function runSearch(){
+  const token = $("token").value;
+  const query = $("query").value.trim();
+  const state = $("state");
+  const results = $("results");
+  const summary = $("summary");
+
+  results.innerHTML = "";
+  summary.innerHTML = "";
+
+  if(!token){ state.textContent = "请先输入内部访问口令"; return; }
+  if(!query){ state.textContent = "请输入昵称或主页 URL"; return; }
+
+  $("search").disabled = true;
+  state.textContent = "查询中…";
+
+  try{
+    const r = await fetch("/api/member-check", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({token, query})
+    });
+    const d = await r.json();
+
+    if(r.status === 401) throw new Error("口令不正确");
+    if(d.error === "index_not_ready") throw new Error("成员索引还没有上传");
+    if(d.error === "query_too_short") throw new Error("查询词至少输入 2 个字符");
+    if(!r.ok) throw new Error("查询失败");
+
+    state.textContent = `索引更新：${fmtTime(d.generated_at)}`;
+
+    if(!d.matches || !d.matches.length){
+      results.innerHTML = `<div class="panel empty">当前索引中没有找到匹配成员。</div>`;
+      return;
+    }
+
+    if(d.total_matches > 1){
+      summary.innerHTML = `<div class="warning">找到 ${d.total_matches} 个候选。昵称可能重名，请结合 profile key / 个人主页确认身份。${d.truncated ? " 当前最多展示 20 个结果。" : ""}</div>`;
+    }
+
+    results.innerHTML = d.matches.map(renderMember).join("");
+  }catch(e){
+    state.textContent = e.message || "查询失败";
+  }finally{
+    $("search").disabled = false;
+  }
+}
+
+$("search").addEventListener("click", runSearch);
+$("query").addEventListener("keydown", e => {
+  if(e.key === "Enter") runSearch();
+});
+</script>
+</body>
+</html>
