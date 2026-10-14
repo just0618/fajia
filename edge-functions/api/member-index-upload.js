@@ -2,8 +2,13 @@ import { getStore } from '@edgeone/pages-blob';
 
 const STORE_NAME = 'fajia-member-index';
 const INDEX_KEY = 'member-index/latest.json';
-const ALLOWED_GROUPS = new Set(['763220', '761299']);
-const MAX_MEMBERS = 5000;
+const ALLOWED_GROUPS = new Set(['763220', '761299', '761356']);
+const DEFAULT_NAMES = {
+  '763220': '贺嘉述专组',
+  '761299': '旧组',
+  '761356': '豆瓣小组 761356'
+};
+const MAX_MEMBERS = 10000;
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
   status,
@@ -38,7 +43,7 @@ function cleanMember(raw) {
 export async function onRequestPost({ request, env }) {
   try {
     const text = await request.text();
-    if (text.length > 4_000_000) return json({ error: 'payload_too_large' }, 413);
+    if (text.length > 6_000_000) return json({ error: 'payload_too_large' }, 413);
 
     const body = JSON.parse(text || '{}');
     const token = String(body.token || '');
@@ -75,20 +80,19 @@ export async function onRequestPost({ request, env }) {
     }
 
     const generatedAt = cleanText(incoming.generated_at, 80) || new Date().toISOString();
+    const groups = {};
+
+    for (const id of ALLOWED_GROUPS) {
+      groups[id] = {
+        name: cleanText(incoming?.groups?.[id]?.name, 100) || DEFAULT_NAMES[id] || id,
+        member_count: Number(incoming?.groups?.[id]?.member_count || 0)
+      };
+    }
 
     const index = {
-      schema_version: 1,
+      schema_version: Number(incoming.schema_version || 1),
       generated_at: generatedAt,
-      groups: {
-        '763220': {
-          name: cleanText(incoming?.groups?.['763220']?.name, 100) || '贺嘉述专组',
-          member_count: Number(incoming?.groups?.['763220']?.member_count || 0)
-        },
-        '761299': {
-          name: cleanText(incoming?.groups?.['761299']?.name, 100) || '旧组',
-          member_count: Number(incoming?.groups?.['761299']?.member_count || 0)
-        }
-      },
+      groups,
       members: [...merged.values()]
     };
 
@@ -99,10 +103,9 @@ export async function onRequestPost({ request, env }) {
       ok: true,
       generated_at: index.generated_at,
       unique_members: index.members.length,
-      group_counts: {
-        '763220': index.groups['763220'].member_count,
-        '761299': index.groups['761299'].member_count
-      }
+      group_counts: Object.fromEntries(
+        Object.entries(index.groups).map(([id, meta]) => [id, meta.member_count])
+      )
     });
   } catch (err) {
     console.error('member index upload failed', err);

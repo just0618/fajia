@@ -3,7 +3,7 @@ import { getStore } from '@edgeone/pages-blob';
 const STORE_NAME = 'fajia-member-index';
 const INDEX_KEY = 'member-index/latest.json';
 const MAX_RESULTS = 20;
-const ALLOWED_GROUPS = new Set(['763220', '761299']);
+const ALLOWED_GROUPS = new Set(['763220', '761299', '761356']);
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
   status,
@@ -21,6 +21,17 @@ function extractProfileKey(query) {
   const text = String(query || '').trim();
   const match = text.match(/douban\.com\/people\/([^/?#]+)/i);
   return match ? decodeURIComponent(match[1]) : '';
+}
+
+function trackedGroups(groupMeta = {}) {
+  return Object.entries(groupMeta)
+    .filter(([id]) => ALLOWED_GROUPS.has(String(id)))
+    .map(([id, meta]) => ({
+      id: String(id),
+      name: String(meta?.name || id),
+      member_count: Number(meta?.member_count || 0)
+    }))
+    .sort((a, b) => a.id.localeCompare(b.id));
 }
 
 function compactMember(member, groupMeta = {}) {
@@ -99,6 +110,7 @@ export async function onRequestPost({ request, env }) {
       ok: true,
       query,
       generated_at: index.generated_at || null,
+      tracked_groups: trackedGroups(index.groups || {}),
       total_matches: scored.length,
       truncated: scored.length > MAX_RESULTS,
       matches
