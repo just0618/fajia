@@ -1,118 +1,15 @@
 import { getStore } from '@edgeone/pages-blob';
-
-const STORE_NAME = 'fajia-member-index';
-const INDEX_KEY = 'member-index/latest.json';
-const ALLOWED_GROUPS = new Set(['763220', '761299', '761356']);
-const DEFAULT_NAMES = {
-  '763220': '贺嘉述专组',
-  '761299': '旧组',
-  '761356': '豆瓣小组 761356'
-};
-const MAX_MEMBERS = 10000;
-
-const json = (data, status = 200) => new Response(JSON.stringify(data), {
-  status,
-  headers: {
-    'content-type': 'application/json; charset=utf-8',
-    'cache-control': 'no-store',
-    'x-content-type-options': 'nosniff'
-  }
-});
-
-function cleanText(value, max = 300) {
-  return String(value || '').trim().slice(0, max);
-}
-
-function cleanMember(raw) {
-  const profileKey = cleanText(raw?.profile_key, 160);
-  if (!profileKey) return null;
-
-  const groups = Array.isArray(raw?.groups)
-    ? [...new Set(raw.groups.map(String).filter((id) => ALLOWED_GROUPS.has(id)))]
-    : [];
-
-  return {
-    profile_key: profileKey,
-    display_name: cleanText(raw?.display_name || raw?.name, 160),
-    username: cleanText(raw?.username, 160),
-    profile_url: cleanText(raw?.profile_url, 500),
-    groups
-  };
-}
-
-export async function onRequestPost({ request, env }) {
-  try {
-    const text = await request.text();
-    if (text.length > 6_000_000) return json({ error: 'payload_too_large' }, 413);
-
-    const body = JSON.parse(text || '{}');
-    const token = String(body.token || '');
-
-    if (!env?.MEMBER_INDEX_UPLOAD_TOKEN || token !== env.MEMBER_INDEX_UPLOAD_TOKEN) {
-      return json({ error: 'unauthorized' }, 401);
-    }
-
-    const incoming = body.index;
-    if (!incoming || !Array.isArray(incoming.members)) {
-      return json({ error: 'invalid_index' }, 400);
-    }
-    if (incoming.members.length > MAX_MEMBERS) {
-      return json({ error: 'too_many_members' }, 400);
-    }
-
-    const merged = new Map();
-
-    for (const raw of incoming.members) {
-      const member = cleanMember(raw);
-      if (!member) continue;
-
-      const key = member.profile_key.toLowerCase();
-      const previous = merged.get(key);
-
-      if (!previous) {
-        merged.set(key, member);
-      } else {
-        previous.groups = [...new Set([...previous.groups, ...member.groups])];
-        if (!previous.display_name && member.display_name) previous.display_name = member.display_name;
-        if (!previous.username && member.username) previous.username = member.username;
-        if (!previous.profile_url && member.profile_url) previous.profile_url = member.profile_url;
-      }
-    }
-
-    const generatedAt = cleanText(incoming.generated_at, 80) || new Date().toISOString();
-    const groups = {};
-
-    for (const id of ALLOWED_GROUPS) {
-      groups[id] = {
-        name: cleanText(incoming?.groups?.[id]?.name, 100) || DEFAULT_NAMES[id] || id,
-        member_count: Number(incoming?.groups?.[id]?.member_count || 0)
-      };
-    }
-
-    const index = {
-      schema_version: Number(incoming.schema_version || 1),
-      generated_at: generatedAt,
-      groups,
-      members: [...merged.values()]
-    };
-
-    const store = getStore({ name: STORE_NAME, consistency: 'strong' });
-    await store.setJSON(INDEX_KEY, index);
-
-    return json({
-      ok: true,
-      generated_at: index.generated_at,
-      unique_members: index.members.length,
-      group_counts: Object.fromEntries(
-        Object.entries(index.groups).map(([id, meta]) => [id, meta.member_count])
-      )
-    });
-  } catch (err) {
-    console.error('member index upload failed', err);
-    return json({ error: 'server_error' }, 500);
-  }
-}
-
-export async function onRequestGet() {
-  return json({ ok: true, service: 'fajia-member-index-upload' });
-}
+const STORE_NAME='fajia-member-index';
+const INDEX_KEY='member-index/latest.json';
+const ALLOWED_GROUPS=new Set(['763220','761299','761356']);
+const DEFAULT_NAMES={'763220':'一个月上七天班（贺嘉述专组）','761299':'法述进修学院（旧组）','761356':'法述修炼中'};
+const VALID_STATUSES=new Set(['CURRENT','MISSING','EXITED']);
+const MAX_MEMBERS=10000;
+const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});
+const cleanText=(v,max=300)=>String(v||'').trim().slice(0,max);
+const cleanNullable=(v,max=100)=>{if(v===null||v===undefined||v==='')return null;const x=cleanText(v,max);return x||null};
+function cleanMemberships(raw){const out={};if(!raw||typeof raw!=='object'||Array.isArray(raw))return out;for(const [id0,x] of Object.entries(raw)){const id=String(id0);if(!ALLOWED_GROUPS.has(id)||!x||typeof x!=='object'||Array.isArray(x))continue;const status=cleanText(x.status,20).toUpperCase();if(!VALID_STATUSES.has(status))continue;out[id]={status,first_seen_at:cleanNullable(x.first_seen_at),last_seen_at:cleanNullable(x.last_seen_at),missing_since:cleanNullable(x.missing_since),exit_confirmed_at:cleanNullable(x.exit_confirmed_at),rejoined_count:Math.max(0,Math.min(9999,Number(x.rejoined_count||0)||0))}}return out}
+function cleanMember(raw){const profileKey=cleanText(raw?.profile_key,160);if(!profileKey)return null;const groups=Array.isArray(raw?.groups)?[...new Set(raw.groups.map(String).filter(id=>ALLOWED_GROUPS.has(id)))]:[];return{profile_key:profileKey,display_name:cleanText(raw?.display_name||raw?.name,160),username:cleanText(raw?.username,160),profile_url:cleanText(raw?.profile_url,500),groups,memberships:cleanMemberships(raw?.memberships)}}
+export async function onRequestPost({request,env}){try{const text=await request.text();if(text.length>8000000)return json({error:'payload_too_large'},413);const body=JSON.parse(text||'{}');const token=String(body.token||'');if(!env?.MEMBER_INDEX_UPLOAD_TOKEN||token!==env.MEMBER_INDEX_UPLOAD_TOKEN)return json({error:'unauthorized'},401);const incoming=body.index;if(!incoming||!Array.isArray(incoming.members))return json({error:'invalid_index'},400);if(incoming.members.length>MAX_MEMBERS)return json({error:'too_many_members'},400);const merged=new Map();for(const raw of incoming.members){const m=cleanMember(raw);if(!m)continue;const key=m.profile_key.toLowerCase();const old=merged.get(key);if(!old){merged.set(key,m)}else{old.groups=[...new Set([...old.groups,...m.groups])];for(const [gid,state] of Object.entries(m.memberships||{})){if(!old.memberships[gid])old.memberships[gid]=state}if(!old.display_name&&m.display_name)old.display_name=m.display_name;if(!old.username&&m.username)old.username=m.username;if(!old.profile_url&&m.profile_url)old.profile_url=m.profile_url}}
+const generatedAt=cleanText(incoming.generated_at,80)||new Date().toISOString();const groups={};for(const id of ALLOWED_GROUPS){groups[id]={name:cleanText(incoming?.groups?.[id]?.name,100)||DEFAULT_NAMES[id]||id,member_count:Number(incoming?.groups?.[id]?.member_count||0)}}const index={schema_version:Math.max(2,Number(incoming.schema_version||2)),generated_at:generatedAt,groups,members:[...merged.values()]};const store=getStore({name:STORE_NAME,consistency:'strong'});await store.setJSON(INDEX_KEY,index);return json({ok:true,schema_version:index.schema_version,generated_at:index.generated_at,unique_members:index.members.length,membership_records:index.members.reduce((n,m)=>n+Object.keys(m.memberships||{}).length,0),group_counts:Object.fromEntries(Object.entries(index.groups).map(([id,meta])=>[id,meta.member_count]))})}catch(err){console.error('member index upload failed',err);return json({error:'server_error'},500)}}
+export async function onRequestGet(){return json({ok:true,service:'fajia-member-index-upload',schema_version:2})}
