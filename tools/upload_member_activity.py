@@ -15,7 +15,11 @@ if not token:
     raise SystemExit("MEMBER_INDEX_UPLOAD_TOKEN is not set")
 
 index = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-payload = json.dumps({"token": token, "index": index}, ensure_ascii=False).encode("utf-8")
+payload = json.dumps(
+    {"token": token, "index": index},
+    ensure_ascii=False,
+    separators=(",", ":"),
+).encode("utf-8")
 req = urllib.request.Request(
     URL,
     data=payload,

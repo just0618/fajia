@@ -134,6 +134,135 @@ def live_overlay(master,canon_max,members,member_slug,member_num,matched,hist,mb
     finally: c.close()
     return stats
 
+def enrich_precise_activity_urls(canon,master,member_rows,history_rows):
+    """
+    Replace activity source_url with a deterministic Douban page + cid anchor:
+        ?start=<page_start>#<cid>
+
+    Ranking basis:
+      - canonical activity -> canonical_comments order within topic
+      - live_overlay       -> master content_items order within topic
+      - fallback to the other source if preferred source has no rank
+    """
+    targets=[]
+    wanted=defaultdict(set)
+
+    for section,rows in (
+        ('members',member_rows),
+        ('historical_identities',history_rows),
+    ):
+        for identity,rec in rows.items():
+            for item in rec.get('recent',[]) or []:
+                iid=str(item.get('item_id') or '')
+                m=re.match(r'^DB_(\d+)_(\d+)$',iid)
+                if not m:
+                    continue
+                topic,cid=m.groups()
+                targets.append((section,identity,item,topic,cid))
+                wanted[topic].add(cid)
+
+    stats={
+        'target_items':len(targets),
+        'topics':len(wanted),
+        'resolved':0,
+        'unresolved':0,
+        'canonical_basis':0,
+        'master_basis':0,
+    }
+
+    if not targets:
+        return stats
+
+    canon_rank={}
+    cc=sqlite3.connect(f'file:{canon}?mode=ro',uri=True)
+    cc.row_factory=sqlite3.Row
+    try:
+        for topic,cids in wanted.items():
+            rows=cc.execute(
+                """SELECT cid
+                   FROM canonical_comments
+                   WHERE topic_id=?
+                     AND COALESCE(cid,'')<>''
+                   ORDER BY CAST(cid AS INTEGER) ASC""",
+                (topic,),
+            ).fetchall()
+
+            for rn,r in enumerate(rows,1):
+                cid=str(r['cid'] or '')
+                if cid in cids:
+                    canon_rank[(topic,cid)]=rn
+    finally:
+        cc.close()
+
+    master_rank={}
+    if master.exists():
+        mc=sqlite3.connect(f'file:{master}?mode=ro',uri=True)
+        mc.row_factory=sqlite3.Row
+        try:
+            for topic,cids in wanted.items():
+                rows=mc.execute(
+                    """SELECT source_id
+                       FROM content_items
+                       WHERE platform='douban'
+                         AND source_layer='douban_chat'
+                         AND item_id LIKE ?
+                         AND COALESCE(source_id,'')<>''
+                         AND COALESCE(deleted_seen_at,'')=''
+                       ORDER BY CAST(source_id AS INTEGER) ASC""",
+                    (f'DB_{topic}_%',),
+                ).fetchall()
+
+                for rn,r in enumerate(rows,1):
+                    cid=str(r['source_id'] or '')
+                    if cid in cids:
+                        master_rank[(topic,cid)]=rn
+        finally:
+            mc.close()
+
+    for section,identity,item,topic,cid in targets:
+        key=(topic,cid)
+        origin=str(item.get('origin') or '')
+
+        if origin=='live_overlay':
+            if key in master_rank:
+                rn=master_rank[key]
+                basis='master'
+            elif key in canon_rank:
+                rn=canon_rank[key]
+                basis='canonical'
+            else:
+                rn=None
+                basis=''
+        else:
+            if key in canon_rank:
+                rn=canon_rank[key]
+                basis='canonical'
+            elif key in master_rank:
+                rn=master_rank[key]
+                basis='master'
+            else:
+                rn=None
+                basis=''
+
+        if not rn:
+            stats['unresolved']+=1
+            continue
+
+        start=((rn-1)//100)*100
+
+        # Store only the compact page coordinate.
+        # The frontend reconstructs:
+        #   https://www.douban.com/group/topic/<topic>/?start=<page_start>#<cid>
+        item['page_start']=start
+        item.pop('source_url', None)
+        item.pop('origin', None)
+
+        stats['resolved']+=1
+        stats[f'{basis}_basis']+=1
+
+    return stats
+
+
 def finalize(x,rows,n,keep,membership):
     recent=sorted(rows.values(),key=lambda r:(str(r.get('published_at') or ''),str(r.get('item_id') or '')),reverse=True)[:keep]
     return {'profile_key':str(x.get('profile_key') or ''),'display_name':str(x.get('display_name') or x.get('canonical_name') or ''),'profile_url':str(x.get('profile_url') or x.get('canonical_profile_url') or ''),'author_uid':str(x.get('author_uid') or ''),'canonical_name':str(x.get('canonical_name') or ''),'canonical_profile_url':str(x.get('canonical_profile_url') or ''),'identity_match_method':str(x.get('identity_match_method') or ''),'membership_record_present':bool(membership),'total_count':int(n or 0),'latest_at':recent[0].get('published_at') if recent else None,'recent':recent}
@@ -161,8 +290,9 @@ def main():
         n=int(ht.get(u,0))
         if n<=0: continue
         rh[u]=finalize(x,hb.get(u,{}),n,keep,False); htotal+=n
-    result={'schema_version':3,'generated_at':now(),'group':{'id':GROUP_ID,'name':GROUP_NAME},'source':{'canonical_db':str(canon),'canonical_max_published_at':canon_max,'live_overlay_db':str(master)},'policy':{'recent_items_per_identity':keep,'text_max_chars':500,'ip_location_uploaded':False,'membership_and_history_separated':True,'historical_identity_does_not_imply_membership':True},'stats':{'tracked_profiles':len(members),'canonical_member_identity_matched':cm,'canonical_history_only_identities':ch,'member_profiles_with_activity':len(rm),'historical_identities_with_activity':len(rh),'member_activity_count':mtotal,'historical_only_activity_count':htotal,'total_activity_count':mtotal+htotal,'live_overlay':live},'members':rm,'historical_identities':rh}
+    precise_url_stats=enrich_precise_activity_urls(canon,master,rm,rh)
+    result={'schema_version':3,'generated_at':now(),'group':{'id':GROUP_ID,'name':GROUP_NAME},'source':{'canonical_db':str(canon),'canonical_max_published_at':canon_max,'live_overlay_db':str(master)},'policy':{'recent_items_per_identity':keep,'text_max_chars':500,'ip_location_uploaded':False,'membership_and_history_separated':True,'historical_identity_does_not_imply_membership':True},'stats':{'tracked_profiles':len(members),'canonical_member_identity_matched':cm,'canonical_history_only_identities':ch,'member_profiles_with_activity':len(rm),'historical_identities_with_activity':len(rh),'member_activity_count':mtotal,'historical_only_activity_count':htotal,'total_activity_count':mtotal+htotal,'live_overlay':live,'precise_activity_urls':precise_url_stats},'members':rm,'historical_identities':rh}
     out.parent.mkdir(parents=True,exist_ok=True); out.write_text(json.dumps(result,ensure_ascii=False,separators=(',',':')),encoding='utf-8'); sz=out.stat().st_size
-    print(json.dumps({'ok':True,'schema_version':3,'canonical_db':str(canon),'canonical_max_published_at':canon_max,'output':str(out),'output_bytes':sz,'output_mib':round(sz/1024/1024,3),'tracked_profiles':len(members),'canonical_member_identity_matched':cm,'canonical_history_only_identities':ch,'member_profiles_with_activity':len(rm),'historical_identities_with_activity':len(rh),'member_activity_count':mtotal,'historical_only_activity_count':htotal,'total_activity_count':mtotal+htotal,'live_overlay':live,'keep_per_identity':keep},ensure_ascii=False,indent=2))
+    print(json.dumps({'ok':True,'schema_version':3,'canonical_db':str(canon),'canonical_max_published_at':canon_max,'output':str(out),'output_bytes':sz,'output_mib':round(sz/1024/1024,3),'tracked_profiles':len(members),'canonical_member_identity_matched':cm,'canonical_history_only_identities':ch,'member_profiles_with_activity':len(rm),'historical_identities_with_activity':len(rh),'member_activity_count':mtotal,'historical_only_activity_count':htotal,'total_activity_count':mtotal+htotal,'live_overlay':live,'precise_activity_urls':precise_url_stats,'keep_per_identity':keep},ensure_ascii=False,indent=2))
 
 if __name__=='__main__': main()
