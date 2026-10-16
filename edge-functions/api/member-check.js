@@ -218,17 +218,35 @@ function cleanDbActivity(
 async function fetchDbIdentity(
   uid,
   env,
-  cache
+  cache,
+  debug=null
 ){
   uid=String(uid||'').trim();
 
-  if(!/^\d{1,32}$/.test(uid))
-    return null;
+  const mark=(stage,extra={})=>{
+    if(Array.isArray(debug)){
+      debug.push({
+        uid,
+        stage,
+        ...extra
+      });
+    }
+  };
 
-  if(cache.has(uid))
+  if(!/^\d{1,32}$/.test(uid)){
+    mark('invalid_uid');
+    return null;
+  }
+
+  if(cache.has(uid)){
+    mark('cache_hit',{
+      success:Boolean(cache.get(uid))
+    });
     return cache.get(uid);
+  }
 
   if(!env?.MEMBER_ACTIVITY_API_TOKEN){
+    mark('token_missing');
     cache.set(uid,null);
     return null;
   }
@@ -241,6 +259,8 @@ async function fetchDbIdentity(
   );
 
   try{
+    mark('fetch_start');
+
     const response=await fetch(
       DB_ACTIVITY_URL,
       {
@@ -259,6 +279,10 @@ async function fetchDbIdentity(
       }
     );
 
+    mark('http_response',{
+      status:Number(response.status||0)
+    });
+
     if(!response.ok){
       cache.set(uid,null);
       return null;
@@ -271,6 +295,9 @@ async function fetchDbIdentity(
       data.ok!==true ||
       String(data.author_uid||'')!==uid
     ){
+      mark('invalid_payload',{
+        response_uid:String(data?.author_uid||'')
+      });
       cache.set(uid,null);
       return null;
     }
@@ -323,11 +350,19 @@ async function fetchDbIdentity(
       activities
     };
 
+    mark('success',{
+      groups:Object.keys(activities)
+    });
+
     cache.set(uid,result);
 
     return result;
 
   }catch(err){
+    mark('fetch_error',{
+      name:String(err?.name||'error')
+    });
+
     console.warn(
       'db activity lookup failed',
       uid,
@@ -914,6 +949,7 @@ export async function onRequestPost({
     }
 
     const dbCache=new Map();
+    const dbDebug=[];
 
     // Exact numeric UID / numeric profile URL fallback.
     //
@@ -933,7 +969,8 @@ export async function onRequestPost({
       const dbExact=await fetchDbIdentity(
         exactUid,
         env,
-        dbCache
+        dbCache,
+        dbDebug
       );
 
       if(
@@ -1005,7 +1042,8 @@ export async function onRequestPost({
         const db=await fetchDbIdentity(
           uid,
           env,
-          dbCache
+          dbCache,
+          dbDebug
         );
 
         if(db){
@@ -1075,6 +1113,8 @@ export async function onRequestPost({
         ),
 
       db_activity_fail_open:true,
+
+      db_activity_debug:dbDebug,
 
       tracked_groups:
         trackedGroups(index.groups||{}),
