@@ -4,6 +4,12 @@ const STORE_NAME='fajia-member-index';
 const INDEX_KEY='member-index/latest.json';
 const DIRECTORY_KEY='member-activity/identity-directory.json';
 
+const DB_ACTIVITY_URL=
+  'https://data.fajia.online/internal/member-activity';
+
+const DB_ACTIVITY_GROUP_ID='763220';
+const MAX_DB_ACTIVITY_LOOKUPS=5;
+
 const MAX_RESULTS=20;
 
 const ALLOWED_GROUPS=new Set([
@@ -119,6 +125,224 @@ function cleanActivity(x,groupId,groupName){
       }))
   };
 }
+
+function cleanDbActivity(
+  raw,
+  identity={}
+){
+  if(
+    !raw ||
+    typeof raw!=='object' ||
+    Array.isArray(raw)
+  ){
+    return null;
+  }
+
+  const groupId=String(
+    raw.group_id||DB_ACTIVITY_GROUP_ID
+  );
+
+  if(!ALLOWED_GROUPS.has(groupId))
+    return null;
+
+  return {
+    group_id:groupId,
+
+    group_name:String(
+      raw.group_name||groupId
+    ),
+
+    author_uid:String(
+      identity.author_uid||''
+    ),
+
+    canonical_name:String(
+      identity.display_name||''
+    ),
+
+    canonical_profile_url:String(
+      identity.profile_url||''
+    ),
+
+    total_count:Math.max(
+      0,
+      Number(raw.total_count||0)||0
+    ),
+
+    latest_at:raw.latest_at||null,
+
+    recent:(Array.isArray(raw.recent)?raw.recent:[])
+      .slice(0,20)
+      .map(i=>({
+        item_id:String(i?.item_id||''),
+
+        source_key:String(
+          i?.source_key||''
+        ),
+
+        source_label:String(
+          i?.source_label||''
+        ),
+
+        source_type:String(
+          i?.source_type||''
+        ),
+
+        published_at:
+          i?.published_at||null,
+
+        text:String(i?.text||''),
+
+        page_start:
+          Number.isInteger(
+            Number(i?.page_start)
+          )
+          && Number(i?.page_start)>=0
+            ? Number(i?.page_start)
+            : null,
+
+        source_url:String(
+          i?.url||
+          i?.source_url||
+          ''
+        ),
+
+        reply_to_item_id:String(
+          i?.reply_to_item_id||''
+        )
+      }))
+  };
+}
+
+
+async function fetchDbIdentity(
+  uid,
+  env,
+  cache
+){
+  uid=String(uid||'').trim();
+
+  if(!/^\d{1,32}$/.test(uid))
+    return null;
+
+  if(cache.has(uid))
+    return cache.get(uid);
+
+  if(!env?.MEMBER_ACTIVITY_API_TOKEN){
+    cache.set(uid,null);
+    return null;
+  }
+
+  const controller=new AbortController();
+
+  const timer=setTimeout(
+    ()=>controller.abort(),
+    7000
+  );
+
+  try{
+    const response=await fetch(
+      DB_ACTIVITY_URL,
+      {
+        method:'POST',
+
+        headers:{
+          'content-type':'application/json',
+
+          'x-fajia-internal-token':
+            env.MEMBER_ACTIVITY_API_TOKEN
+        },
+
+        body:JSON.stringify({uid}),
+
+        signal:controller.signal
+      }
+    );
+
+    if(!response.ok){
+      cache.set(uid,null);
+      return null;
+    }
+
+    const data=await response.json();
+
+    if(
+      !data ||
+      data.ok!==true ||
+      String(data.author_uid||'')!==uid
+    ){
+      cache.set(uid,null);
+      return null;
+    }
+
+    const identity={
+      author_uid:uid,
+
+      display_name:String(
+        data.display_name||''
+      ),
+
+      profile_url:String(
+        data.profile_url||''
+      ),
+
+      profile_keys:[
+        extractProfileKey(
+          data.profile_url||''
+        ) || uid
+      ]
+    };
+
+    const activities={};
+
+    const groups=(
+      data.groups &&
+      typeof data.groups==='object' &&
+      !Array.isArray(data.groups)
+    )
+      ? data.groups
+      : {};
+
+    for(const [groupId,raw] of Object.entries(
+      groups
+    )){
+      if(!ALLOWED_GROUPS.has(String(groupId)))
+        continue;
+
+      const a=cleanDbActivity(
+        raw,
+        identity
+      );
+
+      if(a)
+        activities[String(groupId)]=a;
+    }
+
+    const result={
+      identity,
+      activities
+    };
+
+    cache.set(uid,result);
+
+    return result;
+
+  }catch(err){
+    console.warn(
+      'db activity lookup failed',
+      uid,
+      String(err?.name||'error')
+    );
+
+    cache.set(uid,null);
+
+    return null;
+
+  }finally{
+    clearTimeout(timer);
+  }
+}
+
 
 function score(q,pq,f){
   const key=norm(f.profile_key);
@@ -476,6 +700,34 @@ function candidateKey(c){
   return `history:${norm(c.identity?.profile_url)}`;
 }
 
+function candidateUid(c){
+  const fromIdentity=String(
+    c?.identity?.author_uid||''
+  ).trim();
+
+  if(/^\d{1,32}$/.test(fromIdentity))
+    return fromIdentity;
+
+  if(c?.type==='member'){
+    const pk=String(
+      c?.member?.profile_key||''
+    ).trim();
+
+    if(/^\d{1,32}$/.test(pk))
+      return pk;
+
+    const urlKey=extractProfileKey(
+      c?.member?.profile_url||''
+    );
+
+    if(/^\d{1,32}$/.test(urlKey))
+      return urlKey;
+  }
+
+  return '';
+}
+
+
 export async function onRequestPost({
   request,
   env
@@ -661,13 +913,62 @@ export async function onRequestPost({
       unique.push(r);
     }
 
+    const dbCache=new Map();
+
+    // Exact numeric UID / numeric profile URL fallback.
+    //
+    // This makes identities that exist only in the new
+    // SQLite-backed group searchable even when they have
+    // not yet appeared in the old activity directory.
+    const exactRaw=String(
+      pq||query
+    ).trim();
+
+    const exactUid=
+      /^\d{1,32}$/.test(exactRaw)
+        ? exactRaw
+        : '';
+
+    if(exactUid){
+      const dbExact=await fetchDbIdentity(
+        exactUid,
+        env,
+        dbCache
+      );
+
+      if(
+        dbExact &&
+        Object.keys(
+          dbExact.activities||{}
+        ).length
+      ){
+        const alreadyPresent=unique.some(
+          r=>candidateUid(r)===exactUid
+        );
+
+        if(!alreadyPresent){
+          unique.unshift({
+            score:99,
+            priority:0,
+            type:'db_history',
+            identity:dbExact.identity,
+            dbActivities:dbExact.activities
+          });
+        }
+      }
+    }
+
     const selected=unique.slice(
       0,
       MAX_RESULTS
     );
 
     const shardCache=new Map();
+    const dbGroupsLoaded=new Set();
     const out=[];
+
+    let dbLookupBudget=
+      MAX_DB_ACTIVITY_LOOKUPS;
 
     for(const r of selected){
       const activities=r.identity
@@ -678,6 +979,44 @@ export async function onRequestPost({
             shardCache
           )
         : {};
+
+      if(r.dbActivities){
+        for(const [gid,a] of Object.entries(
+          r.dbActivities
+        )){
+          activities[gid]=a;
+          dbGroupsLoaded.add(gid);
+        }
+      }
+
+      const uid=candidateUid(r);
+
+      if(
+        uid &&
+        !r.dbActivities &&
+        (
+          dbCache.has(uid) ||
+          dbLookupBudget>0
+        )
+      ){
+        if(!dbCache.has(uid))
+          dbLookupBudget-=1;
+
+        const db=await fetchDbIdentity(
+          uid,
+          env,
+          dbCache
+        );
+
+        if(db){
+          for(const [gid,a] of Object.entries(
+            db.activities||{}
+          )){
+            activities[gid]=a;
+            dbGroupsLoaded.add(gid);
+          }
+        }
+      }
 
       if(r.type==='member'){
         out.push(
@@ -718,7 +1057,24 @@ export async function onRequestPost({
         Number(directory.schema_version||0),
 
       activity_groups_loaded:
-        [...shardCache.keys()],
+        [
+          ...new Set([
+            ...shardCache.keys(),
+            ...dbGroupsLoaded
+          ])
+        ],
+
+      db_activity_uids_loaded:
+        [...dbCache.entries()]
+          .filter(([,v])=>Boolean(v))
+          .map(([uid])=>uid),
+
+      db_activity_configured:
+        Boolean(
+          env?.MEMBER_ACTIVITY_API_TOKEN
+        ),
+
+      db_activity_fail_open:true,
 
       tracked_groups:
         trackedGroups(index.groups||{}),
@@ -742,11 +1098,16 @@ export async function onRequestPost({
   }
 }
 
-export async function onRequestGet(){
+export async function onRequestGet({
+  env
+}){
   return json({
     ok:true,
     service:'fajia-member-check',
-    schema_version:6,
-    activity_mode:'directory_shards'
+    schema_version:7,
+    activity_mode:'directory_shards_plus_db',
+    db_activity_configured:Boolean(
+      env?.MEMBER_ACTIVITY_API_TOKEN
+    )
   });
 }
