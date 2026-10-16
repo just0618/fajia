@@ -12,6 +12,9 @@ const MAX_DB_ACTIVITY_LOOKUPS=5;
 
 const MAX_RESULTS=20;
 
+const recentLimitForGroup=groupId=>
+  String(groupId)==='761299' ? 30 : 20;
+
 const ALLOWED_GROUPS=new Set([
   '763220',
   '761299',
@@ -102,7 +105,7 @@ function cleanActivity(x,groupId,groupName){
     latest_at:x.latest_at||null,
 
     recent:(Array.isArray(x.recent)?x.recent:[])
-      .slice(0,20)
+      .slice(0,recentLimitForGroup(groupId))
       .map(i=>({
         item_id:String(i?.item_id||''),
         source_key:String(i?.source_key||''),
