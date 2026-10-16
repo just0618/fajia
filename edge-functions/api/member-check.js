@@ -293,6 +293,27 @@ async function fetchDbIdentity(
     });
 
     if(!response.ok){
+      let errorBody='';
+
+      try{
+        errorBody=(
+          await response.text()
+        ).slice(0,200);
+      }catch(_err){}
+
+      mark('http_error_detail',{
+        eo_log_uuid:String(
+          response.headers.get('eo-log-uuid')||''
+        ).slice(0,160),
+        date:String(
+          response.headers.get('date')||''
+        ).slice(0,80),
+        content_length:String(
+          response.headers.get('content-length')||''
+        ).slice(0,40),
+        body:errorBody
+      });
+
       cache.set(uid,null);
       return null;
     }
