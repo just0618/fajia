@@ -280,7 +280,16 @@ async function fetchDbIdentity(
     );
 
     mark('http_response',{
-      status:Number(response.status||0)
+      status:Number(response.status||0),
+      server:String(
+        response.headers.get('server')||''
+      ).slice(0,80),
+      content_type:String(
+        response.headers.get('content-type')||''
+      ).slice(0,120),
+      via:String(
+        response.headers.get('via')||''
+      ).slice(0,120)
     });
 
     if(!response.ok){
