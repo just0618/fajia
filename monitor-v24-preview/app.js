@@ -497,6 +497,24 @@ function renderRecent(data) {
                 + notice;
             }
 
+          if (
+            key === "douban"
+            &&
+            r.douban_community_view
+              ?.status
+              === "COMBINED_EVENT_VIEW"
+          ) {
+            notice = [
+              notice,
+              (
+                "当前为豆瓣合并事件热点视图；"
+                + "旧组 / 新组事件级热点尚未拆分。"
+              )
+            ]
+              .filter(Boolean)
+              .join(" ");
+          }
+
           return platformSection(
             label,
             tone,
@@ -535,6 +553,540 @@ function renderRecent(data) {
       )
     );
 }
+
+
+function communityDetailPct(
+  value
+) {
+  const n =
+    Number(value);
+
+  return Number.isFinite(n)
+    ? `${(n * 100).toFixed(1)}%`
+    : "—";
+}
+
+
+function communityDetailCount(
+  value
+) {
+  const n =
+    Number(value);
+
+  return Number.isFinite(n)
+    ? n.toLocaleString("zh-CN")
+    : "—";
+}
+
+
+function communitySourceChip(
+  label,
+  value,
+  tone
+) {
+  const n =
+    Number(value || 0);
+
+  return `
+    <span
+      class="community-source-chip
+             ${esc(tone)}
+             ${n === 0 ? "zero" : ""}"
+    >
+      ${esc(label)}
+      <strong>
+        ${communityDetailCount(n)}
+      </strong>
+    </span>
+  `;
+}
+
+
+function communityDetailRows(
+  items,
+  tone
+) {
+  const rows =
+    arr(items)
+      .slice(0, 6);
+
+  if (!rows.length) {
+    return `
+      <div class="community-detail-empty">
+        当前暂无足够数据
+      </div>
+    `;
+  }
+
+  return rows
+    .map(
+      row => {
+        const share =
+          Number(row?.share);
+
+        const width =
+          Number.isFinite(share)
+            ? Math.max(
+                3,
+                Math.min(
+                  100,
+                  share * 100
+                )
+              )
+            : 0;
+
+        return `
+          <div class="community-detail-row">
+            <div class="community-detail-row-head">
+              <span>
+                ${esc(
+                  row?.label
+                  || "其他"
+                )}
+              </span>
+
+              <strong>
+                ${communityDetailCount(
+                  row?.count
+                )}
+              </strong>
+            </div>
+
+            <div
+              class="community-detail-bar
+                     ${esc(tone)}"
+            >
+              <span
+                style="width:${
+                  width.toFixed(1)
+                }%"
+              ></span>
+            </div>
+          </div>
+        `;
+      }
+    )
+    .join("");
+}
+
+
+function renderPositiveCommunitySources(
+  data
+) {
+  const box =
+    $("#positive-community-sources");
+
+  if (!box) {
+    return;
+  }
+
+  const positive =
+    data?.positive_feedback
+    || {};
+
+  const summary =
+    positive
+      .douban_community_summary
+    || {};
+
+  const themes =
+    arr(
+      positive
+        ?.by_platform
+        ?.douban
+        ?.main_themes
+    )
+      .filter(
+        row =>
+          row?.community_counts
+      );
+
+  if (!themes.length) {
+    box.innerHTML = "";
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="community-detail-head">
+      <div>
+        <div class="community-detail-kicker">
+          DOUBAN COMMUNITY SOURCE
+        </div>
+
+        <h3>
+          豆瓣正向主题来自哪些社区
+        </h3>
+      </div>
+
+      <p>
+        ${
+          esc(
+            summary.note
+            || (
+              "社区级正向样本较少，"
+              + "仅用于说明主题来源。"
+            )
+          )
+        }
+      </p>
+    </div>
+
+    <div class="community-positive-summary">
+      ${communitySourceChip(
+        "旧组正向样本",
+        summary.old_group_eligible_rows,
+        "old"
+      )}
+
+      ${communitySourceChip(
+        "新组正向样本",
+        summary.new_group_eligible_rows,
+        "new"
+      )}
+
+      ${communitySourceChip(
+        "其他来源",
+        summary.other_sources_eligible_rows,
+        "other"
+      )}
+    </div>
+
+    <div class="community-source-theme-list">
+      ${themes
+        .map(
+          theme => {
+            const counts =
+              theme.community_counts
+              || {};
+
+            return `
+              <div class="community-source-theme-row">
+                <div class="community-source-theme-title">
+                  <strong>
+                    ${esc(
+                      theme.title
+                      || "其他正向反馈"
+                    )}
+                  </strong>
+
+                  <span>
+                    豆瓣合计
+                    ${communityDetailCount(
+                      theme.support
+                    )}
+                  </span>
+                </div>
+
+                <div class="community-source-chips">
+                  ${communitySourceChip(
+                    "旧组",
+                    counts.old_group,
+                    "old"
+                  )}
+
+                  ${communitySourceChip(
+                    "新组",
+                    counts.new_group,
+                    "new"
+                  )}
+
+                  ${communitySourceChip(
+                    "其他",
+                    counts.other_sources,
+                    "other"
+                  )}
+                </div>
+              </div>
+            `;
+          }
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+
+function renderNegativeCommunityBreakdown(
+  data
+) {
+  const box =
+    $("#negative-community-breakdown");
+
+  if (!box) {
+    return;
+  }
+
+  const block =
+    data
+      ?.negative_feedback
+      ?.douban_by_community
+    || {};
+
+  if (
+    block.status !== "READY"
+  ) {
+    box.innerHTML = "";
+    return;
+  }
+
+  const oldGroup =
+    block.old_group
+    || {};
+
+  const newGroup =
+    block.new_group
+    || {};
+
+  const other =
+    block.other_sources
+    || {};
+
+  const card = (
+    label,
+    group,
+    tone
+  ) => `
+    <article
+      class="community-detail-card ${esc(tone)}"
+    >
+      <div class="community-detail-card-head">
+        <div>
+          <span>
+            ${
+              tone === "old"
+                ? "OLD GROUP"
+                : "NEW GROUP"
+            }
+          </span>
+
+          <h4>
+            ${esc(label)}
+          </h4>
+        </div>
+
+        <div class="community-detail-rate">
+          <strong>
+            ${communityDetailPct(
+              group.rate
+            )}
+          </strong>
+
+          <span>
+            负面占比
+          </span>
+        </div>
+      </div>
+
+      <div class="community-detail-card-meta">
+        当前识别
+        <strong>
+          ${communityDetailCount(
+            group.eligible_rows
+          )}
+        </strong>
+        条负向讨论
+      </div>
+
+      <div class="community-detail-list">
+        ${communityDetailRows(
+          group.items,
+          tone
+        )}
+      </div>
+    </article>
+  `;
+
+  box.innerHTML = `
+    <div class="community-detail-head">
+      <div>
+        <div class="community-detail-kicker">
+          DOUBAN COMMUNITY
+        </div>
+
+        <h3>
+          豆瓣内部 · 主要负面
+        </h3>
+      </div>
+
+      <p>
+        旧组与新组分别统计；
+        其他豆瓣来源当前有
+        ${communityDetailCount(
+          other.eligible_rows
+        )}
+        条负向讨论，不纳入主比较。
+      </p>
+    </div>
+
+    <div class="community-detail-grid">
+      ${card(
+        "旧组",
+        oldGroup,
+        "old"
+      )}
+
+      ${card(
+        "新组",
+        newGroup,
+        "new"
+      )}
+    </div>
+  `;
+}
+
+
+function renderTargetCommunityBreakdown(
+  data
+) {
+  const box =
+    $("#negative-target-community");
+
+  if (!box) {
+    return;
+  }
+
+  const block =
+    data
+      ?.negative_targets
+      ?.douban_by_community
+    || {};
+
+  if (
+    block.status !== "READY"
+  ) {
+    box.innerHTML = "";
+    return;
+  }
+
+  const oldGroup =
+    block.old_group
+    || {};
+
+  const newGroup =
+    block.new_group
+    || {};
+
+  const other =
+    block.other_sources
+    || {};
+
+  const card = (
+    label,
+    group,
+    tone
+  ) => {
+    const unresolved =
+      Number(
+        group.unresolved_count
+        || 0
+      );
+
+    return `
+      <article
+        class="community-detail-card ${esc(tone)}"
+      >
+        <div class="community-detail-card-head">
+          <div>
+            <span>
+              ${
+                tone === "old"
+                  ? "OLD GROUP"
+                  : "NEW GROUP"
+              }
+            </span>
+
+            <h4>
+              ${esc(label)}
+            </h4>
+          </div>
+
+          <div class="community-detail-rate">
+            <strong>
+              ${communityDetailCount(
+                group.resolved_rows
+              )}
+            </strong>
+
+            <span>
+              已明确
+            </span>
+          </div>
+        </div>
+
+        <div class="community-detail-card-meta">
+          共
+          <strong>
+            ${communityDetailCount(
+              group.eligible_rows
+            )}
+          </strong>
+          条负向讨论进入对象归因
+        </div>
+
+        <div class="community-detail-list">
+          ${communityDetailRows(
+            group.items,
+            tone
+          )}
+        </div>
+
+        ${
+          unresolved > 0
+            ? `
+              <div class="community-detail-warning">
+                另有
+                <strong>
+                  ${communityDetailCount(
+                    unresolved
+                  )}
+                </strong>
+                条对象尚未明确归类
+              </div>
+            `
+            : ""
+        }
+      </article>
+    `;
+  };
+
+  box.innerHTML = `
+    <div class="community-detail-head">
+      <div>
+        <div class="community-detail-kicker">
+          DOUBAN COMMUNITY
+        </div>
+
+        <h3>
+          豆瓣内部 · 主要对象
+        </h3>
+      </div>
+
+      <p>
+        REVIEW 不作为正常对象展示；
+        其他豆瓣来源当前有
+        ${communityDetailCount(
+          other.eligible_rows
+        )}
+        条进入对象归因。
+      </p>
+    </div>
+
+    <div class="community-detail-grid">
+      ${card(
+        "旧组",
+        oldGroup,
+        "old"
+      )}
+
+      ${card(
+        "新组",
+        newGroup,
+        "new"
+      )}
+    </div>
+  `;
+}
+
 
 function renderPositive(data) {
   const p =
@@ -1935,9 +2487,16 @@ function renderDashboard(
   );
 
   renderRecent(data);
+
   renderPositive(data);
+  renderPositiveCommunitySources(data);
+
   renderNegative(data);
+  renderNegativeCommunityBreakdown(data);
+
   renderTargets(data);
+  renderTargetCommunityBreakdown(data);
+
   renderSources(data);
   renderPlatformComparison(data);
   renderCommunityComparison(data);

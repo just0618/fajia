@@ -1,6 +1,6 @@
 {
   "version": "FAJIA_MONITOR_FRONTEND_PAYLOAD_V2.4_FORMAL_CANDIDATE_V1.0",
-  "generated_at": "2026-10-16T11:24:36+08:00",
+  "generated_at": "2026-10-16T11:57:56+08:00",
   "meta": {
     "window": "CURRENT_72H",
     "current_72h_rows": 4441,
@@ -13,7 +13,7 @@
     "weibo_recent_updated_at": "2026-10-16T11:07:04+08:00",
     "douban_recent_updated_at": "2026-10-09T03:09:34+08:00",
     "aggregation_updated_at": "2026-10-16T11:05:15+08:00",
-    "community_updated_at": "2026-10-16T11:20:50.028507+08:00"
+    "community_updated_at": "2026-10-16T11:55:27.136194+08:00"
   },
   "publish_readiness": {
     "status": "DEGRADED",
@@ -240,6 +240,110 @@
           }
         ]
       }
+    },
+    "douban_community_view": {
+      "status": "COMBINED_EVENT_VIEW",
+      "note": "当前豆瓣事件级热点仍为合并视图；旧组与新组的事件级热点将在Community Recent Topics 接入后拆分。",
+      "topic_structure": {
+        "old_group": {
+          "kind": "ONTOLOGY_DISTRIBUTION",
+          "distinct_topics": 17,
+          "topic_entropy": 2.3431,
+          "top1_topic_share": 0.2385,
+          "top3_topic_share": 0.5514,
+          "top_topics": [
+            {
+              "label": "粉圈生态",
+              "count": 480,
+              "share": 0.2385
+            },
+            {
+              "label": "日常闲聊",
+              "count": 402,
+              "share": 0.1997
+            },
+            {
+              "label": "舆情争议",
+              "count": 228,
+              "share": 0.1133
+            },
+            {
+              "label": "双人互动",
+              "count": 164,
+              "share": 0.0815
+            },
+            {
+              "label": "单人物料",
+              "count": 121,
+              "share": 0.0601
+            },
+            {
+              "label": "直播",
+              "count": 103,
+              "share": 0.0512
+            },
+            {
+              "label": "公司运营",
+              "count": 103,
+              "share": 0.0512
+            },
+            {
+              "label": "其他",
+              "count": 93,
+              "share": 0.0462
+            }
+          ]
+        },
+        "new_group": {
+          "kind": "ONTOLOGY_DISTRIBUTION",
+          "distinct_topics": 17,
+          "topic_entropy": 2.2974,
+          "top1_topic_share": 0.2601,
+          "top3_topic_share": 0.5346,
+          "top_topics": [
+            {
+              "label": "粉圈生态",
+              "count": 199,
+              "share": 0.2601
+            },
+            {
+              "label": "日常闲聊",
+              "count": 134,
+              "share": 0.1752
+            },
+            {
+              "label": "双人互动",
+              "count": 76,
+              "share": 0.0993
+            },
+            {
+              "label": "公司运营",
+              "count": 64,
+              "share": 0.0837
+            },
+            {
+              "label": "双人物料",
+              "count": 58,
+              "share": 0.0758
+            },
+            {
+              "label": "舆情争议",
+              "count": 46,
+              "share": 0.0601
+            },
+            {
+              "label": "行程动态",
+              "count": 45,
+              "share": 0.0588
+            },
+            {
+              "label": "线下活动",
+              "count": 36,
+              "share": 0.0471
+            }
+          ]
+        }
+      }
     }
   },
   "positive_feedback": {
@@ -346,41 +450,83 @@
             "title": "外形与造型受到赞美",
             "category": "人物表现",
             "tier": "MAIN",
-            "support": 6
+            "support": 6,
+            "community_counts": {
+              "old_group": 3,
+              "new_group": 1,
+              "other_sources": 2
+            },
+            "community_total": 6
           },
           {
             "title": "两人的互动细节受到喜欢",
             "category": "互动",
             "tier": "MAIN",
-            "support": 2
+            "support": 2,
+            "community_counts": {
+              "old_group": 2,
+              "new_group": 0,
+              "other_sources": 0
+            },
+            "community_total": 2
           },
           {
             "title": "物料呈现受到好评",
             "category": "运营与物料",
             "tier": "MAIN",
-            "support": 4
+            "support": 4,
+            "community_counts": {
+              "old_group": 0,
+              "new_group": 2,
+              "other_sources": 3
+            },
+            "community_total": 5
           },
           {
             "title": "表演与舞台表现受到好评",
             "category": "人物表现",
             "tier": "MAIN",
-            "support": 5
+            "support": 5,
+            "community_counts": {
+              "old_group": 4,
+              "new_group": 1,
+              "other_sources": 0
+            },
+            "community_total": 5
           },
           {
             "title": "社区讨论氛围获得好评",
             "category": "粉丝社区",
             "tier": "MAIN",
-            "support": 1
+            "support": 1,
+            "community_counts": {
+              "old_group": 0,
+              "new_group": 1,
+              "other_sources": 0
+            },
+            "community_total": 1
           },
           {
             "title": "品牌与物料细节被认为用心",
             "category": "运营与物料",
             "tier": "MAIN",
-            "support": 1
+            "support": 1,
+            "community_counts": {
+              "old_group": 1,
+              "new_group": 0,
+              "other_sources": 0
+            },
+            "community_total": 1
           }
         ],
         "status": "READY"
       }
+    },
+    "douban_community_summary": {
+      "note": "社区级正向样本较少，来源数量用于说明主题来自哪些社区，不单独外推社区整体态度。",
+      "old_group_eligible_rows": 10,
+      "new_group_eligible_rows": 5,
+      "other_sources_eligible_rows": 5
     }
   },
   "negative_feedback": {
@@ -496,6 +642,74 @@
         ],
         "status": "READY"
       }
+    },
+    "douban_by_community": {
+      "status": "READY",
+      "old_group": {
+        "eligible_rows": 88,
+        "rate": 0.0668,
+        "items": [
+          {
+            "label": "运营与管理",
+            "count": 52,
+            "share": 0.5909
+          },
+          {
+            "label": "传言与攻击",
+            "count": 11,
+            "share": 0.125
+          },
+          {
+            "label": "粉丝群体行为",
+            "count": 9,
+            "share": 0.1023
+          },
+          {
+            "label": "其他待复核议题",
+            "count": 7,
+            "share": 0.0795
+          },
+          {
+            "label": "数据与表现",
+            "count": 5,
+            "share": 0.0568
+          },
+          {
+            "label": "支持与执行安排",
+            "count": 4,
+            "share": 0.0455
+          }
+        ]
+      },
+      "new_group": {
+        "eligible_rows": 43,
+        "rate": 0.0835,
+        "items": [
+          {
+            "label": "运营与管理",
+            "count": 32,
+            "share": 0.7442
+          },
+          {
+            "label": "粉丝群体行为",
+            "count": 5,
+            "share": 0.1163
+          },
+          {
+            "label": "数据与表现",
+            "count": 3,
+            "share": 0.0698
+          },
+          {
+            "label": "其他待复核议题",
+            "count": 3,
+            "share": 0.0698
+          }
+        ]
+      },
+      "other_sources": {
+        "eligible_rows": 52
+      }
     }
   },
   "negative_targets": {
@@ -587,6 +801,56 @@
       "count": 120,
       "render_as_normal_target": false,
       "notice": "部分负面讨论的对象仍待核对，未计入普通对象排行。"
+    },
+    "douban_by_community": {
+      "status": "READY",
+      "old_group": {
+        "eligible_rows": 88,
+        "resolved_rows": 50,
+        "unresolved_count": 38,
+        "items": [
+          {
+            "label": "公司与运营",
+            "count": 40,
+            "share": 0.4545
+          },
+          {
+            "label": "粉丝群体行为",
+            "count": 6,
+            "share": 0.0682
+          },
+          {
+            "label": "传言与攻击相关主体",
+            "count": 4,
+            "share": 0.0455
+          },
+          {
+            "label": "支持与执行安排",
+            "count": 1,
+            "share": 0.0114
+          }
+        ]
+      },
+      "new_group": {
+        "eligible_rows": 43,
+        "resolved_rows": 26,
+        "unresolved_count": 17,
+        "items": [
+          {
+            "label": "公司与运营",
+            "count": 25,
+            "share": 0.5814
+          },
+          {
+            "label": "粉丝群体行为",
+            "count": 1,
+            "share": 0.0233
+          }
+        ]
+      },
+      "other_sources": {
+        "eligible_rows": 52
+      }
     }
   },
   "source_discussion": {
@@ -1173,7 +1437,7 @@
     "window": "CURRENT_72H",
     "lineage": {
       "aggregation_cycle_id": "CYCLE_20261016_110340_3508077",
-      "community_version": "FAJIA_COMMUNITY_AGGREGATION_V1.0.3"
+      "community_version": "FAJIA_COMMUNITY_AGGREGATION_V1.0.4"
     },
     "communities": {
       "old_group": {
@@ -1337,10 +1601,10 @@
       "current_72h_rows": 6464
     },
     "current_snapshot": {
-      "generated_at": "2026-10-16T11:24:36+08:00",
+      "generated_at": "2026-10-16T11:57:56+08:00",
       "current_72h_rows": 4441
     },
-    "interval_hours": 157.58,
+    "interval_hours": 158.13,
     "comparison_mode": "OUTSIDE_PREFERRED_WINDOW",
     "comparison_policy": {
       "formal_min_interval_hours": 18.0,
@@ -1350,7 +1614,7 @@
       "mild_move_pp": 3.0
     },
     "max_abs_delta_pp": 13.0,
-    "notice": "当前最近可用 V2.4 基线相隔约 157.6 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
+    "notice": "当前最近可用 V2.4 基线相隔约 158.1 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
     "by_platform": {
       "weibo": {
         "title": "微博",
