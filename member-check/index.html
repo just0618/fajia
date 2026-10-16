@@ -1,5 +1,278 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><title>成员检索 · Fajia Online</title><style>
 :root{--bg:#faf7f5;--text:#29262c;--muted:#817980;--line:#eadfe2;--pink:#ff8aa1;--green:#237a4b;--greenbg:#edf8f1;--amber:#8a6100;--amberbg:#fff6d9;--red:#9e4051;--redbg:#fff0f2;--graybg:#f5f3f4;--blue:#3568a8;--bluebg:#eef5ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.6 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}.wrap{max-width:980px;margin:auto;padding:42px 18px 72px}.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--muted);font-weight:700}h1{font-size:34px;line-height:1.2;margin:8px 0}.lead{margin:0;color:var(--muted)}.panel,.result{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:18px}.row{display:grid;grid-template-columns:1fr;gap:12px}label{font-weight:650;display:block;margin-bottom:6px}input{width:100%;font:inherit;border:1px solid #ddd2d6;border-radius:12px;padding:12px 14px;outline:none}input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,138,161,.13)}button{font:inherit;border:0;border-radius:12px;padding:12px 18px;background:var(--text);color:#fff;cursor:pointer;font-weight:700}button:disabled{opacity:.45}.hint,.state{color:var(--muted);font-size:13px}.state{margin-left:10px}.actions{display:flex;align-items:center;margin-top:14px;gap:8px;flex-wrap:wrap}.result-head{display:flex;gap:12px;justify-content:space-between;align-items:flex-start}.name{font-size:19px;font-weight:760}.key{font:12px ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);word-break:break-all}.group-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}.group-card{border:1px solid var(--line);border-radius:14px;padding:13px 14px}.group-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.group-name{font-weight:700}.badge{padding:4px 9px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}.current{background:var(--greenbg);color:var(--green)}.missing{background:var(--amberbg);color:var(--amber)}.exited{background:var(--redbg);color:var(--red)}.never{background:var(--graybg);color:var(--muted)}.history{margin-top:8px;color:var(--muted);font-size:12px;display:grid;gap:2px}.warning{background:#fff8e8;border:1px solid #f1dfad;border-radius:14px;padding:12px 14px;margin-top:14px}.history-only{background:var(--bluebg);border:1px solid #d7e6fb;border-radius:14px;padding:12px 14px;margin-top:14px;color:#315b89}.empty{padding:26px;text-align:center;color:var(--muted)}a{color:inherit}.activity{margin-top:16px;border-top:1px dashed var(--line);padding-top:15px}.activity-title{font-weight:760;font-size:15px}.activity-meta{color:var(--muted);font-size:12px}.activity-list{display:grid;gap:9px;margin-top:10px}.activity-item{border:1px solid var(--line);border-radius:12px;padding:11px 12px}.activity-row{display:flex;gap:10px;justify-content:space-between;align-items:flex-start}.activity-time{font-size:12px;color:var(--muted)}.activity-source{font-size:12px;color:var(--blue);background:var(--bluebg);padding:2px 7px;border-radius:999px;white-space:nowrap;text-decoration:none;display:inline-block}.activity-source[href]:hover{text-decoration:underline}.activity-text{margin-top:6px;white-space:pre-wrap;word-break:break-word}.activity-link{margin-top:5px;font-size:12px;color:var(--muted)}.more{margin-top:9px;background:transparent;color:var(--text);border:1px solid var(--line);padding:8px 11px;font-size:12px}.noactivity{margin-top:10px;color:var(--muted);font-size:13px}@media(min-width:720px){.row{grid-template-columns:260px 1fr}.group-grid{grid-template-columns:repeat(3,1fr)}}
 </style></head><body><main class="wrap"><div class="eyebrow">FAJIA · INTERNAL TOOL</div><h1>豆瓣成员检索</h1><p class="lead">成员状态与历史发言分开检索；未进入成员快照的历史作者也可查询。</p><section class="panel"><div class="row"><div><label for="token">内部访问口令</label><input id="token" type="password" autocomplete="off" placeholder="MEMBER_CHECK_TOKEN"><div class="hint">只随本次请求发送。</div></div><div><label for="query">账号</label><input id="query" type="search" autocomplete="off" placeholder="昵称 / 数字 UID / profile key / 豆瓣个人主页 URL"><div class="hint">昵称可能重名；UID、profile key 或个人主页最可靠。</div></div></div><div class="actions"><button id="search">搜索</button><span class="state" id="state"></span></div></section><section id="summary"></section><section id="results"></section></main><script>
-const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));let trackedGroups=[];function fmt(v){if(!v)return'—';try{return new Date(v).toLocaleString('zh-CN',{hour12:false})}catch{return String(v)}}function meta(s){if(!s)return{c:'never',l:'成员快照中无记录',i:'—'};if(s.status==='CURRENT')return{c:'current',l:Number(s.rejoined_count||0)>0?`当前成员 · 曾重新加入 ${Number(s.rejoined_count)} 次`:'当前成员',i:'✓'};if(s.status==='MISSING')return{c:'missing',l:'待确认是否退出',i:'?'};if(s.status==='EXITED')return{c:'exited',l:'已退出',i:'○'};return{c:'never',l:'状态未知',i:'—'}}function hist(s,ho){if(!s)return`<div class="history"><div>${ho?'成员快照中未发现该组记录，无法据此判断首次快照之前的成员状态。':'当前成员数据库中没有该组成员记录。'}</div></div>`;const a=[];if(s.first_seen_at)a.push(`<div>首次发现：${esc(fmt(s.first_seen_at))}</div>`);if(s.last_seen_at)a.push(`<div>最后确认在组：${esc(fmt(s.last_seen_at))}</div>`);if(s.missing_since)a.push(`<div>首次检测缺失：${esc(fmt(s.missing_since))}</div>`);if(s.exit_confirmed_at)a.push(`<div>确认退出：${esc(fmt(s.exit_confirmed_at))}</div>`);if(Number(s.rejoined_count||0)>0)a.push(`<div>重新加入记录：${Number(s.rejoined_count)} 次</div>`);return`<div class="history">${a.join('')||'<div>已有成员记录，时间信息尚未提供。</div>'}</div>`}function card(g,m){const s=m.memberships?.[String(g.id)]||null,x=meta(s);return`<div class="group-card"><div class="group-top"><div class="group-name">${esc(g.name)}</div><span class="badge ${x.c}">${x.i} ${esc(x.l)}</span></div>${hist(s,m.historical_identity_only)}</div>`}function activityUrl(x){const direct=String(x?.source_url||'').trim(),m=String(x?.item_id||'').match(/^DB_(\d+)_(\d+)$/);if(!m)return direct;const topic=m[1],cid=m[2],start=Number(x?.page_start);if(Number.isInteger(start)&&start>=0)return`https://www.douban.com/group/topic/${topic}/?start=${start}#${cid}`;if(/^https:\/\/www\.douban\.com\/group\/topic\/\d+\//i.test(direct)){try{const u=new URL(direct);u.hash=cid;if(u.searchParams.has('start'))u.searchParams.delete('cid');else u.searchParams.set('cid',cid);return u.toString()}catch(_){}}return`https://www.douban.com/group/topic/${topic}/?cid=${cid}#${cid}`}function activityItem(x){const kind=x.source_type==='reply'?'回复':'发言',src=x.source_label||x.source_key||'豆瓣历史帖子',href=activityUrl(x),badge=href?`<a class="activity-source" href="${esc(href)}" target="_blank" rel="noopener noreferrer" title="打开豆瓣原发言">${esc(src)} · ${esc(kind)} ↗</a>`:`<div class="activity-source">${esc(src)} · ${esc(kind)}</div>`;return`<div class="activity-item"><div class="activity-row"><div class="activity-time">${esc(fmt(x.published_at))}</div>${badge}</div><div class="activity-text">${esc(x.text||'')}</div></div>`}function activityBlockOne(m,gid,a){const items=Array.isArray(a?.recent)?a.recent:[],first=items.slice(0,5),rest=items.slice(5),base=String(m.author_uid||m.profile_key||'').replace(/[^a-zA-Z0-9_-]/g,'_'),id=`act_${base}_${String(gid).replace(/[^a-zA-Z0-9_-]/g,'_')}`,g=trackedGroups.find(x=>String(x.id)===String(gid)),name=a?.group_name||g?.name||gid;return`<div class="activity"><div><div class="activity-title">${esc(name)} · 最近发言</div><div class="activity-meta">全历史已收录 ${Number(a?.total_count||0)} 条${a?.latest_at?` · 最近一条 ${esc(fmt(a.latest_at))}`:''}</div></div><div class="activity-list">${first.map(activityItem).join('')}<div id="${id}" style="display:none">${rest.map(activityItem).join('')}</div></div>${rest.length?`<button class="more" type="button" data-target="${id}" data-count="${rest.length}">查看更多（再显示 ${rest.length} 条）</button>`:''}</div>`}function activityBlock(m){let acts=m?.activities&&typeof m.activities==='object'&&!Array.isArray(m.activities)?m.activities:{};if(!Object.keys(acts).length&&m?.activity){const gid=String(m.activity.group_id||'761299');acts={[gid]:m.activity}}const order=new Map(trackedGroups.map((g,i)=>[String(g.id),i]));const entries=Object.entries(acts).filter(([,a])=>a&&Number(a.total_count||0)>0).sort((a,b)=>(order.get(String(a[0]))??999)-(order.get(String(b[0]))??999));if(!entries.length)return`<div class="activity"><div class="noactivity">当前已收录历史发言中没有匹配到该账号的发言。</div></div>`;return entries.map(([gid,a])=>activityBlockOne(m,gid,a)).join('')}function render(m){const link=m.profile_url?`<a href="${esc(m.profile_url)}" target="_blank" rel="noopener noreferrer">打开豆瓣主页 ↗</a>`:'',uid=m.author_uid?`<div class="key">豆瓣 UID: ${esc(m.author_uid)}</div>`:'',pk=m.profile_key?`<div class="key">profile_key: ${esc(m.profile_key)}</div>`:'',note=m.historical_identity_only?`<div class="history-only"><strong>仅发现历史发言身份。</strong> 当前成员快照中没有该账号的成员记录，因此不能据此判断其当前状态，也不能直接认定为“已退出”。可能在首次成员快照之前已经退出，也可能从未被现有成员快照记录。</div>`:'';return`<article class="result"><div class="result-head"><div><div class="name">${esc(m.display_name||'未记录昵称')}</div>${pk}${uid}</div><div>${link}</div></div>${note}<div class="group-grid">${trackedGroups.map(g=>card(g,m)).join('')}</div>${activityBlock(m)}</article>`}async function run(){const token=$('token').value,query=$('query').value.trim(),st=$('state'),res=$('results'),sum=$('summary');res.innerHTML='';sum.innerHTML='';if(!token){st.textContent='请先输入内部访问口令';return}if(!query){st.textContent='请输入昵称、UID 或主页 URL';return}$('search').disabled=true;st.textContent='查询中…';try{const r=await fetch('/api/member-check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,query})}),d=await r.json();if(r.status===401)throw new Error('口令不正确');if(!r.ok)throw new Error(d.error||'查询失败');trackedGroups=Array.isArray(d.tracked_groups)?d.tracked_groups:[];st.textContent=`成员索引：${fmt(d.generated_at)}${d.activity_generated_at?` · 发言索引：${fmt(d.activity_generated_at)}`:''}`;if(!d.matches?.length){res.innerHTML='<div class="panel empty">成员快照与已收录历史发言中都没有找到匹配账号。</div>';return}if(d.total_matches>1)sum.innerHTML=`<div class="warning">找到 ${d.total_matches} 个候选。昵称可能重名，请结合 UID / profile key / 个人主页确认身份。</div>`;res.innerHTML=d.matches.map(render).join('');document.querySelectorAll('.more').forEach(btn=>btn.addEventListener('click',()=>{const el=document.getElementById(btn.dataset.target);if(!el)return;const open=el.style.display!=='none';el.style.display=open?'none':'contents';btn.textContent=open?`查看更多（再显示 ${btn.dataset.count} 条）`:'收起更多发言'}))}catch(e){st.textContent=e.message||'查询失败'}finally{$('search').disabled=false}}$('search').addEventListener('click',run);$('query').addEventListener('keydown',e=>{if(e.key==='Enter')run()});
+const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));let trackedGroups=[];function fmt(v){if(!v)return'—';try{return new Date(v).toLocaleString('zh-CN',{hour12:false})}catch{return String(v)}}function meta(s){if(!s)return{c:'never',l:'成员快照中无记录',i:'—'};if(s.status==='CURRENT')return{c:'current',l:Number(s.rejoined_count||0)>0?`当前成员 · 曾重新加入 ${Number(s.rejoined_count)} 次`:'当前成员',i:'✓'};if(s.status==='MISSING')return{c:'missing',l:'待确认是否退出',i:'?'};if(s.status==='EXITED')return{c:'exited',l:'已退出',i:'○'};return{c:'never',l:'状态未知',i:'—'}}function hist(s,ho){if(!s)return`<div class="history"><div>${ho?'成员快照中未发现该组记录，无法据此判断首次快照之前的成员状态。':'当前成员数据库中没有该组成员记录。'}</div></div>`;const a=[];if(s.first_seen_at)a.push(`<div>首次发现：${esc(fmt(s.first_seen_at))}</div>`);if(s.last_seen_at)a.push(`<div>最后确认在组：${esc(fmt(s.last_seen_at))}</div>`);if(s.missing_since)a.push(`<div>首次检测缺失：${esc(fmt(s.missing_since))}</div>`);if(s.exit_confirmed_at)a.push(`<div>确认退出：${esc(fmt(s.exit_confirmed_at))}</div>`);if(Number(s.rejoined_count||0)>0)a.push(`<div>重新加入记录：${Number(s.rejoined_count)} 次</div>`);return`<div class="history">${a.join('')||'<div>已有成员记录，时间信息尚未提供。</div>'}</div>`}function card(g,m){const s=m.memberships?.[String(g.id)]||null,x=meta(s);return`<div class="group-card"><div class="group-top"><div class="group-name">${esc(g.name)}</div><span class="badge ${x.c}">${x.i} ${esc(x.l)}</span></div>${hist(s,m.historical_identity_only)}</div>`}function activityUrl(x){const direct=String(x?.source_url||'').trim(),m=String(x?.item_id||'').match(/^DB_(\d+)_(\d+)$/);if(!m)return direct;const topic=m[1],cid=m[2],start=Number(x?.page_start);if(Number.isInteger(start)&&start>=0)return`https://www.douban.com/group/topic/${topic}/?start=${start}#${cid}`;if(/^https:\/\/www\.douban\.com\/group\/topic\/\d+\//i.test(direct)){try{const u=new URL(direct);u.hash=cid;if(u.searchParams.has('start'))u.searchParams.delete('cid');else u.searchParams.set('cid',cid);return u.toString()}catch(_){}}return`https://www.douban.com/group/topic/${topic}/?cid=${cid}#${cid}`}function activityItem(x){const kind=x.source_type==='reply'?'回复':'发言',src=x.source_label||x.source_key||'豆瓣历史帖子',href=activityUrl(x),badge=href?`<a class="activity-source" href="${esc(href)}" target="_blank" rel="noopener noreferrer" title="打开豆瓣原发言">${esc(src)} · ${esc(kind)} ↗</a>`:`<div class="activity-source">${esc(src)} · ${esc(kind)}</div>`;return`<div class="activity-item"><div class="activity-row"><div class="activity-time">${esc(fmt(x.published_at))}</div>${badge}</div><div class="activity-text">${esc(x.text||'')}</div></div>`}function activityHasRows(a){
+  return !!a&&(
+    Number(a.total_count||0)>0||
+    (
+      Array.isArray(a.recent)&&
+      a.recent.length>0
+    )
+  )
+}
+
+function activityBlockOne(
+  m,
+  gid,
+  a,
+  opts={}
+){
+  const items=
+    Array.isArray(a?.recent)
+      ? a.recent
+      : [];
+
+  const first=items.slice(0,5);
+  const rest=items.slice(5);
+
+  const base=String(
+    m.author_uid||
+    m.profile_key||
+    ''
+  ).replace(
+    /[^a-zA-Z0-9_-]/g,
+    '_'
+  );
+
+  const blockKey=String(
+    opts.key||gid
+  ).replace(
+    /[^a-zA-Z0-9_-]/g,
+    '_'
+  );
+
+  const id=
+    `act_${base}_${blockKey}`;
+
+  const g=trackedGroups.find(
+    x=>String(x.id)===String(gid)
+  );
+
+  const name=
+    opts.name||
+    a?.group_name||
+    g?.name||
+    gid;
+
+  const suffix=
+    opts.suffix||
+    '最近发言';
+
+  return `
+    <div class="activity">
+      <div>
+        <div class="activity-title">
+          ${esc(name)} · ${esc(suffix)}
+        </div>
+
+        <div class="activity-meta">
+          全历史已收录 ${Number(a?.total_count||0)} 条
+          ${
+            a?.latest_at
+              ? ` · 最近一条 ${esc(fmt(a.latest_at))}`
+              : ''
+          }
+        </div>
+      </div>
+
+      <div class="activity-list">
+        ${first.map(activityItem).join('')}
+
+        <div
+          id="${id}"
+          style="display:none"
+        >
+          ${rest.map(activityItem).join('')}
+        </div>
+      </div>
+
+      ${
+        rest.length
+          ? `
+            <button
+              class="more"
+              type="button"
+              data-target="${id}"
+              data-count="${rest.length}"
+            >
+              查看更多（再显示 ${rest.length} 条）
+            </button>
+          `
+          : ''
+      }
+    </div>
+  `;
+}
+
+function activityBlock(m){
+  let acts=
+    m?.activities&&
+    typeof m.activities==='object'&&
+    !Array.isArray(m.activities)
+      ? m.activities
+      : {};
+
+  if(
+    !Object.keys(acts).length&&
+    m?.activity
+  ){
+    const gid=String(
+      m.activity.group_id||
+      '761299'
+    );
+
+    acts={
+      [gid]:m.activity
+    };
+  }
+
+  const order=new Map(
+    trackedGroups.map(
+      (g,i)=>[
+        String(g.id),
+        i
+      ]
+    )
+  );
+
+  const entries=
+    Object.entries(acts)
+      .filter(([,a])=>{
+        if(!a)
+          return false;
+
+        if(activityHasRows(a))
+          return true;
+
+        const supplemental=
+          a.supplemental&&
+          typeof a.supplemental==='object'&&
+          !Array.isArray(a.supplemental)
+            ? a.supplemental
+            : {};
+
+        return Object.values(
+          supplemental
+        ).some(
+          activityHasRows
+        );
+      })
+      .sort(
+        (a,b)=>
+          (order.get(String(a[0]))??999)
+          -
+          (order.get(String(b[0]))??999)
+      );
+
+  if(!entries.length){
+    return `
+      <div class="activity">
+        <div class="noactivity">
+          当前已收录历史发言中没有匹配到该账号的发言。
+        </div>
+      </div>
+    `;
+  }
+
+  const blocks=[];
+
+  for(const [gid,a] of entries){
+
+    /*
+     * 761299:
+     * main chat + two independently quota'd
+     * supplemental towers.
+     */
+    if(String(gid)==='761299'){
+
+      if(activityHasRows(a)){
+        blocks.push(
+          activityBlockOne(
+            m,
+            gid,
+            a,
+            {
+              key:'761299_main',
+              suffix:'闲聊楼 · 最近发言'
+            }
+          )
+        );
+      }
+
+      const supplemental=
+        a?.supplemental&&
+        typeof a.supplemental==='object'&&
+        !Array.isArray(a.supplemental)
+          ? a.supplemental
+          : {};
+
+      for(
+        const topic of [
+          '502292130',
+          '502372097'
+        ]
+      ){
+        const section=
+          supplemental[topic];
+
+        if(
+          !activityHasRows(section)
+        ){
+          continue;
+        }
+
+        blocks.push(
+          activityBlockOne(
+            m,
+            gid,
+            section,
+            {
+              key:
+                `761299_${topic}`,
+
+              name:
+                section.source_label||
+                `补充楼 ${topic}`,
+
+              suffix:
+                '最近发言'
+            }
+          )
+        );
+      }
+
+      continue;
+    }
+
+
+    /*
+     * Other groups retain their previous
+     * one-group / one-block behaviour.
+     */
+    if(activityHasRows(a)){
+      blocks.push(
+        activityBlockOne(
+          m,
+          gid,
+          a
+        )
+      );
+    }
+  }
+
+
+  if(!blocks.length){
+    return `
+      <div class="activity">
+        <div class="noactivity">
+          当前已收录历史发言中没有匹配到该账号的发言。
+        </div>
+      </div>
+    `;
+  }
+
+  return blocks.join('');
+}
+
+function render(m){const link=m.profile_url?`<a href="${esc(m.profile_url)}" target="_blank" rel="noopener noreferrer">打开豆瓣主页 ↗</a>`:'',uid=m.author_uid?`<div class="key">豆瓣 UID: ${esc(m.author_uid)}</div>`:'',pk=m.profile_key?`<div class="key">profile_key: ${esc(m.profile_key)}</div>`:'',note=m.historical_identity_only?`<div class="history-only"><strong>仅发现历史发言身份。</strong> 当前成员快照中没有该账号的成员记录，因此不能据此判断其当前状态，也不能直接认定为“已退出”。可能在首次成员快照之前已经退出，也可能从未被现有成员快照记录。</div>`:'';return`<article class="result"><div class="result-head"><div><div class="name">${esc(m.display_name||'未记录昵称')}</div>${pk}${uid}</div><div>${link}</div></div>${note}<div class="group-grid">${trackedGroups.map(g=>card(g,m)).join('')}</div>${activityBlock(m)}</article>`}async function run(){const token=$('token').value,query=$('query').value.trim(),st=$('state'),res=$('results'),sum=$('summary');res.innerHTML='';sum.innerHTML='';if(!token){st.textContent='请先输入内部访问口令';return}if(!query){st.textContent='请输入昵称、UID 或主页 URL';return}$('search').disabled=true;st.textContent='查询中…';try{const r=await fetch('/api/member-check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,query})}),d=await r.json();if(r.status===401)throw new Error('口令不正确');if(!r.ok)throw new Error(d.error||'查询失败');trackedGroups=Array.isArray(d.tracked_groups)?d.tracked_groups:[];st.textContent=`成员索引：${fmt(d.generated_at)}${d.activity_generated_at?` · 发言索引：${fmt(d.activity_generated_at)}`:''}`;if(!d.matches?.length){res.innerHTML='<div class="panel empty">成员快照与已收录历史发言中都没有找到匹配账号。</div>';return}if(d.total_matches>1)sum.innerHTML=`<div class="warning">找到 ${d.total_matches} 个候选。昵称可能重名，请结合 UID / profile key / 个人主页确认身份。</div>`;res.innerHTML=d.matches.map(render).join('');document.querySelectorAll('.more').forEach(btn=>btn.addEventListener('click',()=>{const el=document.getElementById(btn.dataset.target);if(!el)return;const open=el.style.display!=='none';el.style.display=open?'none':'contents';btn.textContent=open?`查看更多（再显示 ${btn.dataset.count} 条）`:'收起更多发言'}))}catch(e){st.textContent=e.message||'查询失败'}finally{$('search').disabled=false}}$('search').addEventListener('click',run);$('query').addEventListener('keydown',e=>{if(e.key==='Enter')run()});
 </script></body></html>
