@@ -83,49 +83,226 @@ function cleanState(x){
   };
 }
 
-function cleanActivity(x,groupId,groupName){
-  if(!x||typeof x!=='object'||Array.isArray(x))
+function cleanActivity(
+  x,
+  groupId,
+  groupName
+){
+  if(
+    !x ||
+    typeof x!=='object' ||
+    Array.isArray(x)
+  ){
     return null;
+  }
+
+
+  const cleanItemForApi=i=>({
+    item_id:
+      String(i?.item_id||''),
+
+    source_key:
+      String(i?.source_key||''),
+
+    source_label:
+      String(i?.source_label||''),
+
+    source_type:
+      String(i?.source_type||''),
+
+    published_at:
+      i?.published_at||null,
+
+    text:
+      String(i?.text||''),
+
+    page_start:
+      Number.isInteger(
+        Number(i?.page_start)
+      )
+      && Number(i?.page_start)>=0
+        ? Number(i?.page_start)
+        : null,
+
+    source_url:
+      String(
+        i?.source_url||''
+      ),
+
+    reply_to_item_id:
+      String(
+        i?.reply_to_item_id||''
+      )
+  });
+
+
+  const supplemental={};
+
+  if(
+    String(groupId)==='761299' &&
+    x.supplemental &&
+    typeof x.supplemental==='object' &&
+    !Array.isArray(
+      x.supplemental
+    )
+  ){
+    for(
+      const topicId
+      of [
+        '502292130',
+        '502372097'
+      ]
+    ){
+      const section=
+        x.supplemental[
+          topicId
+        ];
+
+      if(
+        !section ||
+        typeof section!=='object' ||
+        Array.isArray(section)
+      ){
+        continue;
+      }
+
+      const recent=(
+        Array.isArray(
+          section.recent
+        )
+          ? section.recent
+          : []
+      )
+        .slice(0,10)
+        .map(cleanItemForApi);
+
+      const totalCount=
+        Math.max(
+          0,
+          Number(
+            section.total_count||0
+          )||0
+        );
+
+      if(
+        totalCount<=0 &&
+        recent.length===0
+      ){
+        continue;
+      }
+
+      supplemental[
+        topicId
+      ]={
+        topic_id:
+          String(
+            section.topic_id||
+            topicId
+          ),
+
+        source_label:
+          String(
+            section.source_label||
+            `补充楼 ${topicId}`
+          ),
+
+        total_count:
+          totalCount,
+
+        latest_at:
+          section.latest_at||
+          null,
+
+        recent
+      };
+    }
+  }
+
+
+  const totalCount=Math.max(
+    0,
+    Number(
+      x.total_count||0
+    )||0
+  );
+
+  const supplementalCount=
+    Object.values(
+      supplemental
+    ).reduce(
+      (n,section)=>
+        n+
+        Math.max(
+          0,
+          Number(
+            section.total_count||0
+          )||0
+        ),
+      0
+    );
+
 
   return {
-    group_id:String(groupId||''),
-    group_name:String(groupName||groupId||''),
+    group_id:
+      String(groupId||''),
 
-    author_uid:String(x.author_uid||''),
-    canonical_name:String(x.canonical_name||''),
-    canonical_profile_url:String(
-      x.canonical_profile_url||''
-    ),
+    group_name:
+      String(
+        groupName||
+        groupId||
+        ''
+      ),
 
-    total_count:Math.max(
-      0,
-      Number(x.total_count||0)||0
-    ),
+    author_uid:
+      String(
+        x.author_uid||''
+      ),
 
-    latest_at:x.latest_at||null,
+    canonical_name:
+      String(
+        x.canonical_name||''
+      ),
 
-    recent:(Array.isArray(x.recent)?x.recent:[])
-      .slice(0,recentLimitForGroup(groupId))
-      .map(i=>({
-        item_id:String(i?.item_id||''),
-        source_key:String(i?.source_key||''),
-        source_label:String(i?.source_label||''),
-        source_type:String(i?.source_type||''),
-        published_at:i?.published_at||null,
-        text:String(i?.text||''),
+    canonical_profile_url:
+      String(
+        x.canonical_profile_url||
+        ''
+      ),
 
-        page_start:
-          Number.isInteger(Number(i?.page_start))
-          && Number(i?.page_start)>=0
-            ? Number(i?.page_start)
-            : null,
+    total_count:
+      totalCount,
 
-        source_url:String(i?.source_url||''),
+    all_total_count:
+      Math.max(
+        totalCount+
+        supplementalCount,
+        Number(
+          x.all_total_count||0
+        )||0
+      ),
 
-        reply_to_item_id:String(
-          i?.reply_to_item_id||''
+    latest_at:
+      x.latest_at||null,
+
+    recent:
+      (
+        Array.isArray(
+          x.recent
         )
-      }))
+          ? x.recent
+          : []
+      )
+        .slice(
+          0,
+          recentLimitForGroup(
+            groupId
+          )
+        )
+        .map(
+          cleanItemForApi
+        ),
+
+    supplemental
   };
 }
 
