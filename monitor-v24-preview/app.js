@@ -1155,6 +1155,460 @@ function insightCard(x) {
   `;
 }
 
+function communityPct(
+  value
+) {
+  const n = Number(value);
+
+  return Number.isFinite(n)
+    ? `${(n * 100).toFixed(1)}%`
+    : "—";
+}
+
+
+function communityValue(
+  value,
+  digits = 0
+) {
+  const n = Number(value);
+
+  return Number.isFinite(n)
+    ? n.toLocaleString(
+        "zh-CN",
+        {
+          maximumFractionDigits:
+            digits,
+          minimumFractionDigits:
+            digits
+        }
+      )
+    : "—";
+}
+
+
+function communityRankRows(
+  items,
+  limit = 4
+) {
+  const rows =
+    arr(items)
+      .slice(
+        0,
+        limit
+      );
+
+  if (!rows.length) {
+    return `
+      <div class="community-empty">
+        暂无足够数据
+      </div>
+    `;
+  }
+
+  return rows
+    .map(
+      item => {
+        const share =
+          Number(
+            item?.share
+          );
+
+        const width =
+          Number.isFinite(
+            share
+          )
+            ? Math.max(
+                4,
+                Math.min(
+                  100,
+                  share * 100
+                )
+              )
+            : 0;
+
+        return `
+          <div class="community-rank-row">
+            <div class="community-rank-head">
+              <span>
+                ${esc(
+                  item?.label
+                  || "其他"
+                )}
+              </span>
+
+              <strong>
+                ${communityValue(
+                  item?.count
+                )}
+              </strong>
+            </div>
+
+            <div class="community-rank-bar">
+              <span
+                style="width:${width.toFixed(
+                  1
+                )}%"
+              ></span>
+            </div>
+          </div>
+        `;
+      }
+    )
+    .join("");
+}
+
+
+function communityMetric(
+  label,
+  value,
+  note = ""
+) {
+  return `
+    <div class="community-metric">
+      <span>
+        ${esc(label)}
+      </span>
+
+      <strong>
+        ${esc(value)}
+      </strong>
+
+      ${
+        note
+          ? `
+            <small>
+              ${esc(note)}
+            </small>
+          `
+          : ""
+      }
+    </div>
+  `;
+}
+
+
+function communityCard(
+  item,
+  key
+) {
+  const activity =
+    item?.activity || {};
+
+  const participation =
+    item?.participation || {};
+
+  const ecology =
+    item?.topic_ecology || {};
+
+  const negative =
+    item?.negative || {};
+
+  const targets =
+    item?.targets || {};
+
+  const unresolved =
+    Number(
+      targets.unresolved_count
+      || 0
+    );
+
+  return `
+    <article
+      class="community-card ${esc(key)}"
+    >
+      <div class="community-card-head">
+        <div>
+          <div class="community-card-kicker">
+            ${
+              key === "old"
+                ? "OLD GROUP"
+                : "NEW GROUP"
+            }
+          </div>
+
+          <h3>
+            ${esc(
+              item?.label || "—"
+            )}
+          </h3>
+        </div>
+
+        <span class="community-window">
+          当前72小时
+        </span>
+      </div>
+
+      <div class="community-metrics">
+        ${communityMetric(
+          "讨论量",
+          communityValue(
+            activity.rows
+          )
+        )}
+
+        ${communityMetric(
+          "参与人数",
+          communityValue(
+            activity.unique_authors
+          ),
+          "匿名去重作者"
+        )}
+
+        ${communityMetric(
+          "参与广度",
+          communityValue(
+            participation
+              .unique_authors_per_100_rows,
+            2
+          ),
+          "每100条对应作者"
+        )}
+
+        ${communityMetric(
+          "负面占比",
+          communityPct(
+            negative.rate
+          )
+        )}
+
+        ${communityMetric(
+          "Top3集中度",
+          communityPct(
+            ecology.top3_share
+          )
+        )}
+
+        ${communityMetric(
+          "话题数",
+          communityValue(
+            ecology.distinct_topics
+          )
+        )}
+      </div>
+
+      <div class="community-subgrid">
+        <div class="community-subsection">
+          <div class="community-subhead">
+            <h4>主要不满</h4>
+            <span>
+              ${communityValue(
+                negative.eligible_rows
+              )} 条负面
+            </span>
+          </div>
+
+          ${communityRankRows(
+            negative.main_directions,
+            4
+          )}
+        </div>
+
+        <div class="community-subsection">
+          <div class="community-subhead">
+            <h4>主要对象</h4>
+            <span>
+              已识别对象
+            </span>
+          </div>
+
+          ${communityRankRows(
+            targets.resolved,
+            4
+          )}
+
+          ${
+            unresolved > 0
+              ? `
+                <div class="community-unresolved">
+                  另有
+                  <strong>
+                    ${communityValue(
+                      unresolved
+                    )}
+                  </strong>
+                  条对象尚未明确归类
+                </div>
+              `
+              : ""
+          }
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+
+function renderCommunityComparison(
+  data
+) {
+  const box =
+    $("#community-comparison");
+
+  const note =
+    $("#community-note");
+
+  if (!box) {
+    return;
+  }
+
+  const block =
+    data?.community_comparison
+    || {};
+
+  const status =
+    String(
+      block.status
+      || "UNAVAILABLE"
+    ).toUpperCase();
+
+  if (
+    status === "UNAVAILABLE"
+    || !block.communities
+  ) {
+    box.innerHTML = `
+      <article class="empty-card">
+        当前快照暂无豆瓣社区拆分数据。
+      </article>
+    `;
+
+    if (note) {
+      note.textContent =
+        "社区对比将在可用的分组数据接入后展示。";
+    }
+
+    return;
+  }
+
+  const oldGroup =
+    block.communities
+      ?.old_group
+    || {};
+
+  const newGroup =
+    block.communities
+      ?.new_group
+    || {};
+
+  const insights =
+    arr(
+      block.insights
+    );
+
+  const other =
+    block.other_sources
+    || {};
+
+  const quality =
+    block.quality
+    || {};
+
+  if (note) {
+    note.textContent =
+      status === "READY"
+        ? (
+          "对比当前72小时旧组与新组的讨论生态；"
+          + "其他豆瓣来源单独保留，不纳入主比较。"
+        )
+        : (
+          "社区数据可展示，但部分质量指标存在提示；"
+          + "请结合覆盖状态阅读。"
+        );
+  }
+
+  box.innerHTML = `
+    <div class="community-status-line">
+      <span
+        class="community-status ${
+          status === "READY"
+            ? "ready"
+            : "degraded"
+        }"
+      >
+        ${
+          status === "READY"
+            ? "数据完整"
+            : "覆盖提示"
+        }
+      </span>
+
+      <span>
+        旧组 / 新组主比较
+      </span>
+    </div>
+
+    <div class="community-grid">
+      ${communityCard(
+        oldGroup,
+        "old"
+      )}
+
+      ${communityCard(
+        newGroup,
+        "new"
+      )}
+    </div>
+
+    ${
+      insights.length
+        ? `
+          <div class="community-insight-list">
+            ${insights
+              .map(
+                x => `
+                  <div class="community-insight">
+                    <span class="community-insight-dot"></span>
+                    <span>
+                      ${esc(x)}
+                    </span>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        `
+        : ""
+    }
+
+    <div class="community-footnote">
+      <div>
+        <strong>其他豆瓣来源</strong>
+        <span>
+          ${communityValue(
+            other.rows
+          )} 条
+          ${
+            Number(
+              other.unique_authors
+            ) > 0
+              ? ` · ${
+                  communityValue(
+                    other.unique_authors
+                  )
+                } 位匿名去重作者`
+              : ""
+          }
+        </span>
+      </div>
+
+      <div>
+        ${
+          Number(
+            quality.unknown_rows
+            || 0
+          ) === 0
+            ? "当前窗口无未归属豆瓣来源。"
+            : `另有 ${
+                communityValue(
+                  quality.unknown_rows
+                )
+              } 条来源待归属。`
+        }
+      </div>
+    </div>
+  `;
+}
+
+
 function renderPlatformComparison(
   data
 ) {
@@ -1486,6 +1940,7 @@ function renderDashboard(
   renderTargets(data);
   renderSources(data);
   renderPlatformComparison(data);
+  renderCommunityComparison(data);
 
   renderStateCard(
     "#discussion-change",
