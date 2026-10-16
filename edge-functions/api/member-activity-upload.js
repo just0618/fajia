@@ -1,5 +1,5 @@
 import { getStore } from '@edgeone/pages-blob';
-const STORE_NAME='fajia-member-index',LEGACY_ACTIVITY_KEY='member-activity/latest.json',ALLOWED_GROUPS=new Set(['763220','761299','761356']),GROUP_NAMES={'763220':'一个月上七天班（贺嘉述专组）','761299':'法述进修学院（旧组）','761356':'法述修炼中'},MAX_IDENTITIES=5000;
+const STORE_NAME='fajia-member-index',ALLOWED_GROUPS=new Set(['763220','761299','761356']),GROUP_NAMES={'763220':'一个月上七天班（贺嘉述专组）','761299':'法述进修学院（旧组）','761356':'法述修炼中'},MAX_IDENTITIES=5000;
 const maxRecentForGroup=groupId=>String(groupId)==='761299'?30:20;
 const json=(d,s=200)=>new Response(JSON.stringify(d),{status:s,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}}),clean=(v,n=500)=>String(v||'').trim().slice(0,n);
 function cleanItem(x,groupId){const id=clean(x?.item_id,180);if(!id)return null;return{item_id:id,group_id:groupId,source_key:clean(x?.source_key,120),source_label:clean(x?.source_label,160),source_type:clean(x?.source_type,40),published_at:clean(x?.published_at,80),text:clean(x?.text,520),page_start:Number.isInteger(Number(x?.page_start))&&Number(x?.page_start)>=0?Number(x?.page_start):null,source_url:clean(x?.source_url,600),reply_to_item_id:clean(x?.reply_to_item_id,180)}}
@@ -72,14 +72,6 @@ const shardKey=`member-activity/${groupId}.json`;
 stage='write_shard';
 await store.setJSON(shardKey,index);
 
-stage='write_legacy';
-/* Migration safety:
-   old group continues to feed the legacy key until member-check
-   has been migrated to shard-aware reads. */
-if(groupId==='761299'){
-  await store.setJSON(LEGACY_ACTIVITY_KEY,index);
-}
-
 stage='completed';
 return json({
   ok:true,
@@ -87,7 +79,7 @@ return json({
   group_id:groupId,
   group_name:groupName,
   shard_key:shardKey,
-  legacy_written:groupId==='761299',
+  legacy_written:false,
   generated_at:index.generated_at,
   member_profiles_with_activity:Object.keys(members).length,
   historical_identities_with_activity:Object.keys(historical_identities).length,
