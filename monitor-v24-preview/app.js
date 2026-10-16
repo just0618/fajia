@@ -309,15 +309,7 @@ function recentTopicCards(items) {
                 )} 条独立支持
               </span>
 
-              ${
-                x.evidence_tier
-                  ? `
-                    <span>
-                      ${esc(x.evidence_tier)}
-                    </span>
-                  `
-                  : ""
-              }
+
 
               ${
                 num(x.reaction_heat_count)
