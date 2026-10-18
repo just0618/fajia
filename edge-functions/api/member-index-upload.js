@@ -1,8 +1,8 @@
 import { getStore } from '@edgeone/pages-blob';
 const STORE_NAME='fajia-member-index';
 const INDEX_KEY='member-index/latest.json';
-const ALLOWED_GROUPS=new Set(['763220','761299','761356']);
-const DEFAULT_NAMES={'763220':'一个月上七天班（贺嘉述专组）','761299':'法述进修学院（旧组）','761356':'法述修炼中'};
+const ALLOWED_GROUPS=new Set(['738719','763220','761299','761356']);
+const DEFAULT_NAMES={'738719':'比奇堡守护爱情专案组','763220':'一个月上七天班（贺嘉述专组）','761299':'法述进修学院（旧组）','761356':'法述修炼中'};
 const VALID_STATUSES=new Set(['CURRENT','MISSING','EXITED']);
 const MAX_MEMBERS=10000;
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}});

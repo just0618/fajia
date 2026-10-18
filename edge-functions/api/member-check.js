@@ -3,6 +3,7 @@ import { getStore } from '@edgeone/pages-blob';
 const STORE_NAME='fajia-member-index';
 const INDEX_KEY='member-index/latest.json';
 const DIRECTORY_KEY='member-activity/identity-directory.json';
+const REVIEW_KEY='member-review/738719/latest.json';
 
 const DB_ACTIVITY_URL=
   'https://data.fajia.online/internal/member-activity';
@@ -16,6 +17,7 @@ const recentLimitForGroup=groupId=>
   String(groupId)==='761299' ? 30 : 20;
 
 const ALLOWED_GROUPS=new Set([
+  '738719',
   '763220',
   '761299',
   '761356'
@@ -983,11 +985,64 @@ export async function onRequestPost({
     const token=String(body.token||'');
     const query=String(body.query||'').trim();
 
+    const mode=String(
+      body.mode||'search'
+    ).trim().toLowerCase();
+
     if(
       !env?.MEMBER_CHECK_TOKEN ||
       token!==env.MEMBER_CHECK_TOKEN
     ){
       return json({error:'unauthorized'},401);
+    }
+
+    if(mode==='review'){
+      const store=getStore({
+        name:STORE_NAME,
+        consistency:'strong'
+      });
+
+      let review=null;
+
+      try{
+        review=await store.get(
+          REVIEW_KEY,
+          {
+            type:'json',
+            consistency:'strong'
+          }
+        );
+      }catch(_){
+        review=null;
+      }
+
+      if(
+        !review ||
+        !Array.isArray(
+          review.members
+        )
+      ){
+        return json(
+          {
+            error:
+              'removal_review_not_ready'
+          },
+          503
+        );
+      }
+
+      return json({
+        ok:true,
+        mode:'review',
+        review
+      });
+    }
+
+    if(mode!=='search'){
+      return json(
+        {error:'invalid_mode'},
+        400
+      );
     }
 
     if(!query||query.length>200)
@@ -1354,8 +1409,9 @@ export async function onRequestGet({
   return json({
     ok:true,
     service:'fajia-member-check',
-    schema_version:7,
+    schema_version:8,
     activity_mode:'directory_shards_plus_db',
+    review_mode:true,
     db_activity_configured:Boolean(
       env?.MEMBER_ACTIVITY_API_TOKEN
     )
