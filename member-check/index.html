@@ -1,6 +1,272 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><title>成员检索 · Fajia Online</title><style>
 :root{--bg:#faf7f5;--text:#29262c;--muted:#817980;--line:#eadfe2;--pink:#ff8aa1;--green:#237a4b;--greenbg:#edf8f1;--amber:#8a6100;--amberbg:#fff6d9;--red:#9e4051;--redbg:#fff0f2;--graybg:#f5f3f4;--blue:#3568a8;--bluebg:#eef5ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.6 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}.wrap{max-width:980px;margin:auto;padding:42px 18px 72px}.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--muted);font-weight:700}h1{font-size:34px;line-height:1.2;margin:8px 0}.lead{margin:0;color:var(--muted)}.panel,.result{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:18px}.row{display:grid;grid-template-columns:1fr;gap:12px}label{font-weight:650;display:block;margin-bottom:6px}input{width:100%;font:inherit;border:1px solid #ddd2d6;border-radius:12px;padding:12px 14px;outline:none}input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,138,161,.13)}button{font:inherit;border:0;border-radius:12px;padding:12px 18px;background:var(--text);color:#fff;cursor:pointer;font-weight:700}button:disabled{opacity:.45}.hint,.state{color:var(--muted);font-size:13px}.state{margin-left:10px}.actions{display:flex;align-items:center;margin-top:14px;gap:8px;flex-wrap:wrap}.result-head{display:flex;gap:12px;justify-content:space-between;align-items:flex-start}.name{font-size:19px;font-weight:760}.key{font:12px ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);word-break:break-all}.group-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}.group-card{border:1px solid var(--line);border-radius:14px;padding:13px 14px}.group-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}.group-name{font-weight:700}.badge{padding:4px 9px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}.current{background:var(--greenbg);color:var(--green)}.missing{background:var(--amberbg);color:var(--amber)}.exited{background:var(--redbg);color:var(--red)}.never{background:var(--graybg);color:var(--muted)}.history{margin-top:8px;color:var(--muted);font-size:12px;display:grid;gap:2px}.warning{background:#fff8e8;border:1px solid #f1dfad;border-radius:14px;padding:12px 14px;margin-top:14px}.history-only{background:var(--bluebg);border:1px solid #d7e6fb;border-radius:14px;padding:12px 14px;margin-top:14px;color:#315b89}.empty{padding:26px;text-align:center;color:var(--muted)}a{color:inherit}.activity{margin-top:16px;border-top:1px dashed var(--line);padding-top:15px}.activity-title{font-weight:760;font-size:15px}.activity-meta{color:var(--muted);font-size:12px}.activity-list{display:grid;gap:9px;margin-top:10px}.activity-item{border:1px solid var(--line);border-radius:12px;padding:11px 12px}.activity-row{display:flex;gap:10px;justify-content:space-between;align-items:flex-start}.activity-time{font-size:12px;color:var(--muted)}.activity-source{font-size:12px;color:var(--blue);background:var(--bluebg);padding:2px 7px;border-radius:999px;white-space:nowrap;text-decoration:none;display:inline-block}.activity-source[href]:hover{text-decoration:underline}.activity-text{margin-top:6px;white-space:pre-wrap;word-break:break-word}.activity-link{margin-top:5px;font-size:12px;color:var(--muted)}.more{margin-top:9px;background:transparent;color:var(--text);border:1px solid var(--line);padding:8px 11px;font-size:12px}.noactivity{margin-top:10px;color:var(--muted);font-size:13px}@media(min-width:720px){.row{grid-template-columns:260px 1fr}.group-grid{grid-template-columns:repeat(3,1fr)}}
-</style></head><body><main class="wrap"><div class="eyebrow">FAJIA · INTERNAL TOOL</div><h1>豆瓣成员检索</h1><p class="lead">成员状态与历史发言分开检索；未进入成员快照的历史作者也可查询。</p><section class="panel"><div class="row"><div><label for="token">内部访问口令</label><input id="token" type="password" autocomplete="off" placeholder="MEMBER_CHECK_TOKEN"><div class="hint">只随本次请求发送。</div></div><div><label for="query">账号</label><input id="query" type="search" autocomplete="off" placeholder="昵称 / 数字 UID / profile key / 豆瓣个人主页 URL"><div class="hint">昵称可能重名；UID、profile key 或个人主页最可靠。</div></div></div><div class="actions"><button id="search">搜索</button><span class="state" id="state"></span></div></section><section id="summary"></section><section id="results"></section></main><script>
+
+.tabs{
+  display:flex;
+  gap:8px;
+  margin-top:18px;
+  padding:5px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  width:max-content;
+  max-width:100%;
+}
+.tab{
+  background:transparent;
+  color:var(--muted);
+  padding:9px 15px;
+  border-radius:10px;
+}
+.tab.active{
+  background:var(--text);
+  color:#fff;
+}
+.view[hidden]{
+  display:none!important;
+}
+.review-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+.review-title{
+  font-size:18px;
+  font-weight:760;
+}
+.review-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:18px;
+}
+.stat-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:15px;
+}
+.stat-value{
+  font-size:28px;
+  line-height:1.1;
+  font-weight:780;
+}
+.stat-label{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:12px;
+}
+.rule-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-top:18px;
+}
+.rule-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:15px;
+}
+.rule-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:flex-start;
+}
+.rule-name{
+  font-weight:760;
+}
+.rule-desc{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:12px;
+}
+.gate-ready{
+  background:var(--greenbg);
+  color:var(--green);
+}
+.gate-wait{
+  background:var(--amberbg);
+  color:var(--amber);
+}
+.gate-blocked{
+  background:var(--redbg);
+  color:var(--red);
+}
+.review-notice{
+  margin-top:18px;
+  background:var(--bluebg);
+  border:1px solid #d7e6fb;
+  border-radius:14px;
+  padding:12px 14px;
+  color:#315b89;
+}
+.review-filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+.review-filter{
+  background:#fff;
+  color:var(--text);
+  border:1px solid var(--line);
+  padding:8px 12px;
+  font-size:12px;
+}
+.review-filter.active{
+  background:var(--text);
+  color:#fff;
+  border-color:var(--text);
+}
+.review-member{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:17px;
+  margin-top:12px;
+}
+.review-member-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+.review-member-meta{
+  margin-top:10px;
+  display:grid;
+  gap:4px;
+  color:var(--muted);
+  font-size:12px;
+}
+.reason-row{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-top:11px;
+}
+.reason-tag{
+  display:inline-block;
+  padding:4px 9px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+.reason-inactive{
+  background:var(--amberbg);
+  color:var(--amber);
+}
+.reason-dual{
+  background:var(--redbg);
+  color:var(--red);
+}
+.review-section-title{
+  margin-top:20px;
+  font-size:13px;
+  font-weight:760;
+  color:var(--muted);
+}
+@media(min-width:720px){
+  .group-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+  .review-grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+  .rule-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+</style></head><body><main class="wrap">
+<div class="eyebrow">FAJIA · INTERNAL TOOL</div>
+<h1>豆瓣成员管理</h1>
+<p class="lead">查询成员状态与历史发言，并复核新组待剔除成员。</p>
+
+<section class="panel">
+  <label for="token">内部访问口令</label>
+  <input
+    id="token"
+    type="password"
+    autocomplete="off"
+    placeholder="MEMBER_CHECK_TOKEN"
+  >
+  <div class="hint">仅随本次请求发送，不会保存在页面中。</div>
+</section>
+
+<nav class="tabs" aria-label="成员管理功能">
+  <button
+    id="tabSearch"
+    class="tab active"
+    type="button"
+  >成员查询</button>
+
+  <button
+    id="tabReview"
+    class="tab"
+    type="button"
+  >待剔除复核</button>
+</nav>
+
+<section id="searchView" class="view">
+  <section class="panel">
+    <label for="query">账号</label>
+    <input
+      id="query"
+      type="search"
+      autocomplete="off"
+      placeholder="昵称 / 数字 UID / profile key / 豆瓣个人主页 URL"
+    >
+    <div class="hint">
+      昵称可能重名；UID、profile key 或个人主页最可靠。
+    </div>
+
+    <div class="actions">
+      <button id="search" type="button">搜索</button>
+      <span class="state" id="state"></span>
+    </div>
+  </section>
+
+  <section id="summary"></section>
+  <section id="results"></section>
+</section>
+
+<section
+  id="reviewView"
+  class="view"
+  hidden
+>
+  <section class="panel">
+    <div class="review-head">
+      <div>
+        <div class="review-title">新组待剔除复核</div>
+        <div class="hint">
+          仅用于人工复核，不会自动移除任何成员。
+        </div>
+      </div>
+
+      <button
+        id="refreshReview"
+        type="button"
+      >刷新名单</button>
+    </div>
+
+    <div
+      class="state"
+      id="reviewState"
+      style="margin:12px 0 0"
+    ></div>
+  </section>
+
+  <section id="reviewSummary"></section>
+  <section id="reviewRules"></section>
+  <section id="reviewFilters"></section>
+  <section id="reviewResults"></section>
+</section>
+
+</main><script>
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));let trackedGroups=[];function fmt(v){if(!v)return'—';try{return new Date(v).toLocaleString('zh-CN',{hour12:false})}catch{return String(v)}}function meta(s){if(!s)return{c:'never',l:'成员快照中无记录',i:'—'};if(s.status==='CURRENT')return{c:'current',l:Number(s.rejoined_count||0)>0?`当前成员 · 曾重新加入 ${Number(s.rejoined_count)} 次`:'当前成员',i:'✓'};if(s.status==='MISSING')return{c:'missing',l:'待确认是否退出',i:'?'};if(s.status==='EXITED')return{c:'exited',l:'已退出',i:'○'};return{c:'never',l:'状态未知',i:'—'}}function hist(s,ho){if(!s)return`<div class="history"><div>${ho?'成员快照中未发现该组记录，无法据此判断首次快照之前的成员状态。':'当前成员数据库中没有该组成员记录。'}</div></div>`;const a=[];if(s.first_seen_at)a.push(`<div>首次发现：${esc(fmt(s.first_seen_at))}</div>`);if(s.last_seen_at)a.push(`<div>最后确认在组：${esc(fmt(s.last_seen_at))}</div>`);if(s.missing_since)a.push(`<div>首次检测缺失：${esc(fmt(s.missing_since))}</div>`);if(s.exit_confirmed_at)a.push(`<div>确认退出：${esc(fmt(s.exit_confirmed_at))}</div>`);if(Number(s.rejoined_count||0)>0)a.push(`<div>重新加入记录：${Number(s.rejoined_count)} 次</div>`);return`<div class="history">${a.join('')||'<div>已有成员记录，时间信息尚未提供。</div>'}</div>`}function card(g,m){const s=m.memberships?.[String(g.id)]||null,x=meta(s);return`<div class="group-card"><div class="group-top"><div class="group-name">${esc(g.name)}</div><span class="badge ${x.c}">${x.i} ${esc(x.l)}</span></div>${hist(s,m.historical_identity_only)}</div>`}function activityUrl(x){const direct=String(x?.source_url||'').trim(),m=String(x?.item_id||'').match(/^DB_(\d+)_(\d+)$/);if(!m)return direct;const topic=m[1],cid=m[2],start=Number(x?.page_start);if(Number.isInteger(start)&&start>=0)return`https://www.douban.com/group/topic/${topic}/?start=${start}#${cid}`;if(/^https:\/\/www\.douban\.com\/group\/topic\/\d+\//i.test(direct)){try{const u=new URL(direct);u.hash=cid;if(u.searchParams.has('start'))u.searchParams.delete('cid');else u.searchParams.set('cid',cid);return u.toString()}catch(_){}}return`https://www.douban.com/group/topic/${topic}/?cid=${cid}#${cid}`}function activityItem(x){const kind=x.source_type==='reply'?'回复':'发言',src=x.source_label||x.source_key||'豆瓣历史帖子',href=activityUrl(x),badge=href?`<a class="activity-source" href="${esc(href)}" target="_blank" rel="noopener noreferrer" title="打开豆瓣原发言">${esc(src)} · ${esc(kind)} ↗</a>`:`<div class="activity-source">${esc(src)} · ${esc(kind)}</div>`;return`<div class="activity-item"><div class="activity-row"><div class="activity-time">${esc(fmt(x.published_at))}</div>${badge}</div><div class="activity-text">${esc(x.text||'')}</div></div>`}function activityHasRows(a){
   return !!a&&(
     Number(a.total_count||0)>0||
@@ -274,5 +540,520 @@ function activityBlock(m){
   return blocks.join('');
 }
 
-function render(m){const link=m.profile_url?`<a href="${esc(m.profile_url)}" target="_blank" rel="noopener noreferrer">打开豆瓣主页 ↗</a>`:'',uid=m.author_uid?`<div class="key">豆瓣 UID: ${esc(m.author_uid)}</div>`:'',pk=m.profile_key?`<div class="key">profile_key: ${esc(m.profile_key)}</div>`:'',note=m.historical_identity_only?`<div class="history-only"><strong>仅发现历史发言身份。</strong> 当前成员快照中没有该账号的成员记录，因此不能据此判断其当前状态，也不能直接认定为“已退出”。可能在首次成员快照之前已经退出，也可能从未被现有成员快照记录。</div>`:'';return`<article class="result"><div class="result-head"><div><div class="name">${esc(m.display_name||'未记录昵称')}</div>${pk}${uid}</div><div>${link}</div></div>${note}<div class="group-grid">${trackedGroups.map(g=>card(g,m)).join('')}</div>${activityBlock(m)}</article>`}async function run(){const token=$('token').value,query=$('query').value.trim(),st=$('state'),res=$('results'),sum=$('summary');res.innerHTML='';sum.innerHTML='';if(!token){st.textContent='请先输入内部访问口令';return}if(!query){st.textContent='请输入昵称、UID 或主页 URL';return}$('search').disabled=true;st.textContent='查询中…';try{const r=await fetch('/api/member-check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,query})}),d=await r.json();if(r.status===401)throw new Error('口令不正确');if(!r.ok)throw new Error(d.error||'查询失败');trackedGroups=Array.isArray(d.tracked_groups)?d.tracked_groups:[];st.textContent=`成员索引：${fmt(d.generated_at)}${d.activity_generated_at?` · 发言索引：${fmt(d.activity_generated_at)}`:''}`;if(!d.matches?.length){res.innerHTML='<div class="panel empty">成员快照与已收录历史发言中都没有找到匹配账号。</div>';return}if(d.total_matches>1)sum.innerHTML=`<div class="warning">找到 ${d.total_matches} 个候选。昵称可能重名，请结合 UID / profile key / 个人主页确认身份。</div>`;res.innerHTML=d.matches.map(render).join('');document.querySelectorAll('.more').forEach(btn=>btn.addEventListener('click',()=>{const el=document.getElementById(btn.dataset.target);if(!el)return;const open=el.style.display!=='none';el.style.display=open?'none':'contents';btn.textContent=open?`查看更多（再显示 ${btn.dataset.count} 条）`:'收起更多发言'}))}catch(e){st.textContent=e.message||'查询失败'}finally{$('search').disabled=false}}$('search').addEventListener('click',run);$('query').addEventListener('keydown',e=>{if(e.key==='Enter')run()});
+function render(m){const link=m.profile_url?`<a href="${esc(m.profile_url)}" target="_blank" rel="noopener noreferrer">打开豆瓣主页 ↗</a>`:'',uid=m.author_uid?`<div class="key">豆瓣 UID: ${esc(m.author_uid)}</div>`:'',pk=m.profile_key?`<div class="key">profile_key: ${esc(m.profile_key)}</div>`:'',note=m.historical_identity_only?`<div class="history-only"><strong>仅发现历史发言身份。</strong> 当前成员快照中没有该账号的成员记录，因此不能据此判断其当前状态，也不能直接认定为“已退出”。可能在首次成员快照之前已经退出，也可能从未被现有成员快照记录。</div>`:'';return`<article class="result"><div class="result-head"><div><div class="name">${esc(m.display_name||'未记录昵称')}</div>${pk}${uid}</div><div>${link}</div></div>${note}<div class="group-grid">${trackedGroups.map(g=>card(g,m)).join('')}</div>${activityBlock(m)}</article>`}async function run(){const token=$('token').value,query=$('query').value.trim(),st=$('state'),res=$('results'),sum=$('summary');res.innerHTML='';sum.innerHTML='';if(!token){st.textContent='请先输入内部访问口令';return}if(!query){st.textContent='请输入昵称、UID 或主页 URL';return}$('search').disabled=true;st.textContent='查询中…';try{const r=await fetch('/api/member-check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token,query})}),d=await r.json();if(r.status===401)throw new Error('口令不正确');if(!r.ok)throw new Error(d.error||'查询失败');trackedGroups=Array.isArray(d.tracked_groups)?d.tracked_groups:[];st.textContent=`成员索引：${fmt(d.generated_at)}${d.activity_generated_at?` · 发言索引：${fmt(d.activity_generated_at)}`:''}`;if(!d.matches?.length){res.innerHTML='<div class="panel empty">成员快照与已收录历史发言中都没有找到匹配账号。</div>';return}if(d.total_matches>1)sum.innerHTML=`<div class="warning">找到 ${d.total_matches} 个候选。昵称可能重名，请结合 UID / profile key / 个人主页确认身份。</div>`;res.innerHTML=d.matches.map(render).join('');document.querySelectorAll('.more').forEach(btn=>btn.addEventListener('click',()=>{const el=document.getElementById(btn.dataset.target);if(!el)return;const open=el.style.display!=='none';el.style.display=open?'none':'contents';btn.textContent=open?`查看更多（再显示 ${btn.dataset.count} 条）`:'收起更多发言'}))}catch(e){st.textContent=e.message||'查询失败'}finally{$('search').disabled=false}}
+let currentReview=null;
+let currentReviewFilter='all';
+
+function setTab(name){
+  const search=name==='search';
+
+  $('searchView').hidden=!search;
+  $('reviewView').hidden=search;
+
+  $('tabSearch').classList.toggle(
+    'active',
+    search
+  );
+
+  $('tabReview').classList.toggle(
+    'active',
+    !search
+  );
+
+  if(!search){
+    loadReview();
+  }
+}
+
+function gateMeta(gate){
+  const status=String(
+    gate?.status||'UNKNOWN'
+  );
+
+  if(gate?.ready){
+    return {
+      cls:'gate-ready',
+      label:'已启用'
+    };
+  }
+
+  const labels={
+    NOT_MATURED:'尚未成熟',
+    ACQUISITION_INCOMPLETE:'采集未完整',
+    ACQUISITION_STALE:'采集状态过期',
+    ACTIVITY_ARTIFACT_STALE:'活动索引过期',
+    NO_COMPLETE_MEMBERSHIP_SNAPSHOT:'缺少完整成员快照',
+    MEMBERSHIP_SNAPSHOT_STALE:'成员快照过期',
+    WAITING_FOR_COMPLETE_MEMBERSHIP_SNAPSHOT:'等待完整成员快照'
+  };
+
+  return {
+    cls:
+      status==='NOT_MATURED'
+        ? 'gate-wait'
+        : 'gate-blocked',
+
+    label:
+      labels[status]||
+      status
+  };
+}
+
+function reasonTags(m){
+  const reasons=
+    Array.isArray(m?.reasons)
+      ? m.reasons
+      : [];
+
+  const out=[];
+
+  if(
+    reasons.includes(
+      'INACTIVE_72H'
+    )
+  ){
+    out.push(
+      '<span class="reason-tag reason-inactive">72h 无活动</span>'
+    );
+  }
+
+  if(
+    reasons.includes(
+      'DUAL_MEMBERSHIP_HJS_SOLO'
+    )
+  ){
+    out.push(
+      '<span class="reason-tag reason-dual">加入贺嘉述专组</span>'
+    );
+  }
+
+  return out.join('');
+}
+
+function observedOrderLabel(v){
+  const labels={
+    HJS_AFTER_NEW_GROUP:
+      '系统首次观察：先新组，后贺嘉述专组',
+
+    HJS_BEFORE_NEW_GROUP:
+      '系统首次观察：先贺嘉述专组，后新组',
+
+    SAME_FIRST_OBSERVATION:
+      '系统首次观察：两组时间相同'
+  };
+
+  return labels[v]||'';
+}
+
+function reviewMember(m){
+  const details=
+    m?.reason_details&&
+    typeof m.reason_details==='object'
+      ? m.reason_details
+      : {};
+
+  const inactive=
+    details.INACTIVE_72H||null;
+
+  const dual=
+    details.DUAL_MEMBERSHIP_HJS_SOLO||null;
+
+  const meta=[];
+
+  if(inactive){
+    if(inactive.latest_activity_at){
+      meta.push(
+        `最近活动：${esc(fmt(inactive.latest_activity_at))}`
+      );
+    }
+
+    if(inactive.activity_window_start){
+      meta.push(
+        `72h 窗口起点：${esc(fmt(inactive.activity_window_start))}`
+      );
+    }
+
+    if(inactive.verified_current_at){
+      meta.push(
+        `成员状态确认：${esc(fmt(inactive.verified_current_at))}`
+      );
+    }
+  }
+
+  if(dual){
+    if(dual.new_group_first_seen_at){
+      meta.push(
+        `新组首次发现：${esc(fmt(dual.new_group_first_seen_at))}`
+      );
+    }
+
+    if(dual.hjs_group_first_seen_at){
+      meta.push(
+        `贺嘉述专组首次发现：${esc(fmt(dual.hjs_group_first_seen_at))}`
+      );
+    }
+
+    const order=observedOrderLabel(
+      dual.observed_join_order
+    );
+
+    if(order){
+      meta.push(
+        esc(order)
+      );
+    }
+  }
+
+  const link=m.profile_url
+    ? `<a href="${esc(m.profile_url)}" target="_blank" rel="noopener noreferrer">打开豆瓣主页 ↗</a>`
+    : '';
+
+  return `
+    <article class="review-member">
+      <div class="review-member-head">
+        <div>
+          <div class="name">
+            ${esc(m.display_name||'未记录昵称')}
+          </div>
+          <div class="key">
+            profile_key: ${esc(m.profile_key||'—')}
+          </div>
+        </div>
+
+        <div>${link}</div>
+      </div>
+
+      <div class="reason-row">
+        ${reasonTags(m)}
+      </div>
+
+      ${
+        meta.length
+          ? `
+            <div class="review-member-meta">
+              ${meta.map(x=>`<div>${x}</div>`).join('')}
+            </div>
+          `
+          : ''
+      }
+    </article>
+  `;
+}
+
+function matchesReviewFilter(m){
+  const reasons=
+    Array.isArray(m?.reasons)
+      ? m.reasons
+      : [];
+
+  const inactive=
+    reasons.includes(
+      'INACTIVE_72H'
+    );
+
+  const dual=
+    reasons.includes(
+      'DUAL_MEMBERSHIP_HJS_SOLO'
+    );
+
+  if(currentReviewFilter==='inactive')
+    return inactive;
+
+  if(currentReviewFilter==='dual')
+    return dual;
+
+  if(currentReviewFilter==='both')
+    return inactive&&dual;
+
+  return true;
+}
+
+function renderReviewMembers(){
+  const all=
+    Array.isArray(
+      currentReview?.members
+    )
+      ? currentReview.members
+      : [];
+
+  const rows=
+    all.filter(
+      matchesReviewFilter
+    );
+
+  if(!rows.length){
+    $('reviewResults').innerHTML=
+      `<div class="panel empty">${
+        all.length
+          ? '当前筛选条件下没有待复核成员。'
+          : '当前没有待复核成员。'
+      }</div>`;
+
+    return;
+  }
+
+  $('reviewResults').innerHTML=
+    rows.map(reviewMember).join('');
+}
+
+function renderReview(review){
+  currentReview=review;
+  currentReviewFilter='all';
+
+  const summary=
+    review?.summary||{};
+
+  $('reviewState').textContent=
+    `待剔除索引：${fmt(review?.generated_at)}`;
+
+  $('reviewSummary').innerHTML=`
+    <div class="review-grid">
+      <div class="stat-card">
+        <div class="stat-value">
+          ${Number(summary.review_members||0)}
+        </div>
+        <div class="stat-label">待复核总数</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-value">
+          ${Number(summary.inactive_72h||0)}
+        </div>
+        <div class="stat-label">72h 无活动</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-value">
+          ${Number(summary.dual_membership_hjs_solo||0)}
+        </div>
+        <div class="stat-label">加入贺嘉述专组</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-value">
+          ${Number(summary.both_reasons||0)}
+        </div>
+        <div class="stat-label">同时命中两项</div>
+      </div>
+    </div>
+
+    <div class="review-notice">
+      此名单仅用于人工复核。
+      系统不会自动移除成员，也不会把“暂时无活动”的成员直接视为待剔除对象。
+    </div>
+  `;
+
+  const gates=
+    review?.rule_gates||{};
+
+  const inactiveGate=
+    gateMeta(
+      gates.INACTIVE_72H
+    );
+
+  const dualGate=
+    gateMeta(
+      gates.DUAL_MEMBERSHIP_HJS_SOLO
+    );
+
+  $('reviewRules').innerHTML=`
+    <div class="review-section-title">
+      规则状态
+    </div>
+
+    <div class="rule-grid">
+      <div class="rule-card">
+        <div class="rule-top">
+          <div class="rule-name">
+            连续 72h 无活动
+          </div>
+
+          <span class="badge ${inactiveGate.cls}">
+            ${esc(inactiveGate.label)}
+          </span>
+        </div>
+
+        <div class="rule-desc">
+          仅在成员连续 CURRENT 满 72 小时、
+          数据采集完整且有成熟后的完整成员快照确认时参与复核。
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <div class="rule-top">
+          <div class="rule-name">
+            新组 × 贺嘉述专组
+          </div>
+
+          <span class="badge ${dualGate.cls}">
+            ${esc(dualGate.label)}
+          </span>
+        </div>
+
+        <div class="rule-desc">
+          当前同时属于新组和贺嘉述专组，
+          且两边最新完整成员快照均已确认后进入复核。
+        </div>
+      </div>
+    </div>
+  `;
+
+  const filters=[
+    [
+      'all',
+      `全部 ${Number(summary.review_members||0)}`
+    ],
+    [
+      'inactive',
+      `72h 无活动 ${Number(summary.inactive_72h||0)}`
+    ],
+    [
+      'dual',
+      `贺嘉述专组 ${Number(summary.dual_membership_hjs_solo||0)}`
+    ],
+    [
+      'both',
+      `同时命中 ${Number(summary.both_reasons||0)}`
+    ]
+  ];
+
+  $('reviewFilters').innerHTML=`
+    <div class="review-filters">
+      ${filters.map(
+        ([key,label])=>`
+          <button
+            type="button"
+            class="review-filter ${
+              key==='all'
+                ? 'active'
+                : ''
+            }"
+            data-review-filter="${key}"
+          >
+            ${esc(label)}
+          </button>
+        `
+      ).join('')}
+    </div>
+  `;
+
+  document
+    .querySelectorAll(
+      '.review-filter'
+    )
+    .forEach(btn=>{
+      btn.addEventListener(
+        'click',
+        ()=>{
+          currentReviewFilter=
+            btn.dataset.reviewFilter||
+            'all';
+
+          document
+            .querySelectorAll(
+              '.review-filter'
+            )
+            .forEach(x=>
+              x.classList.toggle(
+                'active',
+                x===btn
+              )
+            );
+
+          renderReviewMembers();
+        }
+      );
+    });
+
+  renderReviewMembers();
+}
+
+async function loadReview(){
+  const token=
+    $('token').value;
+
+  const state=
+    $('reviewState');
+
+  const button=
+    $('refreshReview');
+
+  $('reviewSummary').innerHTML='';
+  $('reviewRules').innerHTML='';
+  $('reviewFilters').innerHTML='';
+  $('reviewResults').innerHTML='';
+
+  if(!token){
+    state.textContent=
+      '请先输入内部访问口令';
+
+    return;
+  }
+
+  button.disabled=true;
+  state.textContent='加载中…';
+
+  try{
+    const r=await fetch(
+      '/api/member-check',
+      {
+        method:'POST',
+        headers:{
+          'Content-Type':
+            'application/json'
+        },
+        body:JSON.stringify({
+          token,
+          mode:'review'
+        })
+      }
+    );
+
+    const d=await r.json();
+
+    if(r.status===401){
+      throw new Error(
+        '口令不正确'
+      );
+    }
+
+    if(
+      r.status===503 &&
+      d.error===
+        'removal_review_not_ready'
+    ){
+      throw new Error(
+        '待剔除复核数据尚未就绪'
+      );
+    }
+
+    if(!r.ok){
+      throw new Error(
+        d.error||
+        '加载失败'
+      );
+    }
+
+    renderReview(
+      d.review
+    );
+
+  }catch(e){
+    state.textContent=
+      e.message||
+      '加载失败';
+
+    $('reviewResults').innerHTML=
+      '<div class="panel empty">无法加载待剔除复核数据。</div>';
+
+  }finally{
+    button.disabled=false;
+  }
+}
+
+$('search').addEventListener('click',run);
+$('query').addEventListener('keydown',e=>{if(e.key==='Enter')run()});
+$('tabSearch').addEventListener('click',()=>setTab('search'));
+$('tabReview').addEventListener('click',()=>setTab('review'));
+$('refreshReview').addEventListener('click',loadReview);
 </script></body></html>
