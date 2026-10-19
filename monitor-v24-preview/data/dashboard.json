@@ -1,18 +1,18 @@
 {
   "version": "FAJIA_MONITOR_FRONTEND_PAYLOAD_V2.4_FORMAL_CANDIDATE_V1.0",
-  "generated_at": "2026-10-20T05:02:57+08:00",
+  "generated_at": "2026-10-20T05:18:29+08:00",
   "meta": {
     "window": "CURRENT_72H",
-    "current_72h_rows": 6474,
+    "current_72h_rows": 6473,
     "current_72h_source_counts": {
-      "douban_chat": 5510,
+      "douban_chat": 5509,
       "weibo_chaohua": 931,
       "weibo_comment": 20,
       "weibo_repost": 13
     },
     "weibo_recent_updated_at": "2026-10-20T04:33:07+08:00",
     "douban_recent_updated_at": "2026-10-09T03:09:34+08:00",
-    "aggregation_updated_at": "2026-10-20T04:57:35+08:00",
+    "aggregation_updated_at": "2026-10-20T05:14:46+08:00",
     "community_updated_at": null
   },
   "publish_readiness": {
@@ -568,7 +568,7 @@
   "source_discussion": {
     "title": "不同来源在聊什么",
     "window": "CURRENT_72H",
-    "current_rows": 6474,
+    "current_rows": 6473,
     "sources": [
       {
         "source_family": "weibo_chaohua",
@@ -810,7 +810,7 @@
       {
         "source_family": "douban_chat",
         "title": "豆瓣闲聊楼",
-        "rows": 5510,
+        "rows": 5509,
         "coverage": {
           "status": "READY",
           "source_level_claim_allowed": true,
@@ -828,7 +828,7 @@
             "topic_code": "T10",
             "title": "粉圈生态",
             "support_rows": 2112,
-            "share_of_source_rows": 0.3833
+            "share_of_source_rows": 0.3834
           },
           {
             "topic_code": "T16",
@@ -873,16 +873,16 @@
             "share_of_source_rows": 0.0704
           },
           {
-            "topic_code": "T03",
-            "title": "双人物料",
-            "support_rows": 321,
-            "share_of_source_rows": 0.0583
-          },
-          {
             "topic_code": "T13",
             "title": "线下活动",
             "support_rows": 321,
             "share_of_source_rows": 0.0583
+          },
+          {
+            "topic_code": "T03",
+            "title": "双人物料",
+            "support_rows": 320,
+            "share_of_source_rows": 0.0581
           },
           {
             "topic_code": "T02",
@@ -905,8 +905,8 @@
           {
             "topic_code": "T12",
             "title": "考古",
-            "support_rows": 92,
-            "share_of_source_rows": 0.0167
+            "support_rows": 91,
+            "share_of_source_rows": 0.0165
           },
           {
             "topic_code": "T14",
@@ -993,7 +993,7 @@
       },
       "douban": {
         "status": "READY",
-        "rows": 5510,
+        "rows": 5509,
         "source_titles": [
           "豆瓣闲聊楼"
         ],
@@ -1004,7 +1004,7 @@
           {
             "title": "粉圈生态",
             "support_rows": 2112,
-            "share_of_platform_rows": 0.3833
+            "share_of_platform_rows": 0.3834
           },
           {
             "title": "日常闲聊",
@@ -1049,7 +1049,7 @@
         "type": "DIRECT",
         "bucket": "watch",
         "title": "当前样本规模差异较大",
-        "summary": "微博当前纳入 964 条样本，豆瓣当前纳入 5510 条样本。两平台覆盖规模差异较大，占比比较只用于描述当前已覆盖样本，不代表平台总体讨论规模。"
+        "summary": "微博当前纳入 964 条样本，豆瓣当前纳入 5509 条样本。两平台覆盖规模差异较大，占比比较只用于描述当前已覆盖样本，不代表平台总体讨论规模。"
       },
       {
         "type": "DIRECT",
@@ -1084,10 +1084,10 @@
       "current_72h_rows": 6464
     },
     "current_snapshot": {
-      "generated_at": "2026-10-20T05:02:57+08:00",
-      "current_72h_rows": 6474
+      "generated_at": "2026-10-20T05:18:29+08:00",
+      "current_72h_rows": 6473
     },
-    "interval_hours": 247.22,
+    "interval_hours": 247.48,
     "comparison_mode": "OUTSIDE_PREFERRED_WINDOW",
     "comparison_policy": {
       "formal_min_interval_hours": 18.0,
@@ -1097,7 +1097,7 @@
       "mild_move_pp": 3.0
     },
     "max_abs_delta_pp": 16.0,
-    "notice": "当前最近可用 V2.4 基线相隔约 247.2 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
+    "notice": "当前最近可用 V2.4 基线相隔约 247.5 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
     "by_platform": {
       "weibo": {
         "title": "微博",
@@ -1181,7 +1181,7 @@
             "title": "粉圈生态",
             "kind": "RISING",
             "previous_share": 0.3162,
-            "current_share": 0.3833,
+            "current_share": 0.3834,
             "delta_pp": 6.7
           },
           {
