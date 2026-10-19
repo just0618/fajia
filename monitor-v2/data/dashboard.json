@@ -1,12 +1,12 @@
 {
   "version": "FAJIA_MONITOR_FRONTEND_PAYLOAD_V2.2",
   "public_projection_version": "FAJIA_MONITOR_PUBLIC_PAYLOAD_V2.2",
-  "generated_at": "2026-10-20T05:34:16+08:00",
+  "generated_at": "2026-10-20T06:35:19+08:00",
   "meta": {
-    "current_72h_rows": 6472,
+    "current_72h_rows": 6471,
     "current_72h_source_counts": {
-      "douban_chat": 5508,
       "weibo_chaohua": 931,
+      "douban_chat": 5507,
       "weibo_comment": 20,
       "weibo_repost": 13
     }
@@ -23,8 +23,8 @@
     "title": "最近在聊什么",
     "status": "READY",
     "data_window": {
-      "window_start": "2026-10-17T05:29:46+08:00",
-      "window_end": "2026-10-20T05:29:46+08:00"
+      "window_start": "2026-10-17T06:20:55+08:00",
+      "window_end": "2026-10-20T06:20:55+08:00"
     },
     "publishable": true,
     "items": [
@@ -195,7 +195,7 @@
   "source_discussion": {
     "title": "不同来源在聊什么",
     "status": "READY",
-    "current_rows": 6472,
+    "current_rows": 6471,
     "sources": [
       {
         "source_family": "weibo_chaohua",
@@ -354,7 +354,7 @@
       {
         "source_family": "douban_chat",
         "title": "豆瓣闲聊楼",
-        "rows": 5508,
+        "rows": 5507,
         "coverage": {
           "status": "READY",
           "notice": "当前样本量与覆盖范围可用于来源级讨论概览。"
@@ -366,7 +366,7 @@
           },
           {
             "display_title": "日常闲聊",
-            "support_rows": 1443
+            "support_rows": 1442
           },
           {
             "display_title": "舆情争议",
@@ -439,7 +439,7 @@
   "platform_comparison": {
     "status": "READY",
     "weibo_current_rows": 964,
-    "douban_current_rows": 5508,
+    "douban_current_rows": 5507,
     "comparison_generated": true
   },
   "history": {
