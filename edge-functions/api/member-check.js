@@ -457,7 +457,11 @@ async function fetchDbIdentity(
 
         body:JSON.stringify({uid}),
 
-        signal:controller.signal
+        signal:controller.signal,
+
+        eo:{
+          resolveOverride:'106.54.50.117'
+        }
       }
     );
 
