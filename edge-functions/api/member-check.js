@@ -1414,6 +1414,7 @@ export async function onRequestGet({
     ok:true,
     service:'fajia-member-check',
     schema_version:8,
+    build_marker:'resolve-override-97b557c',
     activity_mode:'directory_shards_plus_db',
     review_mode:true,
     db_activity_configured:Boolean(
