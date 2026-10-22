@@ -121,6 +121,9 @@
   color:#fff;
   border-color:var(--text);
 }
+.review-filter:disabled{
+  cursor:not-allowed;
+}
 .review-member{
   background:#fff;
   border:1px solid var(--line);
@@ -573,18 +576,18 @@ function gateMeta(gate){
   if(gate?.ready){
     return {
       cls:'gate-ready',
-      label:'已启用'
+      label:'规则已就绪'
     };
   }
 
   const labels={
-    NOT_MATURED:'尚未成熟',
-    ACQUISITION_INCOMPLETE:'采集未完整',
-    ACQUISITION_STALE:'采集状态过期',
-    ACTIVITY_ARTIFACT_STALE:'活动索引过期',
-    NO_COMPLETE_MEMBERSHIP_SNAPSHOT:'缺少完整成员快照',
-    MEMBERSHIP_SNAPSHOT_STALE:'成员快照过期',
-    WAITING_FOR_COMPLETE_MEMBERSHIP_SNAPSHOT:'等待完整成员快照'
+    NOT_MATURED:'尚未满72h',
+    ACQUISITION_INCOMPLETE:'已满72h，等待数据完整性确认',
+    ACQUISITION_STALE:'等待采集状态恢复',
+    ACTIVITY_ARTIFACT_STALE:'等待活动数据刷新',
+    NO_COMPLETE_MEMBERSHIP_SNAPSHOT:'等待首次完整成员快照',
+    MEMBERSHIP_SNAPSHOT_STALE:'等待成员快照刷新',
+    WAITING_FOR_COMPLETE_MEMBERSHIP_SNAPSHOT:'等待成熟后完整成员快照'
   };
 
   return {
@@ -776,6 +779,18 @@ function renderReviewMembers(){
       ? currentReview.members
       : [];
 
+  const gates=
+    currentReview?.rule_gates||{};
+
+  const inactiveReady=
+    !!gates.INACTIVE_72H?.ready;
+
+  const dualReady=
+    !!gates.DUAL_MEMBERSHIP_HJS_SOLO?.ready;
+
+  const allRulesReady=
+    inactiveReady&&dualReady;
+
   const rows=
     all.filter(
       matchesReviewFilter
@@ -786,7 +801,9 @@ function renderReviewMembers(){
       `<div class="panel empty">${
         all.length
           ? '当前筛选条件下没有待复核成员。'
-          : '当前没有待复核成员。'
+          : allRulesReady
+            ? '当前没有待复核成员。'
+            : '当前暂无已确认待复核成员；仍有规则尚未就绪。'
       }</div>`;
 
     return;
@@ -803,6 +820,59 @@ function renderReview(review){
   const summary=
     review?.summary||{};
 
+  const gates=
+    review?.rule_gates||{};
+
+  const inactiveReady=
+    !!gates.INACTIVE_72H?.ready;
+
+  const dualReady=
+    !!gates.DUAL_MEMBERSHIP_HJS_SOLO?.ready;
+
+  const allRulesReady=
+    inactiveReady&&dualReady;
+
+  const anyRuleReady=
+    inactiveReady||dualReady;
+
+  const confirmedTotal=
+    Number(
+      summary.review_members||0
+    );
+
+  const inactiveCount=
+    inactiveReady
+      ? Number(
+          summary.inactive_72h||0
+        )
+      : '暂不可判定';
+
+  const dualCount=
+    dualReady
+      ? Number(
+          summary.dual_membership_hjs_solo||0
+        )
+      : '暂不可判定';
+
+  const bothCount=
+    allRulesReady
+      ? Number(
+          summary.both_reasons||0
+        )
+      : '暂不可判定';
+
+  const totalDisplay=
+    allRulesReady
+      ? String(confirmedTotal)
+      : anyRuleReady
+        ? `已确认 ${confirmedTotal}`
+        : '暂不可判定';
+
+  const totalLabel=
+    allRulesReady
+      ? '待复核总数'
+      : '当前已确认待复核';
+
   $('reviewState').textContent=
     `待剔除索引：${fmt(review?.generated_at)}`;
 
@@ -810,41 +880,45 @@ function renderReview(review){
     <div class="review-grid">
       <div class="stat-card">
         <div class="stat-value">
-          ${Number(summary.review_members||0)}
+          ${esc(totalDisplay)}
         </div>
-        <div class="stat-label">待复核总数</div>
+        <div class="stat-label">${esc(totalLabel)}</div>
       </div>
 
       <div class="stat-card">
         <div class="stat-value">
-          ${Number(summary.inactive_72h||0)}
+          ${esc(inactiveCount)}
         </div>
         <div class="stat-label">72h 无活动</div>
       </div>
 
       <div class="stat-card">
         <div class="stat-value">
-          ${Number(summary.dual_membership_hjs_solo||0)}
+          ${esc(dualCount)}
         </div>
         <div class="stat-label">加入贺嘉述专组</div>
       </div>
 
       <div class="stat-card">
         <div class="stat-value">
-          ${Number(summary.both_reasons||0)}
+          ${esc(bothCount)}
         </div>
         <div class="stat-label">同时命中两项</div>
       </div>
     </div>
 
     <div class="review-notice">
+      ${
+        allRulesReady
+          ? '全部复核规则均已完成数据确认。'
+          : anyRuleReady
+            ? '部分复核规则尚未就绪；当前人数仅包含已经能够确认的规则结果，不代表最终人数。'
+            : '复核规则尚未完成数据确认，当前人数暂不可判定。'
+      }
       此名单仅用于人工复核。
       系统不会自动移除成员，也不会把“暂时无活动”的成员直接视为待剔除对象。
     </div>
   `;
-
-  const gates=
-    review?.rule_gates||{};
 
   const inactiveGate=
     gateMeta(
@@ -901,26 +975,34 @@ function renderReview(review){
   const filters=[
     [
       'all',
-      `全部 ${Number(summary.review_members||0)}`
+      allRulesReady
+        ? `全部 ${confirmedTotal}`
+        : anyRuleReady
+          ? `已确认 ${confirmedTotal}`
+          : '全部 暂不可判定',
+      true
     ],
     [
       'inactive',
-      `72h 无活动 ${Number(summary.inactive_72h||0)}`
+      `72h 无活动 ${inactiveCount}`,
+      inactiveReady
     ],
     [
       'dual',
-      `贺嘉述专组 ${Number(summary.dual_membership_hjs_solo||0)}`
+      `贺嘉述专组 ${dualCount}`,
+      dualReady
     ],
     [
       'both',
-      `同时命中 ${Number(summary.both_reasons||0)}`
+      `同时命中 ${bothCount}`,
+      allRulesReady
     ]
   ];
 
   $('reviewFilters').innerHTML=`
     <div class="review-filters">
       ${filters.map(
-        ([key,label])=>`
+        ([key,label,enabled])=>`
           <button
             type="button"
             class="review-filter ${
@@ -929,6 +1011,7 @@ function renderReview(review){
                 : ''
             }"
             data-review-filter="${key}"
+            ${enabled?'':'disabled'}
           >
             ${esc(label)}
           </button>
