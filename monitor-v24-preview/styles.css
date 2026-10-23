@@ -1225,3 +1225,14 @@
   }
 }
 
+
+
+/* V24_COMMUNITY_RECENT_SPLIT_V1 */
+/*
+ * Recent Topics desktop hierarchy:
+ * Weibo occupies the full first row;
+ * the two Douban communities sit side-by-side below it.
+ */
+#recent-platforms > *:first-child {
+  grid-column: 1 / -1;
+}

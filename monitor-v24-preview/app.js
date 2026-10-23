@@ -463,7 +463,8 @@ function renderRecent(data) {
 
     const rows = [
       ["weibo", "微博", "weibo"],
-      ["douban", "豆瓣", "douban"]
+    ["douban_old_group", "法述进修学院（旧组）", "douban"],
+    ["douban_new_group", "比奇堡守护爱情专案组（新组）", "douban"]
     ];
 
     box.innerHTML =
