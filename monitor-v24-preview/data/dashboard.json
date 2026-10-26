@@ -1,6 +1,6 @@
 {
   "version": "FAJIA_MONITOR_FRONTEND_PAYLOAD_V2.4_FORMAL_CANDIDATE_V1.0",
-  "generated_at": "2026-10-26T12:54:35+08:00",
+  "generated_at": "2026-10-26T13:10:38+08:00",
   "meta": {
     "window": "CURRENT_72H",
     "current_72h_rows": 2371,
@@ -9,9 +9,9 @@
       "weibo_chaohua": 548
     },
     "weibo_recent_updated_at": "2026-10-26T11:44:37+08:00",
-    "douban_recent_updated_at": null,
+    "douban_recent_updated_at": "2026-10-26T05:01:19.318728+00:00",
     "aggregation_updated_at": "2026-10-26T12:54:16+08:00",
-    "community_updated_at": "2026-10-26T12:54:35.637662+08:00",
+    "community_updated_at": "2026-10-26T13:10:37.734097+08:00",
     "recent_window_start": "2026-10-23T11:09:27+08:00",
     "recent_window_end": "2026-10-26T11:09:27+08:00"
   },
@@ -26,7 +26,7 @@
   },
   "recent_topics": {
     "title": "最近在聊什么",
-    "status": "PARTIAL",
+    "status": "READY",
     "window_policy": "WEIBO_HOTSPOT_CYCLE_CANONICAL_72H",
     "canonical_hotspot_cycle_id": "CYCLE_20261026_110927_3092016",
     "data_window": {
@@ -102,26 +102,323 @@
         ]
       },
       "douban_old_group": {
+        "version": "FAJIA_CURRENT_RECENT_TOPICS_V1.0",
+        "generated_at": "2026-10-26T04:17:29.842424+00:00",
         "platform": "douban",
-        "status": "PENDING_CURRENT_WINDOW",
-        "publishable": false,
+        "status": "READY",
+        "publishable": true,
         "data_window": {
           "window_start": "2026-10-23T11:09:27+08:00",
-          "window_end": "2026-10-26T11:09:27+08:00"
+          "window_end": "2026-10-26T11:09:27+08:00",
+          "freshness_status": "CURRENT",
+          "age_hours_at_build": 1.134
         },
-        "items": [],
-        "notice": "法述进修学院（旧组）当前窗口热点正在生成；不会回退到旧窗口。"
+        "summary": {
+          "upstream_topics": 12,
+          "visible_topics": 11,
+          "visible_families": 8,
+          "displayed_cards": 8,
+          "max_related_topics_per_card": 3,
+          "ranking_mode": "FAMILY_DIVERSIFIED",
+          "one_top_level_card_per_family": true,
+          "long_tail_excluded_from_primary_display": true
+        },
+        "items": [
+          {
+            "rank": 1,
+            "family_id": "FAM02",
+            "family_title": "关于回应不足、不沟通及回避争议的指控",
+            "topic_id": "T021",
+            "title": "当事人被指回应不足、不沟通后仍回避争议",
+            "summary": "围绕某当事人是否采取冷处理、回应不足、不沟通展开讨论，部分用户不满其在被揭穿后仍不正面回应、长期未回应；同时出现关于沟通责任归属的叙事争议，有人称曾主动递话、对方长期未回应，要求厘清到底谁不沟通、谁回应不足。",
+            "evidence_score": 0.9214,
+            "independent_support_count": 6,
+            "reaction_heat_count": 0,
+            "related_topics": [],
+            "family_visible_topic_count": 1
+          },
+          {
+            "rank": 2,
+            "family_id": "FAM05",
+            "family_title": "攻受外貌年龄感与形象讨论",
+            "topic_id": "T013",
+            "title": "粉丝热议某攻显老与攻受年龄差",
+            "summary": "网友围绕某攻观感讨论其是否太装、太主动、显老，并延伸到攻受年龄差是否明显；有人觉得两人像差很多岁，也有人澄清攻受都是02年、攻只大几个月。",
+            "evidence_score": 0.881,
+            "independent_support_count": 9,
+            "reaction_heat_count": 0,
+            "related_topics": [],
+            "family_visible_topic_count": 1
+          },
+          {
+            "rank": 3,
+            "family_id": "FAM03",
+            "family_title": "CP粉对相关艺人互动或内容更新的不满与期待",
+            "topic_id": "T006",
+            "title": "粉丝吐槽直播难看还质疑剧更丑",
+            "summary": "粉丝围绕直播和剧的观感发言，吐槽直播难看并质疑剧更丑，也有人表示想看相关内容。",
+            "evidence_score": 0.8739,
+            "independent_support_count": 4,
+            "reaction_heat_count": 0,
+            "related_topics": [
+              {
+                "topic_id": "T002",
+                "title": "CP粉吐槽相关艺人缺少双人互动，期待双人内容更新",
+                "summary": "CP粉将空虚、回顾旧内容和等待下一次双人互动或内容更新，归因于相关艺人缺少双人互动和双人暧昧营销，期待恢复双人互动或内容更新。",
+                "evidence_score": 0.8675,
+                "independent_support_count": 5,
+                "reaction_heat_count": 0
+              },
+              {
+                "topic_id": "T029",
+                "title": "粉丝等待旧直播打码左边版",
+                "summary": "粉丝表示一直在等遮住屏幕左边的直播版本，想重温旧直播但担心左侧画面及其中人物引发不适，期待打码左边版。",
+                "evidence_score": 0.8397,
+                "independent_support_count": 4,
+                "reaction_heat_count": 0
+              }
+            ],
+            "family_visible_topic_count": 3
+          },
+          {
+            "rank": 4,
+            "family_id": "FAM01",
+            "family_title": "针对法宣阁的抵制、辱骂与退圈要求",
+            "topic_id": "T010",
+            "title": "法宣阁遭豆瓣用户密集咒骂“去死”并被要求退圈消失",
+            "summary": "豆瓣用户与相关评论对法宣阁持续使用死亡诅咒、辱骂和抵制表达，并要求其退圈消失、远离工作、付出代价。",
+            "evidence_score": 0.8425,
+            "independent_support_count": 23,
+            "reaction_heat_count": 0,
+            "related_topics": [
+              {
+                "topic_id": "T011",
+                "title": "粉丝怒斥法宣阁并质疑小法套冷处理、欺骗另一方",
+                "summary": "评论中既有粉丝对法宣阁的强烈愤怒与辱骂，也有粉丝质疑小法套冷处理、拒绝沟通并欺骗另一方与粉丝。",
+                "evidence_score": 0.7339,
+                "independent_support_count": 4,
+                "reaction_heat_count": 0
+              }
+            ],
+            "family_visible_topic_count": 2
+          },
+          {
+            "rank": 5,
+            "family_id": "FAM06",
+            "family_title": "小作文真实性质疑与文本风格讨论",
+            "topic_id": "T023",
+            "title": "某小作文被指AI生成，引发看不懂与是否催吐讨论",
+            "summary": "评论围绕某段文字称其“太神了”“ai写的”“转人工”，也有人表示“好魔幻的文字 有点看不懂了”“很低脂的小作文”，并疑问其是否在“催吐”。",
+            "evidence_score": 0.8398,
+            "independent_support_count": 8,
+            "reaction_heat_count": 0,
+            "related_topics": [],
+            "family_visible_topic_count": 1
+          },
+          {
+            "rank": 6,
+            "family_id": "FAM07",
+            "family_title": "背景细节与公司关联性的猜测",
+            "topic_id": "T027",
+            "title": "粉丝讨论背景与米椒娱乐公司相似是否同一公司或地点",
+            "summary": "粉丝围绕某背景、黑沙发与米椒娱乐公司相似展开讨论，猜测是否为原公司转给当前公司或同一地点；也有人认为公司在上海可能不是，整体以调侃和质疑相似性为主。",
+            "evidence_score": 0.8397,
+            "independent_support_count": 4,
+            "reaction_heat_count": 0,
+            "related_topics": [],
+            "family_visible_topic_count": 1
+          },
+          {
+            "rank": 7,
+            "family_id": "FAM08",
+            "family_title": "删除时机质疑与相关对象嘲讽",
+            "topic_id": "T024",
+            "title": "网友质疑为何现在才删并嘲讽相关对象被送走",
+            "summary": "评论以“我要笑昏了”“终于送走了”等表达嘲讽，同时质疑为何此前不删、现在才删，并提及“案底”“这么恨”等，围绕删除时机和相关对象引发不满与调侃。",
+            "evidence_score": 0.8074,
+            "independent_support_count": 6,
+            "reaction_heat_count": 0,
+            "related_topics": [],
+            "family_visible_topic_count": 1
+          },
+          {
+            "rank": 8,
+            "family_id": "FAM04",
+            "family_title": "7月特定对视画面的两极化评价",
+            "topic_id": "T025",
+            "title": "7月99害羞对视画面引两极：有人称产品极好，有人表达不满及极端言论",
+            "summary": "粉丝围绕“7月”“99”相关画面和产品讨论，有人表示“找不到7月这么好的产品”，并描述“说完99一脸爱意，被回看又害羞低头不敢对视”；同时也有评论称“看得胃好痛”，质疑右边形象，并出现针对相关人员的极端诅咒等不当表达。",
+            "evidence_score": 0.7695,
+            "independent_support_count": 5,
+            "reaction_heat_count": 0,
+            "related_topics": [],
+            "family_visible_topic_count": 1
+          }
+        ]
       },
       "douban_new_group": {
+        "version": "FAJIA_CURRENT_RECENT_TOPICS_V1.0",
+        "generated_at": "2026-10-26T05:01:19.318728+00:00",
         "platform": "douban",
-        "status": "PENDING_CURRENT_WINDOW",
-        "publishable": false,
+        "status": "READY",
+        "publishable": true,
         "data_window": {
           "window_start": "2026-10-23T11:09:27+08:00",
-          "window_end": "2026-10-26T11:09:27+08:00"
+          "window_end": "2026-10-26T11:09:27+08:00",
+          "freshness_status": "CURRENT",
+          "age_hours_at_build": 1.865
         },
-        "items": [],
-        "notice": "比奇堡守护爱情专案组（新组）当前窗口热点正在生成；不会回退到旧窗口。"
+        "summary": {
+          "upstream_topics": 12,
+          "visible_topics": 12,
+          "visible_families": 8,
+          "displayed_cards": 8,
+          "max_related_topics_per_card": 3,
+          "ranking_mode": "FAMILY_DIVERSIFIED",
+          "one_top_level_card_per_family": true,
+          "long_tail_excluded_from_primary_display": true
+        },
+        "items": [
+          {
+            "rank": 1,
+            "family_id": "FAM07",
+            "family_title": "抖音视频发布时间及公开状态的求证",
+            "topic_id": "T068",
+            "title": "粉丝求证抖音视频是否早已公开",
+            "summary": "粉丝围绕相关抖音视频或内容是否早已公开展开讨论，有人寻找10.2早期录屏或截图，有人讨论是否已在11号凌晨或更早公开，并关注内容是否只出现单人。",
+            "evidence_score": 0.9028,
+            "independent_support_count": 7,
+            "reaction_heat_count": 0,
+            "related_topics": [],
+            "family_visible_topic_count": 1
+          },
+          {
+            "rank": 2,
+            "family_id": "FAM04",
+            "family_title": "针对特定方沉默不回应的澄清诉求",
+            "topic_id": "T016",
+            "title": "法宣阁、贺嘉述沉默不回应遭催出面澄清",
+            "summary": "多组评论围绕法宣阁、贺嘉述及相关方迟迟不回应、不澄清展开，认为沉默导致粉丝被动等待和失望，要求当事人出面给说法。",
+            "evidence_score": 0.8736,
+            "independent_support_count": 11,
+            "reaction_heat_count": 0,
+            "related_topics": [],
+            "family_visible_topic_count": 1
+          },
+          {
+            "rank": 3,
+            "family_id": "FAM05",
+            "family_title": "法嘉相关同框动态真假及关系担忧",
+            "topic_id": "T061",
+            "title": "粉丝担忧法嘉相关同框动态真假并质疑是否不再同框",
+            "summary": "评论聚焦法嘉相关同框动态，粉丝担忧是否不再同框，不满信息真假不明、情绪被牵动，并质疑相关人物是否被愚弄。",
+            "evidence_score": 0.8674,
+            "independent_support_count": 16,
+            "reaction_heat_count": 1,
+            "related_topics": [],
+            "family_visible_topic_count": 1
+          },
+          {
+            "rank": 4,
+            "family_id": "FAM06",
+            "family_title": "对相关圈层不公开物料及单人粉丝倾向的质疑",
+            "topic_id": "T063",
+            "title": "粉丝质疑相关圈层玩专属小偶像、不公开物料引单人粉丝情绪争议",
+            "summary": "评论围绕相关圈层是否不公开物料、是否存在披着相关圈层外衣的单人粉丝，以及双向奔赴说法展开，部分粉丝表示厌烦并质疑情绪化言论。",
+            "evidence_score": 0.8606,
+            "independent_support_count": 12,
+            "reaction_heat_count": 0,
+            "related_topics": [],
+            "family_visible_topic_count": 1
+          },
+          {
+            "rank": 5,
+            "family_id": "FAM02",
+            "family_title": "粉丝因等待与不确定性产生的情绪消耗及去留讨论",
+            "topic_id": "T006",
+            "title": "CP停更、缺乏互动或内容更新引发粉丝情绪消耗",
+            "summary": "粉丝因信息不足、相关艺人互动或内容更新少、CP停更而被迫反复分析，出现疲惫、失眠、哭泣等情绪痛苦，只想直接看到更新或互动，期待恢复更新或获得回应。",
+            "evidence_score": 0.8567,
+            "independent_support_count": 10,
+            "reaction_heat_count": 0,
+            "related_topics": [
+              {
+                "topic_id": "T059",
+                "title": "粉丝等待与'提纯'争议引发情绪消耗，部分粉丝离开呼吁放下",
+                "summary": "多条评论围绕粉丝在等待中的疲惫、部分粉丝离开以及对'提纯'操作的争议，表达了情绪消耗，批评相关操作急功近利，并呼吁尽快明确结果或学会放下。",
+                "evidence_score": 0.8204,
+                "independent_support_count": 11,
+                "reaction_heat_count": 0
+              }
+            ],
+            "family_visible_topic_count": 2
+          },
+          {
+            "rank": 6,
+            "family_id": "FAM03",
+            "family_title": "对恢复双人互动或内容更新的具体诉求与质疑",
+            "topic_id": "T045",
+            "title": "粉丝热议是否会回归“麦麸”双人互动",
+            "summary": "粉丝群体围绕是否会回归或继续“麦麸”双人互动展开讨论，部分粉丝催促内容更新、期待互动，也有人因单人收益不佳或客观条件对双人互动的意愿和可能性存疑。",
+            "evidence_score": 0.8555,
+            "independent_support_count": 10,
+            "reaction_heat_count": 0,
+            "related_topics": [
+              {
+                "topic_id": "T065",
+                "title": "粉丝催双人活动或内容更新：质疑为何不安排",
+                "summary": "粉丝围绕双人活动或双人发卖是否还会安排展开讨论，担忧CP粉需求被忽视，并质疑此前可以双人、现在不行；多人表达焦虑与不满，希望后续仍能安排双人活动或内容更新。",
+                "evidence_score": 0.8516,
+                "independent_support_count": 11,
+                "reaction_heat_count": 0
+              }
+            ],
+            "family_visible_topic_count": 2
+          },
+          {
+            "rank": 7,
+            "family_id": "FAM01",
+            "family_title": "CP关系实质状态与解约及提纯争议",
+            "topic_id": "T001",
+            "title": "两人CP疑似落幕，粉丝纠结还有以后",
+            "summary": "围绕两人的CP关系是否结束、是否真解约、故事有没有以后、能否继续支持，以及结束方式突然且不体面、希望明确告别。",
+            "evidence_score": 0.8334,
+            "independent_support_count": 9,
+            "reaction_heat_count": 0,
+            "related_topics": [
+              {
+                "topic_id": "T055",
+                "title": "两位xgg互动谨慎沟通僵持引猜测",
+                "summary": "围绕两位xgg的现实互动与关系进展，评论猜测双方因怕出错、异地或不爱回消息而谨慎发声，也讨论沟通错位、说反话、不说话等僵局；既有“特别好磕”的观感，也有对进展不足的失望，部分声音希望双方能好好沟通、改善局面。",
+                "evidence_score": 0.8334,
+                "independent_support_count": 7,
+                "reaction_heat_count": 0
+              },
+              {
+                "topic_id": "T042",
+                "title": "粉丝质疑法宣阁是否解约并放手贺嘉述",
+                "summary": "粉丝围绕法宣阁是否真的解约、是否不在意CP粉和唯粉、是否会放手贺嘉述展开讨论，并质疑其选择是否属于反向提纯，同时关注“大香港”是否还会出现。",
+                "evidence_score": 0.8126,
+                "independent_support_count": 7,
+                "reaction_heat_count": 0
+              }
+            ],
+            "family_visible_topic_count": 3
+          },
+          {
+            "rank": 8,
+            "family_id": "FAM08",
+            "family_title": "直播安排未定引发的追问",
+            "topic_id": "T028",
+            "title": "月底、回京后直播安排未定，粉丝追问能否开播",
+            "summary": "粉丝围绕月底、周五、回京后及下周直播安排持续追问，部分粉丝担心迟迟不确认是拖延或放置，希望尽快明确并开播。",
+            "evidence_score": 0.8282,
+            "independent_support_count": 8,
+            "reaction_heat_count": 0,
+            "related_topics": [],
+            "family_visible_topic_count": 1
+          }
+        ]
       }
     },
     "douban_community_view": {
@@ -129,7 +426,7 @@
       "old_group": "法述进修学院（旧组）",
       "new_group": "比奇堡守护爱情专案组（新组）",
       "legacy_combined_douban_used": false,
-      "community_shadow_summary": null
+      "community_shadow_summary": "/opt/fajia/runtime/community_recent_shadow_v1/runs/SHADOW_20261026_120843_436402/COMMUNITY_RECENT_SHADOW_SUMMARY.json"
     }
   },
   "positive_feedback": {
@@ -1150,10 +1447,10 @@
       "current_72h_rows": 6464
     },
     "current_snapshot": {
-      "generated_at": "2026-10-26T12:54:35+08:00",
+      "generated_at": "2026-10-26T13:10:38+08:00",
       "current_72h_rows": 2371
     },
-    "interval_hours": 399.08,
+    "interval_hours": 399.34,
     "comparison_mode": "OUTSIDE_PREFERRED_WINDOW",
     "comparison_policy": {
       "formal_min_interval_hours": 18.0,
@@ -1163,7 +1460,7 @@
       "mild_move_pp": 3.0
     },
     "max_abs_delta_pp": 11.7,
-    "notice": "当前最近可用 V2.4 基线相隔约 399.1 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
+    "notice": "当前最近可用 V2.4 基线相隔约 399.3 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
     "by_platform": {
       "weibo": {
         "title": "微博",
