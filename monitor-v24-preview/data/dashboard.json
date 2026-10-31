@@ -1,19 +1,19 @@
 {
   "version": "FAJIA_MONITOR_FRONTEND_PAYLOAD_V2.4_FORMAL_CANDIDATE_V1.0",
-  "generated_at": "2026-11-01T05:16:47+08:00",
+  "generated_at": "2026-11-01T05:32:23+08:00",
   "meta": {
     "window": "CURRENT_72H",
-    "current_72h_rows": 8569,
+    "current_72h_rows": 8568,
     "current_72h_source_counts": {
-      "douban_chat": 6038,
       "weibo_chaohua": 1267,
+      "douban_chat": 6037,
       "weibo_comment": 549,
       "weibo_repost": 715
     },
     "weibo_recent_updated_at": "2026-10-27T23:46:57+08:00",
     "douban_recent_updated_at": null,
-    "aggregation_updated_at": "2026-11-01T05:08:09+08:00",
-    "community_updated_at": "2026-11-01T05:16:46.870313+08:00",
+    "aggregation_updated_at": "2026-11-01T05:25:37+08:00",
+    "community_updated_at": "2026-11-01T05:32:23.668391+08:00",
     "recent_window_start": "2026-10-24T22:58:30+08:00",
     "recent_window_end": "2026-10-27T22:58:30+08:00"
   },
@@ -397,7 +397,7 @@
       "status": "READY",
       "old_group": {
         "eligible_rows": 138,
-        "rate": 0.0797,
+        "rate": 0.0798,
         "items": [
           {
             "label": "运营与管理",
@@ -594,7 +594,7 @@
   "source_discussion": {
     "title": "不同来源在聊什么",
     "window": "CURRENT_72H",
-    "current_rows": 8569,
+    "current_rows": 8568,
     "sources": [
       {
         "source_family": "weibo_chaohua",
@@ -944,7 +944,7 @@
       {
         "source_family": "douban_chat",
         "title": "豆瓣闲聊楼",
-        "rows": 6038,
+        "rows": 6037,
         "coverage": {
           "status": "READY",
           "source_level_claim_allowed": true,
@@ -961,8 +961,8 @@
           {
             "topic_code": "T10",
             "title": "粉圈生态",
-            "support_rows": 2335,
-            "share_of_source_rows": 0.3867
+            "support_rows": 2334,
+            "share_of_source_rows": 0.3866
           },
           {
             "topic_code": "T16",
@@ -980,7 +980,7 @@
             "topic_code": "T99",
             "title": "其他",
             "support_rows": 595,
-            "share_of_source_rows": 0.0985
+            "share_of_source_rows": 0.0986
           },
           {
             "topic_code": "T01",
@@ -1052,7 +1052,7 @@
             "topic_code": "T12",
             "title": "考古",
             "support_rows": 80,
-            "share_of_source_rows": 0.0132
+            "share_of_source_rows": 0.0133
           },
           {
             "topic_code": "T08",
@@ -1127,7 +1127,7 @@
       },
       "douban": {
         "status": "READY",
-        "rows": 6038,
+        "rows": 6037,
         "source_titles": [
           "豆瓣闲聊楼"
         ],
@@ -1137,8 +1137,8 @@
         "topics": [
           {
             "title": "粉圈生态",
-            "support_rows": 2335,
-            "share_of_platform_rows": 0.3867
+            "support_rows": 2334,
+            "share_of_platform_rows": 0.3866
           },
           {
             "title": "日常闲聊",
@@ -1153,7 +1153,7 @@
           {
             "title": "其他",
             "support_rows": 595,
-            "share_of_platform_rows": 0.0985
+            "share_of_platform_rows": 0.0986
           },
           {
             "title": "双人互动",
@@ -1198,14 +1198,14 @@
     "status": "READY",
     "window": "CURRENT_72H",
     "lineage": {
-      "aggregation_cycle_id": "CYCLE_20261101_050540_1149636",
+      "aggregation_cycle_id": "CYCLE_20261101_052310_1154249",
       "community_version": "FAJIA_COMMUNITY_AGGREGATION_V1.0.4"
     },
     "communities": {
       "old_group": {
         "label": "旧组",
         "activity": {
-          "rows": 1731,
+          "rows": 1730,
           "unique_authors": 132
         },
         "participation": {
@@ -1214,14 +1214,14 @@
           "rows_per_unique_author": 13.11
         },
         "topic_ecology": {
-          "entropy": 2.3335,
-          "top1_share": 0.2423,
-          "top3_share": 0.5649,
+          "entropy": 2.3339,
+          "top1_share": 0.242,
+          "top3_share": 0.5648,
           "distinct_topics": 17
         },
         "negative": {
           "eligible_rows": 138,
-          "rate": 0.0797,
+          "rate": 0.0798,
           "main_directions": [
             {
               "label": "运营与管理",
@@ -1383,10 +1383,10 @@
       "current_72h_rows": 6464
     },
     "current_snapshot": {
-      "generated_at": "2026-11-01T05:16:47+08:00",
-      "current_72h_rows": 8569
+      "generated_at": "2026-11-01T05:32:23+08:00",
+      "current_72h_rows": 8568
     },
-    "interval_hours": 535.45,
+    "interval_hours": 535.71,
     "comparison_mode": "OUTSIDE_PREFERRED_WINDOW",
     "comparison_policy": {
       "formal_min_interval_hours": 18.0,
@@ -1396,7 +1396,7 @@
       "mild_move_pp": 3.0
     },
     "max_abs_delta_pp": 13.3,
-    "notice": "当前最近可用 V2.4 基线相隔约 535.4 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
+    "notice": "当前最近可用 V2.4 基线相隔约 535.7 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
     "by_platform": {
       "weibo": {
         "title": "微博",
@@ -1487,8 +1487,8 @@
             "title": "粉圈生态",
             "kind": "RISING",
             "previous_share": 0.3162,
-            "current_share": 0.3867,
-            "delta_pp": 7.1
+            "current_share": 0.3866,
+            "delta_pp": 7.0
           },
           {
             "title": "公司运营",
@@ -1501,7 +1501,7 @@
             "title": "其他",
             "kind": "STABLE",
             "previous_share": 0.0703,
-            "current_share": 0.0985,
+            "current_share": 0.0986,
             "delta_pp": 2.8
           },
           {
