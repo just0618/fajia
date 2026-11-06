@@ -1,19 +1,19 @@
 {
   "version": "FAJIA_MONITOR_FRONTEND_PAYLOAD_V2.4_FORMAL_CANDIDATE_V1.0",
-  "generated_at": "2026-11-06T20:43:07+08:00",
+  "generated_at": "2026-11-06T20:58:51+08:00",
   "meta": {
     "window": "CURRENT_72H",
-    "current_72h_rows": 2413,
+    "current_72h_rows": 2463,
     "current_72h_source_counts": {
-      "douban_chat": 1270,
-      "weibo_chaohua": 606,
-      "weibo_repost": 328,
-      "weibo_comment": 209
+      "weibo_chaohua": 608,
+      "douban_chat": 1284,
+      "weibo_repost": 351,
+      "weibo_comment": 220
     },
     "weibo_recent_updated_at": "2026-10-27T23:46:57+08:00",
     "douban_recent_updated_at": null,
-    "aggregation_updated_at": "2026-11-06T20:28:52+08:00",
-    "community_updated_at": "2026-11-06T20:43:07.780581+08:00",
+    "aggregation_updated_at": "2026-11-06T20:46:35+08:00",
+    "community_updated_at": "2026-11-06T20:58:51.554126+08:00",
     "recent_window_start": "2026-10-24T22:58:30+08:00",
     "recent_window_end": "2026-10-27T22:58:30+08:00"
   },
@@ -130,7 +130,7 @@
     "title": "大家夸了什么",
     "status": "READY",
     "window": "CURRENT_72H",
-    "eligible_rows": 12,
+    "eligible_rows": 13,
     "coverage": {
       "status": "MULTI_PLATFORM_CURRENT",
       "current_platforms": [
@@ -220,7 +220,7 @@
       "note": "社区级正向样本较少，来源数量用于说明主题来自哪些社区，不单独外推社区整体态度。",
       "old_group_eligible_rows": 3,
       "new_group_eligible_rows": 0,
-      "other_sources_eligible_rows": 2
+      "other_sources_eligible_rows": 3
     }
   },
   "negative_feedback": {
@@ -228,20 +228,20 @@
     "description": "汇总本期讨论中较明显的负向反馈、担忧、争议与批评。",
     "status": "READY",
     "window": "CURRENT_72H",
-    "eligible_rows": 265,
+    "eligible_rows": 272,
     "overall": {
       "main_themes": [
         {
           "title": "后援会与组织管理受到质疑",
           "category": "组织管理",
           "tier": "MAIN",
-          "support": 181
+          "support": 187
         },
         {
           "title": "造谣、攻击与负面信息外溢引发不满",
           "category": "舆论环境",
           "tier": "MAIN",
-          "support": 25
+          "support": 26
         },
         {
           "title": "部分粉丝行为引发不满",
@@ -271,7 +271,7 @@
             "title": "后援会与组织管理受到质疑",
             "category": "组织管理",
             "tier": "MAIN",
-            "support": 121
+            "support": 126
           },
           {
             "title": "造谣、攻击与负面信息外溢引发不满",
@@ -295,13 +295,13 @@
             "title": "后援会与组织管理受到质疑",
             "category": "组织管理",
             "tier": "MAIN",
-            "support": 60
+            "support": 61
           },
           {
             "title": "造谣、攻击与负面信息外溢引发不满",
             "category": "舆论环境",
             "tier": "MAIN",
-            "support": 21
+            "support": 22
           },
           {
             "title": "部分粉丝行为引发不满",
@@ -329,7 +329,7 @@
       "status": "READY",
       "old_group": {
         "eligible_rows": 23,
-        "rate": 0.1045,
+        "rate": 0.1027,
         "items": [
           {
             "label": "运营与管理",
@@ -364,26 +364,26 @@
         "items": []
       },
       "other_sources": {
-        "eligible_rows": 106
+        "eligible_rows": 108
       }
     }
   },
   "negative_targets": {
     "title": "负面主要涉及什么",
-    "description": "本期共识别 265 条负面讨论；一条讨论可能同时涉及多个对象。",
+    "description": "本期共识别 272 条负面讨论；一条讨论可能同时涉及多个对象。",
     "status": "READY",
-    "negative_rows": 265,
-    "resolved_rows": 197,
+    "negative_rows": 272,
+    "resolved_rows": 203,
     "targets": [
       {
         "title": "公司 / 运营",
         "category": "组织运营",
-        "support": 157
+        "support": 162
       },
       {
         "title": "造谣 / 攻击 / 外部负面舆论",
         "category": "舆论环境",
-        "support": 15
+        "support": 16
       },
       {
         "title": "部分粉丝行为",
@@ -407,7 +407,7 @@
     },
     "platform_split_status": "SUMMARY_MISMATCH",
     "unresolved_review": {
-      "count": 68,
+      "count": 69,
       "render_as_normal_target": false,
       "notice": "部分负面讨论的对象仍待核对，未计入普通对象排行。"
     },
@@ -442,19 +442,19 @@
         "items": []
       },
       "other_sources": {
-        "eligible_rows": 106
+        "eligible_rows": 108
       }
     }
   },
   "source_discussion": {
     "title": "不同来源在聊什么",
     "window": "CURRENT_72H",
-    "current_rows": 2413,
+    "current_rows": 2463,
     "sources": [
       {
         "source_family": "weibo_chaohua",
         "title": "微博超话",
-        "rows": 606,
+        "rows": 608,
         "coverage": {
           "status": "READY",
           "source_level_claim_allowed": true,
@@ -462,7 +462,7 @@
           "notice": "当前样本量与覆盖范围可用于来源级讨论概览。"
         },
         "display_scope": "SOURCE_LEVEL",
-        "latest_current_published_at": "2026-11-06T18:54:00+08:00",
+        "latest_current_published_at": "2026-11-06T19:35:00+08:00",
         "topic_semantics": {
           "mode": "MULTI_LABEL_UNORDERED",
           "shares_may_sum_above_one": true
@@ -472,91 +472,91 @@
             "topic_code": "T16",
             "title": "日常闲聊",
             "support_rows": 221,
-            "share_of_source_rows": 0.3647
+            "share_of_source_rows": 0.3635
           },
           {
             "topic_code": "T01",
             "title": "双人互动",
             "support_rows": 144,
-            "share_of_source_rows": 0.2376
+            "share_of_source_rows": 0.2368
           },
           {
             "topic_code": "T10",
             "title": "粉圈生态",
-            "support_rows": 140,
-            "share_of_source_rows": 0.231
+            "support_rows": 142,
+            "share_of_source_rows": 0.2336
           },
           {
             "topic_code": "T15",
             "title": "创作安利",
             "support_rows": 103,
-            "share_of_source_rows": 0.17
+            "share_of_source_rows": 0.1694
           },
           {
             "topic_code": "T03",
             "title": "双人物料",
-            "support_rows": 93,
-            "share_of_source_rows": 0.1535
+            "support_rows": 94,
+            "share_of_source_rows": 0.1546
           },
           {
             "topic_code": "T09",
             "title": "公司运营",
             "support_rows": 53,
-            "share_of_source_rows": 0.0875
+            "share_of_source_rows": 0.0872
           },
           {
             "topic_code": "T04",
             "title": "单人物料",
             "support_rows": 38,
-            "share_of_source_rows": 0.0627
+            "share_of_source_rows": 0.0625
           },
           {
             "topic_code": "T99",
             "title": "其他",
             "support_rows": 35,
-            "share_of_source_rows": 0.0578
+            "share_of_source_rows": 0.0576
           },
           {
             "topic_code": "T05",
             "title": "行程动态",
-            "support_rows": 31,
-            "share_of_source_rows": 0.0512
+            "support_rows": 32,
+            "share_of_source_rows": 0.0526
           },
           {
             "topic_code": "T11",
             "title": "舆情争议",
             "support_rows": 30,
-            "share_of_source_rows": 0.0495
+            "share_of_source_rows": 0.0493
           },
           {
             "topic_code": "T02",
             "title": "直播",
             "support_rows": 24,
-            "share_of_source_rows": 0.0396
+            "share_of_source_rows": 0.0395
           },
           {
             "topic_code": "T13",
             "title": "线下活动",
             "support_rows": 19,
-            "share_of_source_rows": 0.0314
+            "share_of_source_rows": 0.0312
           },
           {
             "topic_code": "T06",
             "title": "商务合作",
             "support_rows": 10,
-            "share_of_source_rows": 0.0165
+            "share_of_source_rows": 0.0164
           },
           {
             "topic_code": "T12",
             "title": "考古",
             "support_rows": 3,
-            "share_of_source_rows": 0.005
+            "share_of_source_rows": 0.0049
           },
           {
             "topic_code": "T07",
             "title": "影视作品",
             "support_rows": 3,
-            "share_of_source_rows": 0.005
+            "share_of_source_rows": 0.0049
           },
           {
             "topic_code": "T14",
@@ -569,7 +569,7 @@
       {
         "source_family": "weibo_comment",
         "title": "微博评论区",
-        "rows": 209,
+        "rows": 220,
         "coverage": {
           "status": "EVENT_CONCENTRATED",
           "source_level_claim_allowed": false,
@@ -577,7 +577,7 @@
           "notice": "当前样本高度集中于单一事件/帖子；以下内容仅代表该事件下的反馈，不代表整个来源的总体讨论。"
         },
         "display_scope": "EVENT_FEEDBACK",
-        "latest_current_published_at": "2026-11-06T18:52:43+08:00",
+        "latest_current_published_at": "2026-11-06T19:28:19+08:00",
         "topic_semantics": {
           "mode": "MULTI_LABEL_UNORDERED",
           "shares_may_sum_above_one": true
@@ -586,81 +586,81 @@
           {
             "topic_code": "T03",
             "title": "双人物料",
-            "support_rows": 79,
-            "share_of_source_rows": 0.378
+            "support_rows": 83,
+            "share_of_source_rows": 0.3773
           },
           {
             "topic_code": "T09",
             "title": "公司运营",
-            "support_rows": 67,
-            "share_of_source_rows": 0.3206
+            "support_rows": 69,
+            "share_of_source_rows": 0.3136
           },
           {
             "topic_code": "T10",
             "title": "粉圈生态",
-            "support_rows": 59,
-            "share_of_source_rows": 0.2823
+            "support_rows": 63,
+            "share_of_source_rows": 0.2864
           },
           {
             "topic_code": "T16",
             "title": "日常闲聊",
-            "support_rows": 33,
-            "share_of_source_rows": 0.1579
+            "support_rows": 36,
+            "share_of_source_rows": 0.1636
           },
           {
             "topic_code": "T02",
             "title": "直播",
-            "support_rows": 30,
-            "share_of_source_rows": 0.1435
+            "support_rows": 31,
+            "share_of_source_rows": 0.1409
           },
           {
             "topic_code": "T05",
             "title": "行程动态",
             "support_rows": 28,
-            "share_of_source_rows": 0.134
+            "share_of_source_rows": 0.1273
           },
           {
             "topic_code": "T01",
             "title": "双人互动",
             "support_rows": 25,
-            "share_of_source_rows": 0.1196
+            "share_of_source_rows": 0.1136
+          },
+          {
+            "topic_code": "T99",
+            "title": "其他",
+            "support_rows": 10,
+            "share_of_source_rows": 0.0455
           },
           {
             "topic_code": "T13",
             "title": "线下活动",
             "support_rows": 8,
-            "share_of_source_rows": 0.0383
-          },
-          {
-            "topic_code": "T99",
-            "title": "其他",
-            "support_rows": 8,
-            "share_of_source_rows": 0.0383
+            "share_of_source_rows": 0.0364
           },
           {
             "topic_code": "T11",
             "title": "舆情争议",
-            "support_rows": 7,
-            "share_of_source_rows": 0.0335
+            "support_rows": 8,
+            "share_of_source_rows": 0.0364
           },
           {
             "topic_code": "T06",
             "title": "商务合作",
             "support_rows": 6,
-            "share_of_source_rows": 0.0287
+            "share_of_source_rows": 0.0273
           },
           {
             "topic_code": "T04",
             "title": "单人物料",
-            "support_rows": 4,
-            "share_of_source_rows": 0.0191
+            "support_rows": 5,
+            "share_of_source_rows": 0.0227
           }
         ]
       },
       {
         "source_family": "weibo_repost",
         "title": "微博转发区",
-        "rows": 328,
+        "rows": 351,
         "coverage": {
           "status": "EVENT_CONCENTRATED",
           "source_level_claim_allowed": false,
@@ -668,7 +668,7 @@
           "notice": "当前样本高度集中于单一事件/帖子；以下内容仅代表该事件下的反馈，不代表整个来源的总体讨论。"
         },
         "display_scope": "EVENT_FEEDBACK",
-        "latest_current_published_at": "2026-11-06T18:48:48+08:00",
+        "latest_current_published_at": "2026-11-06T19:52:58+08:00",
         "topic_semantics": {
           "mode": "MULTI_LABEL_UNORDERED",
           "shares_may_sum_above_one": true
@@ -677,87 +677,87 @@
           {
             "topic_code": "T10",
             "title": "粉圈生态",
-            "support_rows": 125,
-            "share_of_source_rows": 0.3811
+            "support_rows": 130,
+            "share_of_source_rows": 0.3704
           },
           {
             "topic_code": "T16",
             "title": "日常闲聊",
-            "support_rows": 114,
-            "share_of_source_rows": 0.3476
+            "support_rows": 123,
+            "share_of_source_rows": 0.3504
           },
           {
             "topic_code": "T03",
             "title": "双人物料",
-            "support_rows": 64,
-            "share_of_source_rows": 0.1951
+            "support_rows": 71,
+            "share_of_source_rows": 0.2023
           },
           {
             "topic_code": "T09",
             "title": "公司运营",
-            "support_rows": 52,
-            "share_of_source_rows": 0.1585
+            "support_rows": 56,
+            "share_of_source_rows": 0.1595
           },
           {
             "topic_code": "T99",
             "title": "其他",
-            "support_rows": 33,
-            "share_of_source_rows": 0.1006
+            "support_rows": 35,
+            "share_of_source_rows": 0.0997
           },
           {
             "topic_code": "T01",
             "title": "双人互动",
-            "support_rows": 26,
-            "share_of_source_rows": 0.0793
+            "support_rows": 27,
+            "share_of_source_rows": 0.0769
           },
           {
             "topic_code": "T05",
             "title": "行程动态",
-            "support_rows": 24,
-            "share_of_source_rows": 0.0732
+            "support_rows": 26,
+            "share_of_source_rows": 0.0741
           },
           {
             "topic_code": "T04",
             "title": "单人物料",
-            "support_rows": 15,
-            "share_of_source_rows": 0.0457
+            "support_rows": 16,
+            "share_of_source_rows": 0.0456
           },
           {
             "topic_code": "T11",
             "title": "舆情争议",
-            "support_rows": 12,
-            "share_of_source_rows": 0.0366
+            "support_rows": 13,
+            "share_of_source_rows": 0.037
+          },
+          {
+            "topic_code": "T02",
+            "title": "直播",
+            "support_rows": 8,
+            "share_of_source_rows": 0.0228
           },
           {
             "topic_code": "T13",
             "title": "线下活动",
             "support_rows": 6,
-            "share_of_source_rows": 0.0183
-          },
-          {
-            "topic_code": "T02",
-            "title": "直播",
-            "support_rows": 6,
-            "share_of_source_rows": 0.0183
+            "share_of_source_rows": 0.0171
           },
           {
             "topic_code": "T15",
             "title": "创作安利",
             "support_rows": 2,
-            "share_of_source_rows": 0.0061
+            "share_of_source_rows": 0.0057
           },
           {
             "topic_code": "T06",
             "title": "商务合作",
             "support_rows": 1,
-            "share_of_source_rows": 0.003
+            "share_of_source_rows": 0.0028
           }
         ]
       },
       {
         "source_family": "douban_chat",
         "title": "豆瓣闲聊楼",
-        "rows": 1270,
+        "rows": 1284,
         "coverage": {
           "status": "READY",
           "source_level_claim_allowed": true,
@@ -765,7 +765,7 @@
           "notice": "当前样本量与覆盖范围可用于来源级讨论概览。"
         },
         "display_scope": "SOURCE_LEVEL",
-        "latest_current_published_at": "2026-11-06T18:52:39+08:00",
+        "latest_current_published_at": "2026-11-06T19:50:50+08:00",
         "topic_semantics": {
           "mode": "MULTI_LABEL_UNORDERED",
           "shares_may_sum_above_one": true
@@ -774,92 +774,92 @@
           {
             "topic_code": "T10",
             "title": "粉圈生态",
-            "support_rows": 489,
-            "share_of_source_rows": 0.385
+            "support_rows": 494,
+            "share_of_source_rows": 0.3847
           },
           {
             "topic_code": "T16",
             "title": "日常闲聊",
-            "support_rows": 398,
-            "share_of_source_rows": 0.3134
+            "support_rows": 403,
+            "share_of_source_rows": 0.3139
           },
           {
             "topic_code": "T11",
             "title": "舆情争议",
-            "support_rows": 211,
-            "share_of_source_rows": 0.1661
+            "support_rows": 213,
+            "share_of_source_rows": 0.1659
           },
           {
             "topic_code": "T99",
             "title": "其他",
-            "support_rows": 131,
-            "share_of_source_rows": 0.1031
+            "support_rows": 129,
+            "share_of_source_rows": 0.1005
           },
           {
             "topic_code": "T04",
             "title": "单人物料",
             "support_rows": 127,
-            "share_of_source_rows": 0.1
+            "share_of_source_rows": 0.0989
           },
           {
             "topic_code": "T01",
             "title": "双人互动",
-            "support_rows": 111,
-            "share_of_source_rows": 0.0874
+            "support_rows": 112,
+            "share_of_source_rows": 0.0872
           },
           {
             "topic_code": "T05",
             "title": "行程动态",
-            "support_rows": 88,
-            "share_of_source_rows": 0.0693
+            "support_rows": 90,
+            "share_of_source_rows": 0.0701
           },
           {
             "topic_code": "T09",
             "title": "公司运营",
-            "support_rows": 85,
-            "share_of_source_rows": 0.0669
+            "support_rows": 87,
+            "share_of_source_rows": 0.0678
           },
           {
             "topic_code": "T03",
             "title": "双人物料",
-            "support_rows": 75,
-            "share_of_source_rows": 0.0591
+            "support_rows": 77,
+            "share_of_source_rows": 0.06
           },
           {
             "topic_code": "T13",
             "title": "线下活动",
             "support_rows": 56,
-            "share_of_source_rows": 0.0441
+            "share_of_source_rows": 0.0436
           },
           {
             "topic_code": "T06",
             "title": "商务合作",
             "support_rows": 42,
-            "share_of_source_rows": 0.0331
+            "share_of_source_rows": 0.0327
           },
           {
             "topic_code": "T02",
             "title": "直播",
             "support_rows": 42,
-            "share_of_source_rows": 0.0331
+            "share_of_source_rows": 0.0327
           },
           {
             "topic_code": "T15",
             "title": "创作安利",
             "support_rows": 28,
-            "share_of_source_rows": 0.022
+            "share_of_source_rows": 0.0218
           },
           {
             "topic_code": "T14",
             "title": "数据成绩",
             "support_rows": 24,
-            "share_of_source_rows": 0.0189
+            "share_of_source_rows": 0.0187
           },
           {
             "topic_code": "T07",
             "title": "影视作品",
             "support_rows": 13,
-            "share_of_source_rows": 0.0102
+            "share_of_source_rows": 0.0101
           },
           {
             "topic_code": "T12",
@@ -870,8 +870,8 @@
           {
             "topic_code": "T08",
             "title": "音乐作品",
-            "support_rows": 2,
-            "share_of_source_rows": 0.0016
+            "support_rows": 3,
+            "share_of_source_rows": 0.0023
           }
         ]
       }
@@ -885,7 +885,7 @@
     "top_topics": {
       "weibo": {
         "status": "READY",
-        "rows": 1143,
+        "rows": 1179,
         "source_titles": [
           "微博超话",
           "微博评论区",
@@ -898,49 +898,49 @@
         "topics": [
           {
             "title": "日常闲聊",
-            "support_rows": 368,
-            "share_of_platform_rows": 0.322
+            "support_rows": 380,
+            "share_of_platform_rows": 0.3223
           },
           {
             "title": "粉圈生态",
-            "support_rows": 324,
-            "share_of_platform_rows": 0.2835
+            "support_rows": 335,
+            "share_of_platform_rows": 0.2841
           },
           {
             "title": "双人物料",
-            "support_rows": 236,
-            "share_of_platform_rows": 0.2065
+            "support_rows": 248,
+            "share_of_platform_rows": 0.2103
           },
           {
             "title": "双人互动",
-            "support_rows": 195,
-            "share_of_platform_rows": 0.1706
+            "support_rows": 196,
+            "share_of_platform_rows": 0.1662
           },
           {
             "title": "公司运营",
-            "support_rows": 172,
-            "share_of_platform_rows": 0.1505
+            "support_rows": 178,
+            "share_of_platform_rows": 0.151
           },
           {
             "title": "创作安利",
             "support_rows": 105,
-            "share_of_platform_rows": 0.0919
+            "share_of_platform_rows": 0.0891
           },
           {
             "title": "行程动态",
-            "support_rows": 83,
-            "share_of_platform_rows": 0.0726
+            "support_rows": 86,
+            "share_of_platform_rows": 0.0729
           },
           {
             "title": "其他",
-            "support_rows": 76,
-            "share_of_platform_rows": 0.0665
+            "support_rows": 80,
+            "share_of_platform_rows": 0.0679
           }
         ]
       },
       "douban": {
         "status": "READY",
-        "rows": 1270,
+        "rows": 1284,
         "source_titles": [
           "豆瓣闲聊楼"
         ],
@@ -950,43 +950,43 @@
         "topics": [
           {
             "title": "粉圈生态",
-            "support_rows": 489,
-            "share_of_platform_rows": 0.385
+            "support_rows": 494,
+            "share_of_platform_rows": 0.3847
           },
           {
             "title": "日常闲聊",
-            "support_rows": 398,
-            "share_of_platform_rows": 0.3134
+            "support_rows": 403,
+            "share_of_platform_rows": 0.3139
           },
           {
             "title": "舆情争议",
-            "support_rows": 211,
-            "share_of_platform_rows": 0.1661
+            "support_rows": 213,
+            "share_of_platform_rows": 0.1659
           },
           {
             "title": "其他",
-            "support_rows": 131,
-            "share_of_platform_rows": 0.1031
+            "support_rows": 129,
+            "share_of_platform_rows": 0.1005
           },
           {
             "title": "单人物料",
             "support_rows": 127,
-            "share_of_platform_rows": 0.1
+            "share_of_platform_rows": 0.0989
           },
           {
             "title": "双人互动",
-            "support_rows": 111,
-            "share_of_platform_rows": 0.0874
+            "support_rows": 112,
+            "share_of_platform_rows": 0.0872
           },
           {
             "title": "行程动态",
-            "support_rows": 88,
-            "share_of_platform_rows": 0.0693
+            "support_rows": 90,
+            "share_of_platform_rows": 0.0701
           },
           {
             "title": "公司运营",
-            "support_rows": 85,
-            "share_of_platform_rows": 0.0669
+            "support_rows": 87,
+            "share_of_platform_rows": 0.0678
           }
         ]
       }
@@ -996,7 +996,7 @@
         "type": "DIRECT",
         "bucket": "difference",
         "title": "微博侧「双人物料」更突出",
-        "summary": "「双人物料」占当前已覆盖微博样本约 20.6%，进入微博当前主要主题；该主题未进入豆瓣当前 Top topics。这不等同于豆瓣不存在相关讨论。"
+        "summary": "「双人物料」占当前已覆盖微博样本约 21.0%，进入微博当前主要主题；该主题未进入豆瓣当前 Top topics。这不等同于豆瓣不存在相关讨论。"
       },
       {
         "type": "DIRECT",
@@ -1008,13 +1008,13 @@
         "type": "DIRECT",
         "bucket": "difference",
         "title": "豆瓣侧「粉圈生态」占比更高",
-        "summary": "「粉圈生态」占当前已覆盖豆瓣样本约 38.5%，微博约 28.3%，豆瓣高约 10.2 个百分点。该差异仅描述当前已覆盖样本。"
+        "summary": "「粉圈生态」占当前已覆盖豆瓣样本约 38.5%，微博约 28.4%，豆瓣高约 10.1 个百分点。该差异仅描述当前已覆盖样本。"
       },
       {
         "type": "DIRECT",
         "bucket": "difference",
         "title": "豆瓣侧「单人物料」更突出",
-        "summary": "「单人物料」占当前已覆盖豆瓣样本约 10.0%，进入豆瓣当前主要主题；该主题未进入微博当前 Top topics。这不等同于微博不存在相关讨论。"
+        "summary": "「单人物料」占当前已覆盖豆瓣样本约 9.9%，进入豆瓣当前主要主题；该主题未进入微博当前 Top topics。这不等同于微博不存在相关讨论。"
       }
     ]
   },
@@ -1023,30 +1023,30 @@
     "status": "DEGRADED",
     "window": "CURRENT_72H",
     "lineage": {
-      "aggregation_cycle_id": "CYCLE_20261106_202559_3193932",
+      "aggregation_cycle_id": "CYCLE_20261106_204352_3198518",
       "community_version": "FAJIA_COMMUNITY_AGGREGATION_V1.0.4"
     },
     "communities": {
       "old_group": {
         "label": "旧组",
         "activity": {
-          "rows": 220,
-          "unique_authors": 53
+          "rows": 224,
+          "unique_authors": 54
         },
         "participation": {
           "identity_coverage": 1.0,
-          "unique_authors_per_100_rows": 24.09,
+          "unique_authors_per_100_rows": 24.11,
           "rows_per_unique_author": 4.15
         },
         "topic_ecology": {
-          "entropy": 2.4251,
+          "entropy": 2.4296,
           "top1_share": 0.1955,
-          "top3_share": 0.4816,
+          "top3_share": 0.4804,
           "distinct_topics": 17
         },
         "negative": {
           "eligible_rows": 23,
-          "rate": 0.1045,
+          "rate": 0.1027,
           "main_directions": [
             {
               "label": "运营与管理",
@@ -1127,7 +1127,7 @@
       }
     },
     "other_sources": {
-      "rows": 1048,
+      "rows": 1058,
       "unique_authors": 72
     },
     "quality": {
@@ -1146,10 +1146,10 @@
       "current_72h_rows": 6464
     },
     "current_snapshot": {
-      "generated_at": "2026-11-06T20:43:07+08:00",
-      "current_72h_rows": 2413
+      "generated_at": "2026-11-06T20:58:51+08:00",
+      "current_72h_rows": 2463
     },
-    "interval_hours": 670.89,
+    "interval_hours": 671.15,
     "comparison_mode": "OUTSIDE_PREFERRED_WINDOW",
     "comparison_policy": {
       "formal_min_interval_hours": 18.0,
@@ -1158,8 +1158,8 @@
       "strong_move_pp": 5.0,
       "mild_move_pp": 3.0
     },
-    "max_abs_delta_pp": 13.1,
-    "notice": "当前最近可用 V2.4 基线相隔约 670.9 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
+    "max_abs_delta_pp": 13.5,
+    "notice": "当前最近可用 V2.4 基线相隔约 671.1 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
     "by_platform": {
       "weibo": {
         "title": "微博",
@@ -1168,56 +1168,56 @@
             "title": "双人物料",
             "kind": "RISING",
             "previous_share": 0.0755,
-            "current_share": 0.2065,
-            "delta_pp": 13.1
-          },
-          {
-            "title": "双人互动",
-            "kind": "RISING",
-            "previous_share": 0.0816,
-            "current_share": 0.1706,
-            "delta_pp": 8.9
+            "current_share": 0.2103,
+            "delta_pp": 13.5
           },
           {
             "title": "粉圈生态",
             "kind": "FALLING",
             "previous_share": 0.3716,
-            "current_share": 0.2835,
-            "delta_pp": -8.8
+            "current_share": 0.2841,
+            "delta_pp": -8.7
+          },
+          {
+            "title": "双人互动",
+            "kind": "RISING",
+            "previous_share": 0.0816,
+            "current_share": 0.1662,
+            "delta_pp": 8.5
           },
           {
             "title": "创作安利",
             "kind": "FALLING",
             "previous_share": 0.142,
-            "current_share": 0.0919,
-            "delta_pp": -5.0
+            "current_share": 0.0891,
+            "delta_pp": -5.3
           },
           {
             "title": "日常闲聊",
             "kind": "MILD_FALLING",
             "previous_share": 0.3625,
-            "current_share": 0.322,
+            "current_share": 0.3223,
             "delta_pp": -4.0
           },
           {
             "title": "行程动态",
             "kind": "STABLE",
             "previous_share": 0.0604,
-            "current_share": 0.0726,
-            "delta_pp": 1.2
+            "current_share": 0.0729,
+            "delta_pp": 1.3
           },
           {
             "title": "公司运营",
             "kind": "NEW",
             "previous_share": null,
-            "current_share": 0.1505,
+            "current_share": 0.151,
             "delta_pp": null
           },
           {
             "title": "其他",
             "kind": "STABLE",
             "previous_share": null,
-            "current_share": 0.0665,
+            "current_share": 0.0679,
             "delta_pp": null
           },
           {
@@ -1243,57 +1243,57 @@
             "title": "粉圈生态",
             "kind": "RISING",
             "previous_share": 0.3162,
-            "current_share": 0.385,
+            "current_share": 0.3847,
             "delta_pp": 6.9
           },
           {
             "title": "舆情争议",
             "kind": "FALLING",
             "previous_share": 0.2335,
-            "current_share": 0.1661,
-            "delta_pp": -6.7
+            "current_share": 0.1659,
+            "delta_pp": -6.8
           },
           {
             "title": "公司运营",
             "kind": "MILD_FALLING",
             "previous_share": 0.1099,
-            "current_share": 0.0669,
-            "delta_pp": -4.3
+            "current_share": 0.0678,
+            "delta_pp": -4.2
           },
           {
             "title": "日常闲聊",
             "kind": "MILD_RISING",
             "previous_share": 0.2757,
-            "current_share": 0.3134,
+            "current_share": 0.3139,
             "delta_pp": 3.8
           },
           {
             "title": "其他",
             "kind": "MILD_RISING",
             "previous_share": 0.0703,
-            "current_share": 0.1031,
-            "delta_pp": 3.3
+            "current_share": 0.1005,
+            "delta_pp": 3.0
           },
           {
             "title": "单人物料",
             "kind": "STABLE",
             "previous_share": 0.0894,
-            "current_share": 0.1,
-            "delta_pp": 1.1
-          },
-          {
-            "title": "行程动态",
-            "kind": "STABLE",
-            "previous_share": 0.0657,
-            "current_share": 0.0693,
-            "delta_pp": 0.4
+            "current_share": 0.0989,
+            "delta_pp": 1.0
           },
           {
             "title": "双人互动",
             "kind": "STABLE",
             "previous_share": 0.0908,
-            "current_share": 0.0874,
-            "delta_pp": -0.3
+            "current_share": 0.0872,
+            "delta_pp": -0.4
+          },
+          {
+            "title": "行程动态",
+            "kind": "STABLE",
+            "previous_share": 0.0657,
+            "current_share": 0.0701,
+            "delta_pp": 0.4
           }
         ]
       }
