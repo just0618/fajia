@@ -1,6 +1,6 @@
 {
   "version": "FAJIA_MONITOR_FRONTEND_PAYLOAD_V2.4_FORMAL_CANDIDATE_V1.0",
-  "generated_at": "2026-11-21T20:16:06+08:00",
+  "generated_at": "2026-11-21T20:31:49+08:00",
   "meta": {
     "window": "CURRENT_72H",
     "current_72h_rows": 1154,
@@ -11,8 +11,8 @@
     },
     "weibo_recent_updated_at": "2026-10-27T23:46:57+08:00",
     "douban_recent_updated_at": null,
-    "aggregation_updated_at": "2026-11-21T20:08:48+08:00",
-    "community_updated_at": "2026-11-21T20:16:06.337523+08:00",
+    "aggregation_updated_at": "2026-11-21T20:27:51+08:00",
+    "community_updated_at": "2026-11-21T20:31:49.697743+08:00",
     "recent_window_start": "2026-10-24T22:58:30+08:00",
     "recent_window_end": "2026-10-27T22:58:30+08:00"
   },
@@ -197,7 +197,7 @@
     "description": "汇总本期讨论中较明显的负向反馈、担忧、争议与批评。",
     "status": "READY",
     "window": "CURRENT_72H",
-    "eligible_rows": 83,
+    "eligible_rows": 82,
     "overall": {
       "main_themes": [
         {
@@ -210,7 +210,7 @@
           "title": "造谣、攻击与负面信息外溢引发不满",
           "category": "舆论环境",
           "tier": "MAIN",
-          "support": 24
+          "support": 23
         },
         {
           "title": "部分粉丝行为引发不满",
@@ -240,7 +240,7 @@
             "title": "造谣、攻击与负面信息外溢引发不满",
             "category": "舆论环境",
             "tier": "MAIN",
-            "support": 24
+            "support": 23
           },
           {
             "title": "部分粉丝行为引发不满",
@@ -282,9 +282,9 @@
   },
   "negative_targets": {
     "title": "负面主要涉及什么",
-    "description": "本期共识别 83 条负面讨论；一条讨论可能同时涉及多个对象。",
+    "description": "本期共识别 82 条负面讨论；一条讨论可能同时涉及多个对象。",
     "status": "READY",
-    "negative_rows": 83,
+    "negative_rows": 82,
     "resolved_rows": 56,
     "targets": [
       {
@@ -309,7 +309,7 @@
     },
     "platform_split_status": "SUMMARY_MISMATCH",
     "unresolved_review": {
-      "count": 27,
+      "count": 26,
       "render_as_normal_target": false,
       "notice": "部分负面讨论的对象仍待核对，未计入普通对象排行。"
     },
@@ -348,7 +348,7 @@
           "notice": "当前样本量与覆盖范围可用于来源级讨论概览。"
         },
         "display_scope": "SOURCE_LEVEL",
-        "latest_current_published_at": "2026-11-21T19:41:00+08:00",
+        "latest_current_published_at": "2026-11-21T19:48:00+08:00",
         "topic_semantics": {
           "mode": "MULTI_LABEL_UNORDERED",
           "shares_may_sum_above_one": true
@@ -399,8 +399,8 @@
           {
             "topic_code": "T15",
             "title": "创作安利",
-            "support_rows": 57,
-            "share_of_source_rows": 0.0869
+            "support_rows": 58,
+            "share_of_source_rows": 0.0884
           },
           {
             "topic_code": "T99",
@@ -777,7 +777,7 @@
     "status": "DEGRADED",
     "window": "CURRENT_72H",
     "lineage": {
-      "aggregation_cycle_id": "CYCLE_20261121_200400_358089",
+      "aggregation_cycle_id": "CYCLE_20261121_202349_363078",
       "community_version": "FAJIA_COMMUNITY_AGGREGATION_V1.0.4"
     },
     "communities": {
@@ -858,10 +858,10 @@
       "current_72h_rows": 6464
     },
     "current_snapshot": {
-      "generated_at": "2026-11-21T20:16:06+08:00",
+      "generated_at": "2026-11-21T20:31:49+08:00",
       "current_72h_rows": 1154
     },
-    "interval_hours": 1030.44,
+    "interval_hours": 1030.7,
     "comparison_mode": "OUTSIDE_PREFERRED_WINDOW",
     "comparison_policy": {
       "formal_min_interval_hours": 18.0,
@@ -871,7 +871,7 @@
       "mild_move_pp": 3.0
     },
     "max_abs_delta_pp": 17.6,
-    "notice": "当前最近可用 V2.4 基线相隔约 1030.4 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
+    "notice": "当前最近可用 V2.4 基线相隔约 1030.7 小时，超出首选 18–36 小时比较窗口；结果仅作为参考，不作正式趋势判断。",
     "by_platform": {
       "weibo": {
         "title": "微博",
