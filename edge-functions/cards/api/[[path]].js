@@ -9,13 +9,7 @@ function errorResponse(status, message) {
 
 export async function onRequest({ request }) {
   const url = new URL(request.url);
-  if (url.pathname === '/cards') {
-    return new Response(null, {
-      status: 308,
-      headers: { Location: '/cards/' + url.search, 'Cache-Control': 'no-store' },
-    });
-  }
-  if (!/^\/cards\/[a-zA-Z0-9/._-]*$/.test(url.pathname)) {
+  if (!/^\/cards\/api\/[a-zA-Z0-9/._-]*$/.test(url.pathname)) {
     return errorResponse(404, '页面不存在');
   }
   if (!['GET', 'HEAD', 'POST'].includes(request.method)) {
